@@ -1,0 +1,33 @@
+/* 1. Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* 2. Tailwind Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 3. Definisi Variabel dan Base Styles (Hanya satu kali) */
+@layer base {
+  :root {
+    --bg: #FFFAF3;
+    --surface: #FFFDF8;
+    --surface2: #FCF8F1;
+    --border: #E8E1D7;
+    --text: #1A312C;
+    --text2: #53645F;
+    --accent: #428475;
+    --accent2: #89D7B7;
+    --shadow: 0 12px 36px rgba(26,49,44,0.08);
+    --shadow2: 0 18px 52px rgba(26,49,44,0.11);
+  }
+
+  html, body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: "Plus Jakarta Sans", sans-serif; 
+  }
+
+  body { 
+    overflow-x: hidden; 
+  }
+}

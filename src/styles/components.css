@@ -53,8 +53,11 @@
   position: fixed; top: 20px; right: 20px; z-index: 90; width: 56px; height: 56px; border-radius: 999px;
   background: rgba(255,253,248,.98); border: 1px solid rgba(232,225,215,.98); box-shadow: 0 12px 30px rgba(26,49,44,.10);
   display: flex; align-items: center; justify-content: center;
+  /* hidden by default; only revealed via .show on mobile */
+  opacity: 0; transform: translateX(24px) scale(.92); pointer-events: none;
   transition: opacity .35s ease, transform .42s cubic-bezier(.2,.9,.2,1), left .42s cubic-bezier(.2,.9,.2,1), right .42s cubic-bezier(.2,.9,.2,1);
 }
+.floating-burger.show { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
 .floating-burger.left { left: 20px; right: auto; }
 
 /* Photo Stack Animasi */
@@ -146,6 +149,14 @@
 }
 
 /* Navbar shell & active pill */
+#topNav {
+  transition: transform .42s cubic-bezier(.2,.9,.2,1), opacity .36s ease;
+}
+#topNav.nav-hidden {
+  transform: translateY(-115%);
+  opacity: 0;
+  pointer-events: none;
+}
 .nav-shell {
   width: 100%;
   max-width: 100%;
@@ -157,16 +168,18 @@
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 8px 22px rgba(26,49,44,.05);
-  transition: all .38s cubic-bezier(.2,.9,.2,1);
+  transition: all .44s cubic-bezier(.2,.9,.2,1);
   overflow: hidden;
 }
 .nav-shell.is-scrolled {
-  width: min(92vw, 72rem);
-  max-width: min(92vw, 72rem);
-  margin: .75rem auto 0;
-  border: 1px solid rgba(232,225,215,.98);
-  border-radius: 2rem;
-  box-shadow: 0 12px 34px rgba(26,49,44,.08);
+  width: min(90vw, 68rem);
+  max-width: min(90vw, 68rem);
+  margin: .85rem auto 0;
+  border: 1px solid rgba(232,225,215,.95);
+  border-radius: 999px;
+  box-shadow: 0 16px 40px rgba(26,49,44,.11);
+  padding-left: .25rem;
+  padding-right: .25rem;
 }
 .nav-links {
   position: relative;
@@ -187,8 +200,13 @@
   opacity: 0;
   transform: translateX(0);
   pointer-events: none;
-  transition: transform .32s cubic-bezier(.2,.9,.2,1), width .32s cubic-bezier(.2,.9,.2,1), height .32s cubic-bezier(.2,.9,.2,1), opacity .2s ease;
-  will-change: transform, width, height, opacity;
+  /* Spring/liquid easing: overshoot slightly then settle */
+  transition:
+    transform .42s cubic-bezier(0.16, 1, 0.3, 1),
+    width     .38s cubic-bezier(0.16, 1, 0.3, 1),
+    height    .32s cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity   .2s ease;
+  will-change: transform, width;
 }
 .nav-link {
   position: relative;
@@ -197,10 +215,12 @@
 }
 .nav-link.active {
   color: white;
+  background: transparent;
+  box-shadow: none;
 }
 .nav-link:hover {
   color: var(--text);
-  background: rgba(232,225,215,.45);
+  /* Removed background to prevent double-highlight overlapping */
 }
 
 /* Section toggle button (load more / collapse) */

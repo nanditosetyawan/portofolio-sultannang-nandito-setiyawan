@@ -1,3 +1,6 @@
+const whiteModeIcon = new URL('../assets/icons/white_mode.png', import.meta.url).href;
+const darkModeIcon  = new URL('../assets/icons/dark_mode.png',  import.meta.url).href;
+
 export const Navbar = (): string => {
   return `
     <!-- Mobile Sidebar -->
@@ -38,8 +41,9 @@ export const Navbar = (): string => {
 
           <div class="flex items-center gap-2 shrink-0">
             <button id="themeToggle" class="w-11 h-11 rounded-full border border-border bg-white/70 flex items-center justify-center hover:bg-surface transition" aria-label="Toggle theme">
-              <span id="themeIcon" class="material-symbols-outlined text-[22px]">light_mode</span>
+              <img id="themeIcon" src="${whiteModeIcon}" alt="Toggle theme" class="w-6 h-6 object-contain">
             </button>
+            <!-- Mobile burger (only on mobile inside navbar) -->
             <button id="menuBtn" class="md:hidden w-11 h-11 rounded-full border border-border bg-surface/90 flex items-center justify-center shadow-sm" aria-label="Open menu">
               <span class="material-symbols-outlined text-[22px]">menu</span>
             </button>
@@ -48,6 +52,7 @@ export const Navbar = (): string => {
       </div>
     </header>
 
+    <!-- Mobile floating burger: only shown on mobile when navbar is hidden after scroll -->
     <button id="mobileFloatingBurger" class="floating-burger md:hidden" aria-label="Open menu">
       <span class="material-symbols-outlined text-[26px] text-text">menu</span>
     </button>

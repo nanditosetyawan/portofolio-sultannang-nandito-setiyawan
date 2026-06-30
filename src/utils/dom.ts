@@ -1,5 +1,7 @@
 import reloadIcon from '../assets/icons/reload.png';
 import backLoadIcon from '../assets/icons/back_load.png';
+import whiteModeIcon from '../assets/icons/white_mode.png';
+import darkModeIcon from '../assets/icons/dark_mode.png';
 
 export const initApp = () => {
   const topNav = document.getElementById('topNav');
@@ -9,7 +11,7 @@ export const initApp = () => {
   const navLinks = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-link]'));
   const mobileBurger = document.getElementById('mobileFloatingBurger');
   const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
+  const themeIcon = document.getElementById('themeIcon') as HTMLImageElement | null;
   const menuBtn = document.getElementById('menuBtn');
   const mobileSidebar = document.getElementById('mobileSidebar');
   const closeSidebar = document.getElementById('closeSidebar');
@@ -46,31 +48,10 @@ export const initApp = () => {
     });
   };
 
-  const setActiveNav = (targetId: string) => {
-    navLinks.forEach(link => {
-      const isActive = link.getAttribute('href') === `#${targetId}`;
-      link.classList.toggle('active', isActive);
-    });
-
-    requestAnimationFrame(() => positionNavPill(targetId));
-  };
-
-  const positionNavPill = (targetId: string) => {
-    if (!desktopNav || !navActivePill) return;
-
-    const activeLink = navLinks.find(link => link.getAttribute('href') === `#${targetId}`);
-    if (!activeLink) return;
-
-    const navRect = desktopNav.getBoundingClientRect();
-    const linkRect = activeLink.getBoundingClientRect();
-    const left = linkRect.left - navRect.left;
-    const top = linkRect.top - navRect.top;
-
-    navActivePill.style.width = `${linkRect.width}px`;
-    navActivePill.style.height = `${linkRect.height}px`;
-    navActivePill.style.transform = `translate(${left}px, ${top}px)`;
-    navActivePill.style.opacity = '1';
-  };
+  // Only desktop nav links — sidebar links are hidden and would give wrong measurements
+  const desktopNavLinks = Array.from(
+    document.querySelectorAll<HTMLElement>('#desktopNav [data-nav-link]')
+  );
 
   const syncNavbarState = () => {
     const scrolled = window.scrollY > 18;
@@ -90,8 +71,6 @@ export const initApp = () => {
         mobileBurger.classList.remove('show', 'left');
       }
     }
-
-    positionNavPill(document.querySelector<HTMLElement>('[data-nav-link].active')?.getAttribute('href')?.slice(1) || 'hero');
   };
 
   // Navbar link behavior
@@ -109,9 +88,10 @@ export const initApp = () => {
 
   // Theme toggle
   themeToggle?.addEventListener('click', () => {
-    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.toggle('dark');
     if (themeIcon) {
-      themeIcon.textContent = document.documentElement.classList.contains('dark') ? 'dark_mode' : 'light_mode';
+      themeIcon.src = isDark ? darkModeIcon : whiteModeIcon;
+      themeIcon.alt = isDark ? 'Dark mode' : 'Light mode';
     }
   });
 
@@ -131,30 +111,200 @@ export const initApp = () => {
 
   revealElements.forEach(el => revealObserver.observe(el));
 
-  // Active nav by section observer
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        setActiveNav(entry.target.id);
+  // ── Continuous Liquid Nav Pill Interpolation ──────────────────────────────
+  let activeSection = 'hero';
+
+  const updateActiveFromScroll = () => {
+    if (!desktopNav || !navActivePill || desktopNavLinks.length === 0) return;
+
+    // The point on the screen where a section is considered "active"
+    const triggerLine = window.innerHeight * 0.35;
+    // The height of the transition zone above and below the trigger line (reduced for faster snap)
+    const zoneHalf = window.innerHeight * 0.10; 
+
+    let currIdx = 0;
+    let nextIdx = 0;
+    let progress = 0;
+
+    // First, find which section is currently solid
+    let solidIdx = 0;
+    for (let i = 0; i < sections.length; i++) {
+      const rect = sections[i].getBoundingClientRect();
+      if (rect.top <= triggerLine + zoneHalf) {
+        solidIdx = i;
       }
+    }
+
+    currIdx = solidIdx;
+    nextIdx = solidIdx;
+
+    // Now check if any boundary is within the transition zone
+    for (let i = 1; i < sections.length; i++) {
+      const y = sections[i].getBoundingClientRect().top;
+      // If the top of section i is within the transition zone
+      if (y > triggerLine - zoneHalf && y < triggerLine + zoneHalf) {
+        // We are transitioning between section i-1 and section i
+        currIdx = i - 1;
+        nextIdx = i;
+        // Calculate how far along the transition is (0 to 1)
+        progress = 1 - (y - (triggerLine - zoneHalf)) / (2 * zoneHalf);
+        break;
+      }
+    }
+
+    // Edge case: bottom of the page
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+      currIdx = sections.length - 1;
+      nextIdx = sections.length - 1;
+      progress = 0;
+    }
+
+    // Get nav link rects
+    const navRect = desktopNav.getBoundingClientRect();
+    const currLinkRect = desktopNavLinks[currIdx].getBoundingClientRect();
+    const nextLinkRect = desktopNavLinks[nextIdx].getBoundingClientRect();
+
+    const currLeft = currLinkRect.left - navRect.left;
+    const currWidth = currLinkRect.width;
+    const currRight = currLeft + currWidth;
+
+    const nextLeft = nextLinkRect.left - navRect.left;
+    const nextWidth = nextLinkRect.width;
+    const nextRight = nextLeft + nextWidth;
+
+    let targetLeft = currLeft;
+    let targetRight = currRight;
+
+    // Liquid stretch-and-shrink effect
+    if (nextLeft > currLeft) {
+      // Moving right: stretch right edge first, then shrink left edge
+      const stretchProgress = Math.min(1, progress * 2);
+      const shrinkProgress = Math.max(0, (progress - 0.5) * 2);
+      targetLeft = currLeft + (nextLeft - currLeft) * shrinkProgress;
+      targetRight = currRight + (nextRight - currRight) * stretchProgress;
+    } else if (nextLeft < currLeft) {
+      // Moving left: stretch left edge first, then shrink right edge
+      const stretchProgress = Math.min(1, progress * 2);
+      const shrinkProgress = Math.max(0, (progress - 0.5) * 2);
+      targetLeft = currLeft - (currLeft - nextLeft) * stretchProgress;
+      targetRight = currRight - (currRight - nextRight) * shrinkProgress;
+    }
+
+    const targetWidth = targetRight - targetLeft;
+
+    navActivePill.style.transition = 'none'; // Disable CSS transition for continuous liquid feel
+    navActivePill.style.transform = `translateX(${targetLeft}px)`;
+    navActivePill.style.width = `${targetWidth}px`;
+    navActivePill.style.opacity = '1';
+
+    // Update discrete active class for text color
+    let primaryIdx = progress < 0.5 ? currIdx : nextIdx;
+    const primarySectionId = sections[primaryIdx].id;
+    if (primarySectionId !== activeSection) {
+      activeSection = primarySectionId;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${activeSection}`);
+      });
+    }
+  };
+
+  // Bind to scroll
+  window.addEventListener('scroll', () => {
+    requestAnimationFrame(updateActiveFromScroll);
+  }, { passive: true });
+  
+  // Wait a tick for fonts/layout to render before first placement
+  setTimeout(() => requestAnimationFrame(updateActiveFromScroll), 100);
+  
+  // We no longer call positionNavPill from setActiveNav directly, it's driven entirely by scroll
+  const setActiveNav = (targetId: string) => {
+    // Only used for manual clicks now; scroll listener handles the pill animation
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === `#${targetId}`);
     });
-  }, { threshold: 0.55, rootMargin: '-15% 0px -35% 0px' });
-
-  sections.forEach(section => sectionObserver.observe(section));
+  };
   setActiveNav('hero');
+  // ─────────────────────────────────────────────────────────────────────────
 
-  // Navbar morph + mobile burger sync
+  // ── Navbar: hide only after 3s of CONTINUOUS down-scroll ─────────────────
   let rafId = 0;
+  let lastScrollY = window.scrollY;
+  let navHidden = false;
+
+  // Timestamp when continuous down-scroll started (null = not scrolling down)
+  let scrollDownStartTime: number | null = null;
+  // Timer to detect scroll has STOPPED (fires ~250ms after last scroll event)
+  let scrollStopTimer: ReturnType<typeof setTimeout> | null = null;
+  // Timer that fires exactly when the 3s threshold is reached mid-scroll
+  let hideTimer: ReturnType<typeof setTimeout> | null = null;
+
+  const hideNav = () => {
+    if (navHidden) return;
+    navHidden = true;
+    topNav?.classList.add('nav-hidden');
+  };
+
+  const showNav = () => {
+    if (!navHidden) return;
+    navHidden = false;
+    topNav?.classList.remove('nav-hidden');
+  };
+
+  const cancelHideTimer = () => {
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+  };
+
+  const resetDownScroll = () => {
+    // User stopped scrolling down (either paused or scrolled up) — reset everything
+    cancelHideTimer();
+    scrollDownStartTime = null;
+  };
+
   const onScroll = () => {
     if (rafId) return;
     rafId = window.requestAnimationFrame(() => {
+      const currentY = window.scrollY;
+      const scrollingDown = currentY > lastScrollY;
+
+      // ── Reset the "scroll stopped" detector on every event ──
+      if (scrollStopTimer) { clearTimeout(scrollStopTimer); scrollStopTimer = null; }
+
+      if (scrollingDown && currentY > 80) {
+        if (scrollDownStartTime === null) {
+          // First down-scroll event — record start time
+          scrollDownStartTime = Date.now();
+          // Schedule hide exactly 3s from now (will be cancelled if scroll stops/reverses)
+          cancelHideTimer();
+          hideTimer = setTimeout(hideNav, 3000);
+        }
+
+        // Detect scroll stop: if no scroll event in 250ms, consider it stopped
+        scrollStopTimer = setTimeout(() => {
+          const elapsed = scrollDownStartTime !== null ? Date.now() - scrollDownStartTime : 0;
+          if (elapsed >= 3000) {
+            // Was scrolling down for ≥ 3s and just stopped → hide
+            hideNav();
+          }
+          // Reset regardless (stopped before or after threshold)
+          resetDownScroll();
+        }, 250);
+
+      } else {
+        // Scrolling up or position didn't change → show navbar and cancel all timers
+        resetDownScroll();
+        showNav();
+      }
+
+      lastScrollY = currentY;
       syncNavbarState();
       rafId = 0;
     });
   };
+
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', syncNavbarState);
   syncNavbarState();
+  // ─────────────────────────────────────────────────────────────────────────
 
   // Accordions
   const accordions = document.querySelectorAll<HTMLElement>('[data-accordion]');

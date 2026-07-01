@@ -55,21 +55,14 @@ export const initApp = () => {
 
   const syncNavbarState = () => {
     const scrolled = window.scrollY > 18;
-    const isMobile = window.innerWidth < 768;
 
     if (navShell) {
       navShell.classList.toggle('is-scrolled', scrolled);
     }
 
     if (topNav && mobileBurger) {
-      if (isMobile) {
-        topNav.classList.toggle('mobile-hidden', scrolled);
-        mobileBurger.classList.toggle('show', scrolled);
-        mobileBurger.classList.toggle('left', scrolled);
-      } else {
-        topNav.classList.remove('mobile-hidden');
-        mobileBurger.classList.remove('show', 'left');
-      }
+      topNav.classList.remove('mobile-hidden');
+      mobileBurger.classList.remove('show', 'left');
     }
   };
 
@@ -439,6 +432,11 @@ export const initApp = () => {
     const prevBtn = stage.querySelector<HTMLButtonElement>('.carousel-prev');
     const nextBtn = stage.querySelector<HTMLButtonElement>('.carousel-next');
 
+    // Find preview badge (which is now a button on mobile) and mobile-only download button
+    const previewBtn = stage.querySelector<HTMLButtonElement>('[data-preview-btn]');
+    const parentAccordion = stage.closest('[data-accordion]');
+    const mobileDownloadBtn = parentAccordion?.querySelector<HTMLButtonElement>('[data-download-btn]');
+
     // Initialize carousel state
     let currentIdx = 0;
     const showImage = (idx: number) => {
@@ -483,8 +481,49 @@ export const initApp = () => {
       showImage(0);
     }
 
+    // Preview button popup modal (only for Mobile screen widths)
+    previewBtn?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isMobile = window.innerWidth < 768;
+      if (!isMobile) return;
+
+      const currentImageSrc = images[currentIdx];
+      if (!currentImageSrc) return;
+
+      const overlay = document.createElement('div');
+      overlay.className = 'fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-[2px] p-4 animate-fade-in';
+
+      const img = document.createElement('img');
+      img.src = currentImageSrc;
+      img.className = 'max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl animate-zoom-in';
+
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white z-10 transition';
+      closeBtn.innerHTML = '<span class="material-symbols-outlined text-[28px]">close</span>';
+      closeBtn.setAttribute('aria-label', 'Close preview');
+
+      overlay.appendChild(img);
+      overlay.appendChild(closeBtn);
+      document.body.appendChild(overlay);
+      document.body.classList.add('overflow-hidden');
+
+      const closeOverlay = () => {
+        overlay.classList.add('animate-fade-out');
+        img.classList.add('animate-zoom-out');
+        setTimeout(() => {
+          overlay.remove();
+          document.body.classList.remove('overflow-hidden');
+        }, 250);
+      };
+
+      closeBtn.addEventListener('click', closeOverlay);
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeOverlay();
+      });
+    });
+
     // Download functionality (download all images)
-    downloadBtn?.addEventListener('click', (event) => {
+    const triggerDownload = (event: Event) => {
       event.stopPropagation();
       images.forEach((imgSrc, idx) => {
         const a = document.createElement('a');
@@ -494,7 +533,10 @@ export const initApp = () => {
         a.click();
         a.remove();
       });
-    });
+    };
+
+    downloadBtn?.addEventListener('click', triggerDownload);
+    mobileDownloadBtn?.addEventListener('click', triggerDownload);
   });
 
   // ── Hero Photo Stack Auto-Rotate ──────────────────────────────────────────

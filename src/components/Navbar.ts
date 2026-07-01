@@ -1,5 +1,5 @@
 const whiteModeIcon = new URL('../assets/icons/white_mode.png', import.meta.url).href;
-const darkModeIcon  = new URL('../assets/icons/dark_mode.png',  import.meta.url).href;
+const darkModeIcon = new URL('../assets/icons/dark_mode.png', import.meta.url).href;
 
 export const Navbar = (): string => {
   return `
@@ -40,7 +40,7 @@ export const Navbar = (): string => {
           </nav>
 
           <div class="flex items-center gap-2 shrink-0">
-            <button id="themeToggle" class="w-11 h-11 rounded-full border border-border bg-white/70 flex items-center justify-center hover:bg-surface transition" aria-label="Toggle theme">
+            <button id="themeToggle" class="hidden md:flex w-11 h-11 rounded-full border border-border bg-white/70 items-center justify-center hover:bg-surface transition" aria-label="Toggle theme">
               <img id="themeIcon" src="${whiteModeIcon}" alt="Toggle theme" class="w-6 h-6 object-contain">
             </button>
             <!-- Mobile burger (only on mobile inside navbar) -->

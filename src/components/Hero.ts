@@ -11,20 +11,25 @@ export const Hero = (): string => {
         </svg>
       </div>
 
-      <div class="mx-auto max-w-7xl px-4 md:px-8 py-16 md:py-24 w-full">
+      <div class="mx-auto max-w-7xl px-4 md:px-8 pt-5 pb-16 md:py-24 w-full">
         <div class="grid lg:grid-cols-12 gap-10 xl:gap-14 items-start">
           <div class="lg:col-span-7 xl:col-span-7 reveal pt-6 md:pt-10 lg:pt-14">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface/90 border border-border text-xs font-bold tracking-[0.24em] uppercase text-text2 mb-6 shadow-sm">
+            <!-- Desktop Badge -->
+            <div class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface/90 border border-border text-xs font-bold tracking-[0.24em] uppercase text-text2 mb-6 shadow-sm">
               ${profile.badge}
+            </div>
+            <!-- Mobile Badge -->
+            <div class="inline-flex md:hidden mb-6 h-[32px] items-center">
+              <span class="text-3xl font-bold text-accent font-handwriting typing-animation">HI, I'm</span>
             </div>
             <h1 class="hero-name text-[clamp(3.2rem,8vw,7rem)] font-extrabold text-text">
               Nandito <br class="hidden md:block">Setiyawan
             </h1>
-            <p class="mt-6 max-w-2xl text-base md:text-lg leading-7 md:leading-8 text-text2">
+            <p class="mt-6 max-w-2xl text-base md:text-lg leading-7 md:leading-8 text-text2 mobile-delay-reveal">
               ${profile.description}
             </p>
 
-            <div class="mt-8 flex flex-wrap gap-3">
+            <div class="mt-8 flex flex-wrap gap-3 mobile-delay-reveal">
               <a href="${profile.linkedin}" class="btn-primary inline-flex items-center gap-2 px-5 py-3 rounded-full font-bold transition">
                 <span class="material-symbols-outlined text-[20px]">launch</span> LinkedIn
               </a>
@@ -33,7 +38,7 @@ export const Hero = (): string => {
               </a>
             </div>
 
-            <div class="mt-8 flex flex-wrap gap-3">
+            <div class="mt-8 flex flex-wrap gap-3 mobile-delay-reveal">
               <a href="${profile.whatsapp}" class="chip-dark px-4 py-2 rounded-full text-sm font-semibold">WhatsApp</a>
               <a href="${profile.instagram}" class="chip-dark px-4 py-2 rounded-full text-sm font-semibold">Instagram</a>
               <a href="${profile.github}" class="chip-dark px-4 py-2 rounded-full text-sm font-semibold">GitHub</a>
@@ -50,13 +55,6 @@ export const Hero = (): string => {
                     <img src="${img}" alt="Portrait ${index + 1}">
                   </div>
                 `).join('')}
-                <div class="absolute left-3 md:left-4 bottom-6 md:bottom-8 w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-surface flex items-center justify-center border border-border shadow-soft z-10">
-                  <span class="material-symbols-outlined text-accent text-3xl">smart_toy</span>
-                </div>
-                <div class="absolute right-3 md:right-4 bottom-6 md:bottom-8 rounded-full bg-white/92 backdrop-blur-md border border-border shadow-soft px-4 py-3 text-xs z-10">
-                  <div class="font-bold">Open to work</div>
-                  <div class="text-text2 mt-1">Frontend / UI</div>
-                </div>
               </div>
             </div>
           </div>

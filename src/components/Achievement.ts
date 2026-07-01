@@ -37,8 +37,8 @@ export const Achievement = (): string => {
               <div class="certificate-preview relative rounded-[1.4rem] overflow-hidden border border-border bg-surface shadow-soft2 min-h-[420px]">
                 <div class="certificate-stage" data-cert-images='${JSON.stringify(ach.certificates)}' data-cert-title="${ach.title}">
                   <img class="cert-img" src="${ach.certificates[0]}" alt="${ach.title}">
-                  <div class="cert-badge">${badgeText}</div>
-                    <button type="button" class="download-btn" aria-label="Download">
+                  <button type="button" class="cert-badge" data-preview-btn>${badgeText}</button>
+                    <button type="button" class="download-btn hidden md:flex" aria-label="Download" title="Download Sertifikat">
                       <img src="${new URL('../assets/icons/download.png', import.meta.url).href}" alt="Download" class="download-img" />
                     </button>
                     <button type="button" class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 hidden" aria-label="Previous">
@@ -49,6 +49,12 @@ export const Achievement = (): string => {
                     </button>
                 </div>
               </div>
+
+              <!-- Mobile Download Button -->
+              <button type="button" class="mobile-download-btn md:hidden w-full flex items-center justify-center gap-2 py-3.5 mt-3 rounded-2xl font-bold transition" aria-label="Download" title="Download Sertifikat" data-download-btn>
+                <img src="${new URL('../assets/icons/download.png', import.meta.url).href}" alt="Download" class="w-5 h-5 object-contain" />
+                <span>Download</span>
+              </button>
             </div>
           </div>
         </div>

@@ -30,7 +30,7 @@ app.innerHTML = `
 
   ${Navbar()}
 
-  <main class="pt-24 md:pt-28">
+  <main class="pt-[4.25rem] md:pt-28">
     ${Hero()}
     ${About()}
     ${Projects()}

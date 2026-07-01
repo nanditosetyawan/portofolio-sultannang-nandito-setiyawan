@@ -31,10 +31,10 @@ export const Hero = (): string => {
 
             <div class="mt-8 flex flex-wrap gap-3 mobile-delay-reveal">
               <a href="${profile.linkedin}" class="btn-primary inline-flex items-center gap-2 px-5 py-3 rounded-full font-bold transition">
-                <span class="material-symbols-outlined text-[20px]">launch</span> LinkedIn
+                <span class="material-symbols-outlined text-[20px]">LinkedIn</span> 
               </a>
               <a href="${profile.resumeLink}" class="btn-secondary inline-flex items-center gap-2 px-5 py-3 rounded-full font-bold transition">
-                <span class="material-symbols-outlined text-[20px]">download</span> Download CV
+                <span class="material-symbols-outlined text-[20px]">Download CV</span> 
               </a>
             </div>
 

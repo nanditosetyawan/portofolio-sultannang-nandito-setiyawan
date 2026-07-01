@@ -8,7 +8,7 @@ export const Achievement = (): string => {
     const badgeText = ach.certificates.length > 1 ? `${ach.certificates.length} FILES` : 'PREVIEW';
 
     return `
-      <article class="accordion elevated rounded-[1.8rem] p-5 md:p-6 ${isHidden}" data-accordion>
+      <article class="accordion elevated rounded-[1.8rem] p-9 md:p-8 ${isHidden}" data-accordion>
         <button class="w-full flex flex-col md:flex-row md:items-center gap-4 text-left" data-accordion-btn>
           <div class="w-full md:w-40 aspect-[4/3] rounded-[1.2rem] overflow-hidden border border-border bg-[linear-gradient(135deg,rgba(137,215,183,.14),rgba(255,253,248,.96))]">
             ${ach.image ? `<img src="${ach.image}" alt="${ach.title} logo" class="w-full h-full object-cover">` : ''}
@@ -66,7 +66,7 @@ export const Achievement = (): string => {
     <section id="achievements" class="stage alt relative py-20 md:py-28 section-wrap">
       <div class="mx-auto max-w-7xl px-4 md:px-8">
         <div class="max-w-2xl reveal">
-          <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-text">Certificates & Milestones</h2>
+          <h2 class="font-cabinet text-3xl md:text-5xl font-extrabold tracking-tight text-text">Certificates & Milestones</h2>
           <p class="mt-5 text-base md:text-lg leading-7 text-text2">Proof of continuing education outside of typical class structures.</p>
         </div>
 

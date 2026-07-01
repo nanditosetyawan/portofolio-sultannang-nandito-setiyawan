@@ -88,11 +88,38 @@
   .stack-card.pos-4{ transform: translate(58px, 26px) rotate(-10deg) scale(.845); }
 }
 @media (max-width: 767px){
-  .photo-stack { width: 100%; min-height: 380px; margin: 0 auto; aspect-ratio: 3 / 4; }
-  .stack-card.pos-1{ transform: translate(18px, 10px) rotate(5deg) scale(.972); }
-  .stack-card.pos-2{ transform: translate(34px, 22px) rotate(-6deg) scale(.942); }
-  .stack-card.pos-3{ transform: translate(12px, 40px) rotate(4deg) scale(.91); }
-  .stack-card.pos-4{ transform: translate(46px, 28px) rotate(-10deg) scale(.885); }
+  /* ── Global mobile page margins ── */
+  .stage > div,
+  section > div.mx-auto {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+
+  /* ── Photo stack: 20% smaller ── */
+  .photo-stack { width: 80%; min-height: 304px; margin: 0 auto; aspect-ratio: 3 / 4; }
+  .stack-card.pos-1{ transform: translate(14px, 8px) rotate(5deg) scale(.972); }
+  .stack-card.pos-2{ transform: translate(27px, 18px) rotate(-6deg) scale(.942); }
+  .stack-card.pos-3{ transform: translate(10px, 32px) rotate(4deg) scale(.91); }
+  .stack-card.pos-4{ transform: translate(37px, 22px) rotate(-10deg) scale(.885); }
+
+  /* ── Cards: smaller padding ── */
+  .elevated,
+  .section-card {
+    padding: 1rem !important;
+  }
+
+  /* ── Accordion / project cards ── */
+  .accordion.elevated {
+    padding: 1.6rem !important;
+    border-radius: 1.25rem !important;
+  }
+  .accordion.elevated button .rounded-\[1\.4rem\] {
+    border-radius: 1rem !important;
+  }
+  /* Slightly smaller certificate preview image on mobile */
+  .certificate-preview {
+    min-height: 300px !important;
+  }
 }
 
 
@@ -451,6 +478,12 @@
   z-index: 2;
   transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
 }
+/* Hide the floating circle download-btn on mobile — replaced by mobile-download-btn */
+@media (max-width: 767px) {
+  .certificate-stage .download-btn {
+    display: none !important;
+  }
+}
 .certificate-stage .download-btn:hover {
   transform: translateY(-1px);
   background: rgba(255,253,248,1);
@@ -574,11 +607,12 @@
 
 /* Mobile-only download button */
 .mobile-download-btn {
+  margin-top: -10px;
   background-color: var(--accent2);
   color: var(--text);
-  border: none;
+  border: 2px solid transparent;
   box-shadow: 0 8px 24px rgba(137, 215, 183, 0.4);
-  transition: all 0.3s ease;
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease, transform .18s ease;
 }
 .mobile-download-btn:hover {
   box-shadow: 0 12px 30px rgba(137, 215, 183, 0.7);
@@ -586,6 +620,13 @@
 }
 .mobile-download-btn:active {
   transform: translateY(1px);
+}
+/* Clicked / downloaded state */
+.mobile-download-btn.downloaded {
+  background-color: transparent;
+  color: #111;
+  border-color: #111;
+  box-shadow: none;
 }
 
 /* Preview Modal Animations */
@@ -617,4 +658,114 @@
 @keyframes zoomOut {
   from { transform: scale(1); opacity: 1; }
   to { transform: scale(0.95); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════
+   MOBILE NAVBAR
+   Default  : pill bar — name (left) + burger (right)
+   Scrolled  : shrinks to a 52px circle on the LEFT
+═══════════════════════════════════════════════════ */
+#mobileNav {
+  transition: transform .55s cubic-bezier(.2,.9,.2,1), opacity .45s ease;
+}
+#mobileNav.nav-hidden {
+  transform: translateY(-150%);
+  opacity: 0;
+  pointer-events: none;
+}
+.mobile-nav-shell {
+  margin: 12px 16px 0;
+  padding: 10px 14px 10px 18px;
+  border-radius: 999px;
+  background: rgba(255,253,248,.98);
+  border: 1px solid rgba(232,225,215,.95);
+  box-shadow: 0 8px 24px rgba(26,49,44,.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: calc(100% - 32px);
+  height: 60px;
+  transition:
+    width     .55s cubic-bezier(.2,.9,.2,1),
+    height    .55s cubic-bezier(.2,.9,.2,1),
+    margin    .55s cubic-bezier(.2,.9,.2,1),
+    padding   .55s cubic-bezier(.2,.9,.2,1),
+    border-radius .55s cubic-bezier(.2,.9,.2,1),
+    opacity   .4s ease,
+    transform .55s cubic-bezier(.2,.9,.2,1);
+}
+
+/* Scrolled: shrink to a 52px circle pinned to the left (matching navbar background) */
+.mobile-nav-shell.is-scrolled {
+  width: 52px !important;
+  height: 52px !important;
+  margin: 14px auto 0 16px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  justify-content: center !important;
+}
+
+/* Full-width box when at top of page (flush to screen edges, fully sharp corners) */
+.mobile-nav-shell.at-top {
+  width: 100% !important;
+  height: 60px !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  border-radius: 0px !important; /* Kotak lancip di semua sudut */
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  justify-content: space-between !important;
+}
+
+/* Name text: fade + scale out when scrolled */
+.mobile-nav-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 1;
+  max-width: 220px;
+  transition:
+    opacity   .3s ease,
+    max-width .44s cubic-bezier(.2,.9,.2,1);
+}
+.mobile-nav-shell.is-scrolled .mobile-nav-name {
+  opacity: 0 !important;
+  max-width: 0 !important;
+  pointer-events: none;
+}
+
+/* Burger button inside the mobile navbar - transparent, no extra backgrounds */
+.mobile-burger-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  transition: transform .18s ease;
+}
+.mobile-burger-btn img {
+  display: block;
+  margin: auto;
+}
+.mobile-burger-btn:active { transform: scale(.9); }
+
+/* Dark-mode shell override */
+.dark .mobile-nav-shell {
+  background: rgba(20,30,27,.98);
+  border-color: rgba(60,80,74,.80);
+}
+.dark .mobile-burger-btn {
+  background: transparent !important;
+  border: none !important;
 }

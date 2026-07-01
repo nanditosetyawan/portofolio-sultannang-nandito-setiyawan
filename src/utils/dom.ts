@@ -2,14 +2,19 @@ import reloadIcon from '../assets/icons/reload.png';
 import backLoadIcon from '../assets/icons/back_load.png';
 import whiteModeIcon from '../assets/icons/white_mode.png';
 import darkModeIcon from '../assets/icons/dark_mode.png';
+import burgerLightIcon from '../assets/icons/burger_light.png';
+import burgerDarkIcon from '../assets/icons/burger_dark.png';
 
 export const initApp = () => {
   const topNav = document.getElementById('topNav');
+  const mobileNav = document.getElementById('mobileNav');
+  const mobileNavShell = document.getElementById('mobileNavShell');
+  const mobileBurgerBtn = document.getElementById('mobileBurgerBtn');
+  const mobileBurgerIcon = document.getElementById('mobileBurgerIcon') as HTMLImageElement | null;
   const navShell = document.getElementById('navShell');
   const desktopNav = document.getElementById('desktopNav');
   const navActivePill = document.getElementById('navActivePill') as HTMLSpanElement | null;
   const navLinks = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-link]'));
-  const mobileBurger = document.getElementById('mobileFloatingBurger');
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon = document.getElementById('themeIcon') as HTMLImageElement | null;
   const menuBtn = document.getElementById('menuBtn');
@@ -25,13 +30,39 @@ export const initApp = () => {
     if (!mobileSidebar) return;
     mobileSidebar.classList.remove('hidden');
     mobileSidebar.classList.add('block');
+    // Allow display: block to apply before starting transitions
+    requestAnimationFrame(() => {
+      const backdrop = document.getElementById('sidebarBackdrop');
+      const content = document.getElementById('sidebarContent');
+      if (backdrop) {
+        backdrop.classList.remove('opacity-0');
+        backdrop.classList.add('opacity-100');
+      }
+      if (content) {
+        content.classList.remove('-translate-x-full');
+        content.classList.add('translate-x-0');
+      }
+    });
     document.body.classList.add('overflow-hidden');
   };
 
   const closeSidebarMenu = () => {
     if (!mobileSidebar) return;
-    mobileSidebar.classList.add('hidden');
-    mobileSidebar.classList.remove('block');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    const content = document.getElementById('sidebarContent');
+    if (backdrop) {
+      backdrop.classList.remove('opacity-100');
+      backdrop.classList.add('opacity-0');
+    }
+    if (content) {
+      content.classList.remove('translate-x-0');
+      content.classList.add('-translate-x-full');
+    }
+    // Wait for transition before hiding completely
+    setTimeout(() => {
+      mobileSidebar.classList.add('hidden');
+      mobileSidebar.classList.remove('block');
+    }, 300);
     document.body.classList.remove('overflow-hidden');
   };
 
@@ -53,6 +84,14 @@ export const initApp = () => {
     document.querySelectorAll<HTMLElement>('#desktopNav [data-nav-link]')
   );
 
+  // ── Mobile burger icon: update to match current theme ────────────────────
+  const syncBurgerIcon = () => {
+    if (!mobileBurgerIcon) return;
+    const isDark = document.documentElement.classList.contains('dark');
+    mobileBurgerIcon.src = isDark ? burgerDarkIcon : burgerLightIcon;
+  };
+  syncBurgerIcon();
+
   const syncNavbarState = () => {
     const scrolled = window.scrollY > 18;
 
@@ -60,9 +99,16 @@ export const initApp = () => {
       navShell.classList.toggle('is-scrolled', scrolled);
     }
 
-    if (topNav && mobileBurger) {
-      topNav.classList.remove('mobile-hidden');
-      mobileBurger.classList.remove('show', 'left');
+    if (mobileNavShell) {
+      mobileNavShell.classList.toggle('is-scrolled', scrolled);
+      // At top: show full-width box, otherwise shrink
+      const atTop = window.scrollY === 0;
+      mobileNavShell.classList.toggle('at-top', atTop);
+    }
+
+    // When back at very top, also ensure nav is visible
+    if (window.scrollY === 0) {
+      showNav();
     }
   };
 
@@ -86,11 +132,12 @@ export const initApp = () => {
       themeIcon.src = isDark ? darkModeIcon : whiteModeIcon;
       themeIcon.alt = isDark ? 'Dark mode' : 'Light mode';
     }
+    syncBurgerIcon();
   });
 
   // Sidebar controls
   menuBtn?.addEventListener('click', openSidebar);
-  mobileBurger?.addEventListener('click', openSidebar);
+  mobileBurgerBtn?.addEventListener('click', openSidebar);
   closeSidebar?.addEventListener('click', closeSidebarMenu);
   sidebarBackdrop?.addEventListener('click', closeSidebarMenu);
 
@@ -235,12 +282,14 @@ export const initApp = () => {
     if (navHidden) return;
     navHidden = true;
     topNav?.classList.add('nav-hidden');
+    mobileNav?.classList.add('nav-hidden');
   };
 
   const showNav = () => {
     if (!navHidden) return;
     navHidden = false;
     topNav?.classList.remove('nav-hidden');
+    mobileNav?.classList.remove('nav-hidden');
   };
 
   const cancelHideTimer = () => {
@@ -522,21 +571,96 @@ export const initApp = () => {
       });
     });
 
-    // Download functionality (download all images)
-    const triggerDownload = (event: Event) => {
+    // Download functionality — correct extension + ZIP for multi-file
+    const getExtension = (src: string): string => {
+      if (src.startsWith('data:')) {
+        // e.g. data:image/jpeg;base64,... or data:image/svg+xml;...
+        const mime = src.split(';')[0].split(':')[1] || '';
+        const map: Record<string, string> = {
+          'image/jpeg': 'jpg',
+          'image/jpg': 'jpg',
+          'image/png': 'png',
+          'image/webp': 'webp',
+          'image/gif': 'gif',
+          'image/svg+xml': 'svg',
+        };
+        return map[mime] ?? 'jpg';
+      }
+      // Real URL — grab extension from the pathname
+      try {
+        const pathname = new URL(src).pathname;
+        const ext = pathname.split('.').pop()?.toLowerCase() ?? '';
+        return ext || 'jpg';
+      } catch {
+        const ext = src.split('?')[0].split('.').pop()?.toLowerCase() ?? '';
+        return ext || 'jpg';
+      }
+    };
+
+    const fetchBlob = (src: string): Promise<Blob> => {
+      if (src.startsWith('data:')) {
+        const [header, payload] = src.split(',');
+        const mime = header.split(':')[1].split(';')[0];
+        const isBase64 = header.includes(';base64');
+        if (isBase64) {
+          const binary = atob(payload);
+          const bytes = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+          return Promise.resolve(new Blob([bytes], { type: mime }));
+        } else {
+          // percent-encoded (e.g. charset=UTF-8 SVG)
+          const decoded = decodeURIComponent(payload);
+          return Promise.resolve(new Blob([decoded], { type: mime }));
+        }
+      }
+      return fetch(src).then(r => r.blob());
+    };
+
+    const triggerDownload = async (event: Event) => {
       event.stopPropagation();
-      images.forEach((imgSrc, idx) => {
+
+      if (images.length === 1) {
+        // Single file — download with correct extension
+        const src = images[0];
+        const ext = getExtension(src);
+        const blob = await fetchBlob(src);
+        const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = imgSrc;
-        a.download = `${title}_File_${idx + 1}.svg`;
+        a.href = url;
+        a.download = `${title}.${ext}`;
         document.body.appendChild(a);
         a.click();
         a.remove();
-      });
+        URL.revokeObjectURL(url);
+      } else {
+        // Multiple files — bundle into ZIP
+        const JSZip = (await import('jszip')).default;
+        const zip = new JSZip();
+        await Promise.all(
+          images.map(async (src, idx) => {
+            const ext = getExtension(src);
+            const blob = await fetchBlob(src);
+            zip.file(`${title}_${idx + 1}.${ext}`, blob);
+          })
+        );
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(zipBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${title}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }
     };
 
     downloadBtn?.addEventListener('click', triggerDownload);
-    mobileDownloadBtn?.addEventListener('click', triggerDownload);
+    mobileDownloadBtn?.addEventListener('click', async (e) => {
+      await triggerDownload(e);
+      // Toggle downloaded style: green → transparent with black border
+      mobileDownloadBtn.classList.add('downloaded');
+    });
   });
 
   // ── Hero Photo Stack Auto-Rotate ──────────────────────────────────────────

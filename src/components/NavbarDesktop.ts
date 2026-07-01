@@ -7,7 +7,7 @@ export const NavbarDesktop = (): string => {
     <header id="topNav" class="hidden md:block fixed top-0 left-0 right-0 z-[70] transition-all duration-500">
       <div id="navShell" class="nav-shell">
         <div class="mx-auto max-w-7xl px-4 md:px-8 py-4 md:py-3 flex items-center justify-between gap-4">
-          <a href="#hero" class="font-extrabold tracking-tight text-base md:text-[1.05rem] text-text shrink-0" data-nav-link data-target="hero">Nandito Setiyawan</a>
+          <a href="#hero" class="font-cabinet font-extrabold tracking-tight text-base md:text-[1.05rem] text-text shrink-0" data-nav-link data-target="hero">Nandito Setiyawan</a>
 
           <nav id="desktopNav" class="flex nav-links text-sm font-semibold">
             <span id="navActivePill" class="nav-active-pill" aria-hidden="true"></span>

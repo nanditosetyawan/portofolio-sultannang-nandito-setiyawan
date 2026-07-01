@@ -8,7 +8,7 @@ export const About = (): string => `
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface/90 border border-border text-xs font-bold tracking-[0.24em] uppercase text-text2 mb-6 shadow-sm">
           About
         </div>
-        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-text">A student who likes building useful, calm, and thoughtful interfaces.</h2>
+        <h2 class="font-cabinet text-3xl md:text-5xl font-extrabold tracking-tight text-text">A student who likes building useful, calm, and thoughtful interfaces.</h2>
         <p class="mt-5 text-base md:text-lg leading-7 text-text2">
           I am currently studying Information Systems and focusing on web development, interface design, and project-based problem solving. I enjoy turning class assignments into polished digital products that look clean, feel modern, and are easy to understand.
         </p>

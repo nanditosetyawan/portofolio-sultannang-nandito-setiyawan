@@ -20,20 +20,20 @@ export const Hero = (): string => {
             </div>
             <!-- Mobile Badge -->
             <div class="inline-flex md:hidden mb-6 h-[32px] items-center">
-              <span class="text-3xl font-bold text-accent font-handwriting typing-animation">HI, I'm</span>
+              <span class="font-cabinet text-3xl font-bold text-accent typing-animation">HI, I'm</span>
             </div>
-            <h1 class="hero-name text-[clamp(3.2rem,8vw,7rem)] font-extrabold text-text">
+            <h1 class="font-cabinet hero-name text-[clamp(3.2rem,8vw,7rem)] font-extrabold text-text">
               Nandito <br class="hidden md:block">Setiyawan
             </h1>
             <p class="mt-6 max-w-2xl text-base md:text-lg leading-7 md:leading-8 text-text2 mobile-delay-reveal">
               ${profile.description}
             </p>
 
-            <div class="mt-8 flex flex-wrap gap-3 mobile-delay-reveal">
-              <a href="${profile.linkedin}" class="btn-primary inline-flex items-center gap-2 px-5 py-3 rounded-full font-bold transition">
+            <div class="mt-8 flex flex-col md:flex-row gap-3 mobile-delay-reveal">
+              <a href="${profile.linkedin}" class="btn-primary inline-flex items-center justify-center gap-2 px-8 py-3 rounded-[22px] font-bold transition w-fit">
                 <span class="material-symbols-outlined text-[20px]">LinkedIn</span> 
               </a>
-              <a href="${profile.resumeLink}" class="btn-secondary inline-flex items-center gap-2 px-5 py-3 rounded-full font-bold transition">
+              <a href="${profile.resumeLink}" class="btn-secondary inline-flex items-center justify-center gap-2 px-10 py-3 rounded-[22px] font-bold transition w-fit">
                 <span class="material-symbols-outlined text-[20px]">Download CV</span> 
               </a>
             </div>

@@ -7,7 +7,7 @@ export const Projects = (): string => {
   const renderList = projects.map((project, i) => {
     const isHidden = i >= 3 ? 'hidden extra-project' : '';
     return `
-      <article class="accordion elevated rounded-[1.8rem] p-4 md:p-5 ${isHidden}" data-accordion>
+      <article class="accordion elevated rounded-[1.8rem] p-8 md:p-7 ${isHidden}" data-accordion>
         <button class="w-full flex flex-col md:flex-row md:items-center gap-4 text-left" data-accordion-btn>
           <div class="w-full md:w-56 aspect-[16/10] rounded-[1.4rem] overflow-hidden border border-border shrink-0 bg-[linear-gradient(135deg,rgba(66,132,117,.12),rgba(137,215,183,.08))]">
             <img src="${project.image}" alt="${project.title}" loading="lazy" class="w-full h-full object-cover opacity-90">
@@ -50,7 +50,7 @@ export const Projects = (): string => {
     <section id="projects" class="stage relative py-20 md:py-28 section-wrap">
       <div class="mx-auto max-w-7xl px-4 md:px-8">
         <div class="reveal">
-          <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-text mb-10">Things I've built.</h2>
+          <h2 class="font-cabinet text-3xl md:text-5xl font-extrabold tracking-tight text-text mb-10">Things I've built.</h2>
         </div>
 
         <div class="space-y-4" id="projectContainer">

@@ -8,6 +8,8 @@
   position: relative;
   padding-top: 5rem;    /* py-20 */
   padding-bottom: 5rem;
+  background: var(--bg);
+  z-index: 10;
 }
 
 @media (min-width: 768px) {
@@ -210,6 +212,9 @@
 
 /* ── Footer ─────────────────────────────────────────────── */
 .site-footer {
+  position: relative;
+  z-index: 10;
+  background: var(--bg);
   border-top: 1px solid var(--border);
   margin-top: 5rem;      /* mt-20 */
   padding-top: 2rem;     /* py-8 */

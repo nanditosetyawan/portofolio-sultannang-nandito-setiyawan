@@ -8,6 +8,8 @@
   position: relative;
   padding-top: 5rem;    /* py-20 */
   padding-bottom: 5rem;
+  background: var(--surface2);
+  z-index: 10;
 }
 
 @media (min-width: 768px) {
@@ -42,6 +44,7 @@
   max-width: 80rem;   /* max-w-7xl */
   padding-left: 1rem; /* px-4 */
   padding-right: 1rem;
+  transform: translateY(-80px);
 }
 
 @media (min-width: 768px) {
@@ -53,7 +56,8 @@
 
 /* ── Header block ───────────────────────────────────────── */
 .about-header {
-  max-width: 48rem; /* max-w-3xl */
+    max-width: 48rem;
+   
 }
 
 /* ── Badge ──────────────────────────────────────────────── */

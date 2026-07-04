@@ -8,6 +8,8 @@
   position: relative;
   padding-top: 5rem;    /* py-20 */
   padding-bottom: 5rem;
+  background: var(--surface2);
+  z-index: 10;
 }
 
 @media (min-width: 768px) {

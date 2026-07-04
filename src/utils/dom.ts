@@ -264,88 +264,116 @@ export const initApp = () => {
     });
   };
   setActiveNav('hero');
-  // ─────────────────────────────────────────────────────────────────────────
+  // ── Hero Background & Content Parallax ──────────────────────────────────
+  const heroSection = document.getElementById('hero');
+  const heroBg = heroSection?.querySelector('.hero-bg-fixed') as HTMLElement | null;
+  const heroContent = heroSection?.querySelector('.hero-container') as HTMLElement | null;
+
+  const updateHeroEffects = (currentY: number) => {
+    if (!heroSection) return;
+    const heroHeight = heroSection.offsetHeight;
+
+    if (currentY <= heroHeight + 100) {
+      // 1. Keep background fixed relative to viewport
+      
+
+      // 2. Fade out and translate up the content
+      if (heroContent) {
+     const fadeStart = heroHeight * 0.78; // mulai pudar saat Hero hampir keluar
+const fadeEnd = heroHeight * 1.05;   // benar-benar hilang saat sudah sangat jauh ke atas
+
+const progress = Math.min(
+  Math.max((currentY - fadeStart) / (fadeEnd - fadeStart), 0),
+  1
+);
+
+heroContent.style.opacity = `${1 - progress}`;
+heroContent.style.transform = `translateY(${-Math.max(0, currentY - fadeStart) * 0.25}px)`;
+      }
+    }
+  };
 
   // ── Navbar: hide only after 3s of CONTINUOUS down-scroll ─────────────────
-  let rafId = 0;
-  let lastScrollY = window.scrollY;
-  let navHidden = false;
+ let rafId = 0;
+let lastScrollY = window.scrollY;
+let navHidden = false;
 
-  // Timestamp when continuous down-scroll started (null = not scrolling down)
-  let scrollDownStartTime: number | null = null;
-  // Timer to detect scroll has STOPPED (fires ~250ms after last scroll event)
-  let scrollStopTimer: ReturnType<typeof setTimeout> | null = null;
-  // Timer that fires exactly when the 3s threshold is reached mid-scroll
-  let hideTimer: ReturnType<typeof setTimeout> | null = null;
+let downScrollAccumMs = 0;
+let lastDownScrollAt: number | null = null;
+let pauseResetTimer: ReturnType<typeof setTimeout> | null = null;
 
-  const hideNav = () => {
-    if (navHidden) return;
-    navHidden = true;
-    topNav?.classList.add('nav-hidden');
-    mobileNav?.classList.add('nav-hidden');
-  };
+const hideNav = () => {
+  if (navHidden) return;
+  navHidden = true;
+  topNav?.classList.add('nav-hidden');
+  mobileNav?.classList.add('nav-hidden');
+};
 
-  const showNav = () => {
-    if (!navHidden) return;
-    navHidden = false;
-    topNav?.classList.remove('nav-hidden');
-    mobileNav?.classList.remove('nav-hidden');
-  };
+const showNav = () => {
+  if (!navHidden) return;
+  navHidden = false;
+  topNav?.classList.remove('nav-hidden');
+  mobileNav?.classList.remove('nav-hidden');
+};
 
-  const cancelHideTimer = () => {
-    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
-  };
+const resetDownScroll = () => {
+  downScrollAccumMs = 0;
+  lastDownScrollAt = null;
+  if (pauseResetTimer) {
+    clearTimeout(pauseResetTimer);
+    pauseResetTimer = null;
+  }
+};
 
-  const resetDownScroll = () => {
-    // User stopped scrolling down (either paused or scrolled up) — reset everything
-    cancelHideTimer();
-    scrollDownStartTime = null;
-  };
+const schedulePauseReset = () => {
+  if (pauseResetTimer) clearTimeout(pauseResetTimer);
 
-  const onScroll = () => {
-    if (rafId) return;
-    rafId = window.requestAnimationFrame(() => {
-      const currentY = window.scrollY;
-      const scrollingDown = currentY > lastScrollY;
+  pauseResetTimer = setTimeout(() => {
+    resetDownScroll();
+  }, 2000);
+};
 
-      // ── Reset the "scroll stopped" detector on every event ──
-      if (scrollStopTimer) { clearTimeout(scrollStopTimer); scrollStopTimer = null; }
+const onScroll = () => {
+  if (rafId) return;
 
-      if (scrollingDown && currentY > 80) {
-        if (scrollDownStartTime === null) {
-          // First down-scroll event — record start time
-          scrollDownStartTime = Date.now();
-          // Schedule hide exactly 3s from now (will be cancelled if scroll stops/reverses)
-          cancelHideTimer();
-          hideTimer = setTimeout(hideNav, 3000);
-        }
+  rafId = window.requestAnimationFrame(() => {
+    const currentY = window.scrollY;
+    const scrollingDown = currentY > lastScrollY;
+    const scrollingUp = currentY < lastScrollY;
 
-        // Detect scroll stop: if no scroll event in 250ms, consider it stopped
-        scrollStopTimer = setTimeout(() => {
-          const elapsed = scrollDownStartTime !== null ? Date.now() - scrollDownStartTime : 0;
-          if (elapsed >= 3000) {
-            // Was scrolling down for ≥ 3s and just stopped → hide
-            hideNav();
-          }
-          // Reset regardless (stopped before or after threshold)
-          resetDownScroll();
-        }, 250);
+    if (scrollingUp) {
+      resetDownScroll();
+      showNav();
+    } else if (scrollingDown && currentY > 80) {
+      const now = Date.now();
 
-      } else {
-        // Scrolling up or position didn't change → show navbar and cancel all timers
-        resetDownScroll();
-        showNav();
+      if (lastDownScrollAt !== null) {
+        downScrollAccumMs += now - lastDownScrollAt;
       }
+      lastDownScrollAt = now;
+
+      schedulePauseReset();
+
+      if (downScrollAccumMs >= 3000) {
+        hideNav();
+      }
+    }
+
 
       lastScrollY = currentY;
+      updateHeroEffects(currentY);
       syncNavbarState();
       rafId = 0;
     });
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', syncNavbarState);
+  window.addEventListener('resize', () => {
+    syncNavbarState();
+    updateHeroEffects(window.scrollY);
+  });
   syncNavbarState();
+  updateHeroEffects(window.scrollY);
   // ─────────────────────────────────────────────────────────────────────────
 
   // Accordions

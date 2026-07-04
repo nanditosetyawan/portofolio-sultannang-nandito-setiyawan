@@ -31,13 +31,24 @@
 
 .hero-name { letter-spacing: -0.05em; text-wrap: balance; line-height: .95; }
 .chip { background: rgba(137,215,183,.16); color: var(--accent); border: 1px solid rgba(137,215,183,.34); }
-.chip-dark { background: rgba(66,132,117,.10); color: var(--text); border: 1px solid rgba(66,132,117,.18); }
-
+.chip-dark {
+    background: #ffffff;
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,.18);
+}
 .btn-primary { background: var(--accent); color: white; box-shadow: 0 14px 28px rgba(66,132,117,.22); }
 .btn-primary:hover { transform: translateY(-1px); background: #32685C; }
-.btn-secondary { background: rgba(255,255,255,.72); color: var(--text); border: 1px solid var(--border); }
-.btn-secondary:hover { transform: translateY(-1px); background: rgba(255,253,248,.98); box-shadow: var(--shadow); }
+.btn-secondary {
+  background: #fff;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
 
+.btn-secondary:hover {
+  background: #fff;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
 .card-line { border-top: 1px solid rgba(232,225,215,.82); }
 
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s ease, transform .8s ease; }
@@ -61,7 +72,14 @@
 .floating-burger.left { left: 20px; right: auto; }
 
 /* Photo Stack Animasi */
-.photo-stack { position: relative; width: min(100%, 420px); margin: 0 auto; min-height: 500px; aspect-ratio: 3 / 4; transform: translateX(-20px); }
+.photo-stack {
+    position: relative;
+    width: min(100%, 380px);
+    margin: 0 auto;
+    min-height: 450px;
+    aspect-ratio: 3 / 4;
+    transform: translateX(-20px);
+}
 .stack-card {
   position: absolute; inset: 0; border-radius: 2.25rem; overflow: hidden; background: rgba(255,253,248,.97);
   border: 1px solid rgba(232,225,215,.96); box-shadow: 0 20px 56px rgba(26,49,44,.14);

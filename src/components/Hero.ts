@@ -4,23 +4,15 @@ import { profile } from '../data/profile';
 export const Hero = (): string => {
   return `
     <section id="hero" class="stage hero-section">
-      <div class="hero-bg-layer">
-        <div class="blob hero-blob-1"></div>
-        <div class="blob slow hero-blob-2"></div>
-        <svg class="hero-svg-bg" viewBox="0 0 600 600" fill="none" aria-hidden="true">
-          <path d="M148 172C215 85 341 64 430 107c83 40 126 132 118 229-8 96-73 186-168 228-88 39-195 31-278-16-88-49-136-143-126-234 10-89 67-171 172-215Z" fill="var(--accent2)"/>
-        </svg>
-      </div>
+    <div class="hero-bg-fixed">
+    <div class="hero-gradient-overlay"></div>
+</div>
 
       <div class="hero-container">
         <div class="hero-grid">
           <div class="hero-left reveal">
-            <!-- Desktop Badge -->
-            <div class="hero-badge">
-              ${profile.badge}
-            </div>
-            <!-- Mobile Badge -->
-            <div class="hero-badge-mobile">
+            <!-- Unified Badge -->
+            <div class="hero-badge-container">
               <span class="font-cabinet hero-badge-text typing-animation">HI, I'm</span>
             </div>
             <h1 class="font-cabinet hero-name hero-title">
@@ -61,6 +53,18 @@ export const Hero = (): string => {
           </div>
         </div>
       </div>
+
+      <!-- Single Wave separator -->
+      <svg class="hero-wave" viewBox="0 0 1440 120" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0,70
+         C180,15 360,15 540,70
+         C720,120 900,120 1080,70
+         C1260,20 1350,20 1440,55
+         L1440,120
+         L0,120
+         Z"
+      fill="var(--surface2)" />
+      </svg>
     </section>
   `;
 };

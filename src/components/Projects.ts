@@ -1,3 +1,4 @@
+import '../styles/projects.css';
 import { projects } from '../data/projects';
 const reloadIcon = new URL('../assets/icons/reload.png', import.meta.url).href;
 const backLoadIcon = new URL('../assets/icons/back_load.png', import.meta.url).href;
@@ -7,36 +8,36 @@ export const Projects = (): string => {
   const renderList = projects.map((project, i) => {
     const isHidden = i >= 3 ? 'hidden extra-project' : '';
     return `
-      <article class="accordion elevated rounded-[1.8rem] p-8 md:p-7 ${isHidden}" data-accordion>
-        <button class="w-full flex flex-col md:flex-row md:items-center gap-4 text-left" data-accordion-btn>
-          <div class="w-full md:w-56 aspect-[16/10] rounded-[1.4rem] overflow-hidden border border-border shrink-0 bg-[linear-gradient(135deg,rgba(66,132,117,.12),rgba(137,215,183,.08))]">
-            <img src="${project.image}" alt="${project.title}" loading="lazy" class="w-full h-full object-cover opacity-90">
+      <article class="accordion elevated project-item ${isHidden}" data-accordion>
+        <button class="project-btn" data-accordion-btn>
+          <div class="project-image-wrapper">
+            <img src="${project.image}" alt="${project.title}" loading="lazy" class="project-image">
           </div>
-          <div class="flex-1">
-            <div class="flex flex-wrap items-center gap-2 mb-3">
-              ${project.techStack.map(tech => `<span class="chip px-3 py-1.5 rounded-full text-xs font-semibold">${tech}</span>`).join('')}
+          <div class="project-meta">
+            <div class="project-tags">
+              ${project.techStack.map(tech => `<span class="chip project-tag">${tech}</span>`).join('')}
             </div>
-            <h3 class="text-xl md:text-2xl font-extrabold text-text">${project.title}</h3>
-            <p class="mt-2 text-sm md:text-base leading-6 text-text2 max-w-2xl">${project.description}</p>
+            <h3 class="project-name">${project.title}</h3>
+            <p class="project-desc">${project.description}</p>
           </div>
-          <div class="w-11 h-11 rounded-full bg-surface2 border border-border flex items-center justify-center shrink-0 ml-auto">
-            <img src="${arrowListIcon}" class="chev transition-transform duration-500 w-5 h-5 object-contain" alt="Toggle">
+          <div class="project-toggle">
+            <img src="${arrowListIcon}" class="chev project-chev" alt="Toggle">
           </div>
         </button>
 
         <div class="accordion-body">
           <div>
-            <div class="card-line pt-5 grid lg:grid-cols-12 gap-5">
-              <div class="lg:col-span-7">
-                <div class="text-sm font-bold text-text mb-2">Overview</div>
-                <p class="text-sm leading-7 text-text2">${project.overview}</p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                  ${project.tags.map(tag => `<span class="chip-dark px-3 py-1.5 rounded-full text-xs font-semibold">${tag}</span>`).join('')}
+            <div class="card-line project-body-grid">
+              <div class="project-overview-col">
+                <div class="project-overview-title">Overview</div>
+                <p class="project-overview-text">${project.overview}</p>
+                <div class="project-tag-row">
+                  ${project.tags.map(tag => `<span class="chip-dark project-tag">${tag}</span>`).join('')}
                 </div>
               </div>
-              <div class="lg:col-span-5">
-                <div class="rounded-[1.4rem] overflow-hidden border border-border bg-surface shadow-soft2">
-                  <img src="${project.image}" alt="Preview" class="w-full aspect-[16/10] object-cover">
+              <div class="project-preview-col">
+                <div class="project-preview-wrapper">
+                  <img src="${project.image}" alt="Preview" class="project-preview-img">
                 </div>
               </div>
             </div>
@@ -47,10 +48,10 @@ export const Projects = (): string => {
   }).join('');
 
   return `
-    <section id="projects" class="stage relative py-20 md:py-28 section-wrap">
-      <div class="mx-auto max-w-7xl px-4 md:px-8">
+    <section id="projects" class="stage section-wrap projects-section">
+      <div class="projects-container">
         <div class="reveal">
-          <h2 class="font-cabinet text-3xl md:text-5xl font-extrabold tracking-tight text-text mb-10">Things I've built.</h2>
+          <h2 class="font-cabinet projects-title">Things I've built.</h2>
         </div>
 
         <div class="space-y-4" id="projectContainer">

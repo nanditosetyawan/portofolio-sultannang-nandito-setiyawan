@@ -1,3 +1,4 @@
+import '../styles/achievement.css';
 import { achievements } from '../data/achievements';
 const reloadIcon = new URL('../assets/icons/reload.png', import.meta.url).href;
 const arrowListIcon = new URL('../assets/icons/arrowlist.png', import.meta.url).href;
@@ -8,30 +9,30 @@ export const Achievement = (): string => {
     const badgeText = ach.certificates.length > 1 ? `${ach.certificates.length} FILES` : 'PREVIEW';
 
     return `
-      <article class="accordion elevated rounded-[1.8rem] p-9 md:p-8 ${isHidden}" data-accordion>
-        <button class="w-full flex flex-col md:flex-row md:items-center gap-4 text-left" data-accordion-btn>
-          <div class="w-full md:w-40 aspect-[4/3] rounded-[1.2rem] overflow-hidden border border-border bg-[linear-gradient(135deg,rgba(137,215,183,.14),rgba(255,253,248,.96))]">
-            ${ach.image ? `<img src="${ach.image}" alt="${ach.title} logo" class="w-full h-full object-cover">` : ''}
+      <article class="accordion elevated achievement-item ${isHidden}" data-accordion>
+        <button class="achievement-btn" data-accordion-btn>
+          <div class="achievement-logo-wrapper">
+            ${ach.image ? `<img src="${ach.image}" alt="${ach.title} logo" class="achievement-logo-img">` : ''}
           </div>
-          <div class="flex-1">
-            <div class="flex flex-wrap items-center gap-2 mb-3">
-              ${ach.tags.map(t => `<span class="chip px-3 py-1.5 rounded-full text-xs font-semibold">${t}</span>`).join('')}
+          <div class="achievement-meta">
+            <div class="achievement-tags">
+              ${ach.tags.map(t => `<span class="chip achievement-tag">${t}</span>`).join('')}
             </div>
-            <h3 class="text-xl md:text-2xl font-extrabold text-text">${ach.title}</h3>
-            ${ach.issuedAt ? `<p class="mt-1 text-xs text-text2 font-medium tracking-wide">Issued at ${ach.issuedAt}</p>` : ''}
-            <p class="mt-2 text-sm md:text-base leading-6 text-text2 max-w-2xl">${ach.description}</p>
+            <h3 class="achievement-name">${ach.title}</h3>
+            ${ach.issuedAt ? `<p class="achievement-date">Issued at ${ach.issuedAt}</p>` : ''}
+            <p class="achievement-desc">${ach.description}</p>
           </div>
-          <div class="w-11 h-11 rounded-full bg-surface2 border border-border flex items-center justify-center shrink-0 ml-auto">
-            <img src="${arrowListIcon}" class="chev transition-transform duration-500 w-5 h-5 object-contain" alt="Toggle">
+          <div class="achievement-toggle">
+            <img src="${arrowListIcon}" class="chev achievement-chev" alt="Toggle">
           </div>
         </button>
 
         <div class="accordion-body">
           <div>
-            <div class="card-line pt-5 flex flex-col gap-5">
+            <div class="card-line achievement-body-inner">
               <div>
-                <div class="text-sm font-bold text-text mb-2">Details</div>
-                <p class="text-sm leading-7 text-text2 max-w-3xl">${ach.details}</p>
+                <div class="achievement-details-title">Details</div>
+                <p class="achievement-details-text">${ach.details}</p>
               </div>
 
               <div class="certificate-preview relative rounded-[1.4rem] overflow-hidden border border-border bg-surface shadow-soft2 min-h-[420px]">
@@ -63,14 +64,14 @@ export const Achievement = (): string => {
   }).join('');
 
   return `
-    <section id="achievements" class="stage alt relative py-20 md:py-28 section-wrap">
-      <div class="mx-auto max-w-7xl px-4 md:px-8">
-        <div class="max-w-2xl reveal">
-          <h2 class="font-cabinet text-3xl md:text-5xl font-extrabold tracking-tight text-text">Certificates & Milestones</h2>
-          <p class="mt-5 text-base md:text-lg leading-7 text-text2">Proof of continuing education outside of typical class structures.</p>
+    <section id="achievements" class="stage alt relative section-wrap achievement-section">
+      <div class="achievement-container">
+        <div class="achievement-header reveal">
+          <h2 class="font-cabinet achievement-title">Certificates & Milestones</h2>
+          <p class="achievement-subtitle">Proof of continuing education outside of typical class structures.</p>
         </div>
 
-        <div class="mt-10 space-y-4">
+        <div class="achievement-list space-y-4">
           ${renderList}
         </div>
 

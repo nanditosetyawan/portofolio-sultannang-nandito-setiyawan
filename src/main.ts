@@ -21,16 +21,16 @@ app.innerHTML = `
     </div>
   </div>
 
-  <div aria-hidden="true" class="fixed inset-0 -z-20 overflow-hidden pointer-events-none">
-    <div class="blob" style="top:-8%; left:-10%; width:34rem; height:34rem; background: radial-gradient(circle at 30% 30%, rgba(137,215,183,.32), rgba(137,215,183,.08) 50%, transparent 72%);"></div>
-    <div class="blob slow" style="top:12%; right:-12%; width:28rem; height:28rem; background: radial-gradient(circle at 30% 30%, rgba(66,132,117,.20), rgba(66,132,117,.05) 56%, transparent 74%);"></div>
-    <div class="blob faster" style="bottom:8%; left:-10%; width:30rem; height:30rem; background: radial-gradient(circle at 30% 30%, rgba(137,215,183,.18), rgba(137,215,183,.04) 52%, transparent 76%);"></div>
-    <div class="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,250,243,.0),rgba(255,250,243,.2))]"></div>
+  <div aria-hidden="true" class="global-bg-layer">
+    <div class="blob global-blob-1"></div>
+    <div class="blob slow global-blob-2"></div>
+    <div class="blob faster global-blob-3"></div>
+    <div class="global-bg-overlay"></div>
   </div>
 
   ${Navbar()}
 
-  <main class="pt-[4.25rem] md:pt-28">
+  <main class="main-content">
     ${Hero()}
     ${About()}
     ${Projects()}

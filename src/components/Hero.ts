@@ -55,6 +55,22 @@ export const Hero = (): string => {
       </div>
 
       <!-- Single Wave separator -->
+
+<svg
+  class="hero-wave hero-wave-top"
+  viewBox="0 0 1440 120"
+  fill="none"
+  preserveAspectRatio="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M0,70
+       C180,15 360,15 540,70
+       C720,120 900,120 1080,70
+       C1260,20 1350,20 1440,55"
+  />
+</svg>
+
       <svg class="hero-wave" viewBox="0 0 1440 120" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0,70
          C180,15 360,15 540,70

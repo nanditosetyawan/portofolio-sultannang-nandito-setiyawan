@@ -272,7 +272,10 @@ export const initApp = () => {
   const updateHeroEffects = (currentY: number) => {
     if (!heroSection) return;
     const heroHeight = heroSection.offsetHeight;
-
+ 
+    if (heroBg) {
+        heroBg.style.opacity = currentY > heroHeight ? "0" : "1";
+    }
     if (currentY <= heroHeight + 100) {
       // 1. Keep background fixed relative to viewport
       
@@ -362,6 +365,7 @@ const onScroll = () => {
 
       lastScrollY = currentY;
       updateHeroEffects(currentY);
+     
       syncNavbarState();
       rafId = 0;
     });

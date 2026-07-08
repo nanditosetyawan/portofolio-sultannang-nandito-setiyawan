@@ -727,4 +727,225 @@ const onScroll = () => {
     }
   }
   // ─────────────────────────────────────────────────────────────────────────
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // ABOUT SECTION — Zigzag parallax + Education sticky dot
+  // ══════════════════════════════════════════════════════════════════════════
+  /*
+    ✏️ KONFIGURASI — ubah nilai konstanta di bawah ini:
+
+    ZIGZAG_SPEED
+      Kecepatan gerak parallax baris skill (px geser per px scroll).
+      Lebih besar = lebih dramatis. Saran: 0.05 – 0.25. Default: 0.12
+
+    ROW2_OFFSET_PX
+      Offset awal (px) baris ke-2 ke kanan untuk efek zigzag.
+      Idealnya ≈ (--skill-circle-size + --skill-gap) / 2.
+      Default: 46 (cocok dengan circle 76px + gap 16px)
+
+    EDU_SWITCH_POINT
+      Progress scroll (0–1) saat tampilan beralih dari item 01 ke 02.
+      0.3 = ganti lebih cepat, 0.6 = ganti lebih lambat. Default: 0.45
+
+    DOT_POSITIONS
+      Posisi dot pada garis vertikal, satu nilai per item pendidikan.
+      Angka adalah persentase tinggi garis (misal '25%' = 25% dari atas).
+      Tambah entry jika kamu punya lebih dari 2 item pendidikan.
+      Default: ['25%', '72%']
+
+    EDU_DOT_MS
+      Durasi animasi pergerakan dot timeline (ms). Default: 550
+  */
+  const ZIGZAG_SPEED      = 0.45; // ✏️ Diperkuat geraknya sesuai permintaan user
+  const EDU_SWITCH_POINT  = 0.45;
+  const DOT_POSITIONS     = ['25%', '72%'] as const;
+  const EDU_DOT_MS        = 550;
+
+  /* ── DOM refs ─────────────────────────────────────────────── */
+  const aboutSkillsWrap = document.getElementById('aboutSkillsSection');
+  const aboutRow1       = aboutSkillsWrap
+    ?.querySelector<HTMLElement>('[data-skills-row="1"]') ?? null;
+  const aboutRow2       = aboutSkillsWrap
+    ?.querySelector<HTMLElement>('[data-skills-row="2"]') ?? null;
+
+  const aboutEduSection = document.getElementById('aboutEduSection');
+  const aboutEduDot     = document.getElementById('aboutEduDot') as HTMLElement | null;
+  const aboutEduTrack   = document.getElementById('aboutEduTrack') as HTMLElement | null;
+
+  // Helper untuk mengambil offset zigzag dari CSS runtime
+  const getSkillsOffset = (): number => {
+    const style = getComputedStyle(document.documentElement);
+    return parseFloat(style.getPropertyValue('--skill-circle-size')) || 106;
+  };
+
+  /* ── Auto-scroll & rotation state variables ────────────────── */
+  let autoScrollPos = 0;
+  let targetScrollOffset = 0;
+  let currentScrollOffset = 0;
+
+  const skillCirclesRow1 = Array.from(aboutSkillsWrap?.querySelectorAll('[data-skills-row="1"] .about-skill-circle') || []) as HTMLElement[];
+  const skillCirclesRow2 = Array.from(aboutSkillsWrap?.querySelectorAll('[data-skills-row="2"] .about-skill-circle') || []) as HTMLElement[];
+
+  const animateSkills = () => {
+    autoScrollPos += 0.35;
+    currentScrollOffset += (targetScrollOffset - currentScrollOffset) * 0.08;
+
+    if (aboutSkillsWrap && aboutRow1 && aboutRow2) {
+      const row2Offset = getSkillsOffset();
+      const t1 = autoScrollPos + currentScrollOffset;
+      const t2 = row2Offset - autoScrollPos - currentScrollOffset;
+
+      aboutRow1.style.transform = `translateX(${t1}px)`;
+      aboutRow2.style.transform = `translateX(${t2}px)`;
+
+      const circleSize = getSkillsOffset();
+      const circumference = Math.PI * circleSize;
+      const r1 = (t1 / circumference) * 360;
+      const r2 = (t2 / circumference) * 360;
+
+      skillCirclesRow1.forEach(circle => { circle.style.transform = `rotate(${r1}deg)`; });
+      skillCirclesRow2.forEach(circle => { circle.style.transform = `rotate(${r2}deg)`; });
+    }
+
+    requestAnimationFrame(animateSkills);
+  };
+
+  if (aboutSkillsWrap) {
+    requestAnimationFrame(animateSkills);
+  }
+
+  const aboutEduLine = aboutEduSection?.querySelector('.about-edu-line') as HTMLElement | null;
+
+  /* ── Education scroll-driven animation ──────────────────────────────────
+     BEHAVIOUR:
+       - Start  : only item 01 visible, dot aligned at top of line, centered with "01"
+       - Phase 1: dot descends, item 01 fades out, item 02 fades in from below
+       - Phase 2: dot rises back to top, now centered with "02" (since track scrolled)
+       - End    : item 02 settled, dot at top, animation done
+
+     DOT path: sin curve in pixels — goes down to center of line, then returns.
+     TRACK   : linear translateY(0 → -itemHeight)
+     OPACITY : 01 fades 1→0 in first half, 02 fades 0→1 in second half
+     HEIGHT  : JS clamps items container to exactly one item height (clips 02)
+  ─────────────────────────────────────────────────────────────────────── */
+  let itemHeight   = 0;
+  let settledY     = 0;  // Center of "01" relative to top of the line
+  let lineMargin   = 0;  // margin-top of the line in pixels
+  let itemsClipped = false;
+
+  const aboutEduItemsEl = aboutEduTrack?.parentElement as HTMLElement | null;
+  const eduItems = aboutEduTrack
+    ? Array.from(aboutEduTrack.children) as HTMLElement[]
+    : [];
+
+  const measureLayout = (): void => {
+    if (itemsClipped || !aboutEduTrack || !aboutEduLine || !aboutEduItemsEl) return;
+    const firstItem = eduItems[0];
+    if (!firstItem) return;
+
+    itemHeight = firstItem.offsetHeight;
+    const numEl = firstItem.querySelector('.about-edu-num') as HTMLElement | null;
+
+    if (numEl && itemHeight > 0) {
+      // Set container height to exactly one item height to clip item 02
+      aboutEduItemsEl.style.height = `${itemHeight}px`;
+
+      // Measure number center Y relative to the line's top
+      const rectNum = numEl.getBoundingClientRect();
+      const rectLine = aboutEduLine.getBoundingClientRect();
+      
+      // Factoring out current translateY of track in case layout measures mid-scroll
+      const trackStyle = getComputedStyle(aboutEduTrack);
+      const matrix = new WebKitCSSMatrix(trackStyle.transform);
+      const currentTrackY = matrix.m41 || matrix.f || 0;
+
+      settledY = (rectNum.top + rectNum.height / 2 - currentTrackY) - rectLine.top;
+      
+      const lineStyle = getComputedStyle(aboutEduLine);
+      lineMargin = Math.abs(parseFloat(lineStyle.marginTop)) || 35;
+
+      itemsClipped = true;
+    }
+  };
+
+  const updateAbout = (): void => {
+    if (!aboutEduSection || !aboutEduDot || !aboutEduTrack || !aboutEduLine) return;
+
+    // Ensure we measure layout
+    measureLayout();
+
+    const rect     = aboutEduSection.getBoundingClientRect();
+    const sectionH = aboutEduSection.offsetHeight;
+    const viewH    = window.innerHeight;
+
+    // Skip on mobile
+    if (sectionH < viewH * 1.2) return;
+
+    // progress 0 → 1
+    const scrolled   = -rect.top;
+    const scrollable = sectionH - viewH;
+    const progress   = Math.max(0, Math.min(1, scrolled / scrollable));
+
+    const D = settledY;
+    const L = itemHeight + 2 * lineMargin; // Total line height
+    const H = itemHeight;
+
+    // ── DOT: sinusoidal arc (goes down then returns to top) ─────────────
+    // starts at D, goes down to L - D, returns to D
+    const arc = Math.sin(progress * Math.PI);
+    const dotY = D + (L - 2 * D) * arc;
+
+    aboutEduDot.style.transition = 'none';
+    aboutEduDot.style.top = `${dotY}px`;
+
+    // ── TRACK: custom non-linear scroll so dot fetches 02 and rises together ──
+    if (H > 0) {
+      let trackY = 0;
+      const tMid = L - 2 * D - H; // Track Y position at progress = 0.5 (fetches 02)
+      
+      if (progress < 0.5) {
+        // Phase 1: 01 exits, track slides slowly to tMid
+        const normP = progress / 0.5;
+        trackY = tMid * normP;
+      } else {
+        // Phase 2: Dot meets 02 and they rise together in perfect alignment
+        trackY = dotY - D - H;
+      }
+      aboutEduTrack.style.transform = `translateY(${trackY}px)`;
+    }
+
+    // ── OPACITY: crossfade so 01 and 02 never fully overlap ─────────────
+    if (eduItems[0]) {
+      const op1 = progress < 0.5 ? 1 - (progress / 0.5) : 0;
+      eduItems[0].style.opacity = `${op1}`;
+    }
+    if (eduItems[1]) {
+      const op2 = progress >= 0.5 ? (progress - 0.5) / 0.5 : 0;
+      eduItems[1].style.opacity = `${op2}`;
+    }
+  };
+
+  // Measure and init on first paint
+  requestAnimationFrame(() => {
+    measureLayout();
+    if (eduItems[1]) eduItems[1].style.opacity = '0';
+    updateAbout();
+  });
+
+  // Scroll listener
+  window.addEventListener('scroll', () => {
+    requestAnimationFrame(updateAbout);
+
+    // Update skills parallax target
+    if (aboutSkillsWrap) {
+      const rect   = aboutSkillsWrap.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      targetScrollOffset = (window.innerHeight / 2 - center) * ZIGZAG_SPEED;
+    }
+  }, { passive: true });
+  // ── End About ────────────────────────────────────────────────────────────
+
+  // ─────────────────────────────────────────────────────────────────────────
 };
+
+

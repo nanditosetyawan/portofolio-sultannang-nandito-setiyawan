@@ -13,7 +13,6 @@
   z-index: 1;
 }
 
-/* ── Background fixed layer ────────────────────────────── */
 .hero-bg-fixed {
   position: fixed;
   inset: 0;
@@ -27,6 +26,7 @@
 
   z-index: -20;
   pointer-events: none;
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* ── Left-side dark gradient overlay ─────────────────────── */

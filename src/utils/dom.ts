@@ -125,6 +125,15 @@ export const initApp = () => {
     });
   });
 
+  // ── About CTA "Lets work together" → scroll to #contact ──────────────────
+  const aboutWidCta = document.getElementById('aboutWidCta');
+  aboutWidCta?.addEventListener('click', (event) => {
+    event.preventDefault();
+    setActiveNav('contact');
+    scrollToSection('contact');
+  });
+  // ─────────────────────────────────────────────────────────────────────────
+
   // Theme toggle
   themeToggle?.addEventListener('click', () => {
     const isDark = document.documentElement.classList.toggle('dark');
@@ -333,7 +342,8 @@ const schedulePauseReset = () => {
 
   pauseResetTimer = setTimeout(() => {
     resetDownScroll();
-  }, 2000);
+  }, 1200); // ✏️ pause reset: 1200ms (dikurangi 40% dari 2000ms)
+
 };
 
 const onScroll = () => {
@@ -357,9 +367,10 @@ const onScroll = () => {
 
       schedulePauseReset();
 
-      if (downScrollAccumMs >= 3000) {
+      if (downScrollAccumMs >= 1800) { // ✏️ hide threshold: 1800ms (dikurangi 40% dari 3000ms)
         hideNav();
       }
+
     }
 
 
@@ -930,6 +941,24 @@ const onScroll = () => {
     measureLayout();
     if (eduItems[1]) eduItems[1].style.opacity = '0';
     updateAbout();
+  });
+
+  // Re-measure after all fonts are loaded.
+  // CabinetGrotesk-Extrabold changes item01's height (fewer line wraps than the
+  // fallback font), so the cached itemHeight / settledY would be wrong without this.
+  document.fonts.ready.then(() => {
+    itemsClipped = false;
+    measureLayout();
+    updateAbout();
+  });
+
+  // Re-measure on resize so the layout stays correct if the window is resized.
+  window.addEventListener('resize', () => {
+    itemsClipped = false;
+    requestAnimationFrame(() => {
+      measureLayout();
+      updateAbout();
+    });
   });
 
   // Scroll listener

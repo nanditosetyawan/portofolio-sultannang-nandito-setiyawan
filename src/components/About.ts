@@ -1,4 +1,6 @@
 import '../styles/about.css';
+import { getYearsInProgramming, HAPPY_CLIENTS, WORKING_PRINCIPLES } from '../data/about';
+import { projects } from '../data/projects';
 
 /* ============================================================
    SKILL DATA
@@ -267,6 +269,133 @@ export const About = (): string => `
 
       </div><!-- /about-edu-sticky -->
     </div><!-- /about-edu-section -->
+
+    <!-- ══════════════════════════════════════════════════════
+         PART 4 ▸ WHAT I'VE DONE — Stats + CTA
+    ══════════════════════════════════════════════════════ -->
+    <!--
+      ✏️ KONFIGURASI STATS:
+         Ubah di src/data/about.ts:
+           PROGRAMMING_START_DATE — tanggal mulai coding (YYYY-MM-DD)
+           HAPPY_CLIENTS          — jumlah happy client
+         Jumlah project dihitung otomatis dari src/data/projects.ts
+
+      ✏️ TEKS DESKRIPSI:
+         Ubah isi <p class="about-wid-desc"> di bawah ini.
+
+      ✏️ TOMBOL CTA:
+         Ubah href jika ID section Contact berubah.
+    -->
+    <div class="about-wid-section">
+      <div class="about-wid-inner">
+
+        <!-- Judul utama -->
+        <h2 class="about-wid-title font-cabinet">What I've done?</h2>
+
+        <!-- Paragraf deskripsi —— ✏️ ganti lorem ipsum ini dengan teks asli kamu -->
+        <p class="about-wid-desc">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+
+        <!-- 3 angka statistik -->
+        <div class="about-wid-stats">
+
+          <!-- Stat kiri: tahun di programming -->
+          <div class="about-wid-stat">
+            <!--
+              ✏️ ANGKA TAHUN: dihitung otomatis dari PROGRAMMING_START_DATE di data/about.ts.
+                 Format: angka tahun + "+", contoh: 1+, 2+, dst.
+            -->
+            <span class="about-wid-num">${getYearsInProgramming()}</span>
+            <span class="about-wid-label">Years in<br>Programming</span>
+          </div>
+
+          <!-- Stat tengah: jumlah project -->
+          <div class="about-wid-stat about-wid-stat--center">
+            <!--
+              ✏️ JUMLAH PROJECT: dihitung otomatis dari data/projects.ts.
+                 Maksimal tampil 99+. Tambah project di sana, angka ini otomatis naik.
+            -->
+            <span class="about-wid-num">${
+              (() => {
+                const count = Array.isArray(projects) ? projects.length : 0;
+                /* ✏️ Batas maksimal tampilan: 99 — baru ada "+" jika ≥99 */
+                return count >= 99 ? '99+' : `${count}`;
+              })()
+            }</span>
+            <span class="about-wid-label">Projects<br>Completed</span>
+          </div>
+
+          <!-- Stat kanan: happy client -->
+          <div class="about-wid-stat">
+            <!--
+              ✏️ HAPPY CLIENTS: ubah HAPPY_CLIENTS di src/data/about.ts.
+                 Default 0. Struktur siap diisi kapan saja.
+            -->
+            <span class="about-wid-num">${HAPPY_CLIENTS > 0 ? `${Math.min(HAPPY_CLIENTS, 99)}+` : '0'}</span>
+            <span class="about-wid-label">Happy<br>Clients</span>
+          </div>
+
+        </div><!-- /about-wid-stats -->
+
+        <!-- CTA Button ──────────────────────────────────────────
+          ✏️ Ubah href jika ID section Contact berubah (saat ini: #contact)
+          ✏️ Ubah teks tombol di antara tag <a> jika perlu
+        -->
+        <a href="#contact" class="about-wid-cta" id="aboutWidCta" aria-label="Navigate to Contact section">
+          Lets work together
+          <svg class="about-wid-cta-arrow" width="20" height="20" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+
+      </div><!-- /about-wid-inner -->
+    </div><!-- /about-wid-section -->
+
+
+    <!-- ══════════════════════════════════════════════════════
+         PART 5 ▸ MY WORKING PRINCIPLES — Transisi Panel/Card
+    ══════════════════════════════════════════════════════ -->
+    <!--
+      ✏️ PRINSIP DATA:
+         Ubah isi data di src/data/about.ts pada array WORKING_PRINCIPLES.
+         Ini akan me-render nomor, judul, dan deskripsi secara dinamis.
+    -->
+    <div class="about-wpr-section" id="aboutWorkingPrinciples">
+      <div class="about-wpr-card">
+        
+        <!-- Judul section -->
+        <h2 class="about-wpr-title font-cabinet">my working principles</h2>
+
+        <!-- Container list prinsip -->
+        <div class="about-wpr-list">
+          ${WORKING_PRINCIPLES.map((p, idx) => `
+            <div class="about-wpr-item">
+              <div class="about-wpr-item-inner">
+                <!-- Nomor besar (tegas & kaku/kotak) -->
+                <div class="about-wpr-num font-cabinet">${p.idx}</div>
+                <!-- Konten teks kanan (judul & deskripsi) -->
+                <div class="about-wpr-content">
+                  <h3 class="about-wpr-item-title">${p.title}</h3>
+                  <p class="about-wpr-item-desc">${p.desc}</p>
+                </div>
+              </div>
+              <!-- Divider line artistik di bawah item 01 & 02 -->
+              ${idx < WORKING_PRINCIPLES.length - 1 ? '<div class="about-wpr-divider"></div>' : ''}
+            </div>
+          `).join('')}
+        </div>
+
+      </div>
+    </div>
 
   </section>
 `;

@@ -9,7 +9,8 @@ export const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80",
     techStack: ["PHP", "MySQL", "HTML"],
     tags: ["CRUD", "UI Design", "Database"],
-    year: 2024
+    year: 2024,
+    role: "Individu"
   },
   {
     id: "survey",
@@ -19,7 +20,8 @@ export const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=900&q=80",
     techStack: ["Tailwind", "JavaScript", "PHP"],
     tags: ["Form", "UX", "Data"],
-    year: 2023
+    year: 2023,
+    role: "Individu"
   },
   {
     id: "spatial",
@@ -29,7 +31,8 @@ export const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80",
     techStack: ["QGIS", "GIS", "Analysis"],
     tags: ["Mapping", "Data processing"],
-    year: 2023
+    year: 2023,
+    role: "Team"
   },
   // Project ke-4 (akan disembunyikan awalnya oleh "Load More")
   {
@@ -40,6 +43,7 @@ export const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=900&q=80",
     techStack: ["TypeScript", "API", "Dashboard"],
     tags: ["Prototype", "UI"],
-    year: 2024
+    year: 2024,
+    role: "Individu"
   }
 ];

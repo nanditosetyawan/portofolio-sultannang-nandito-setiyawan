@@ -972,6 +972,134 @@ const onScroll = () => {
       targetScrollOffset = (window.innerHeight / 2 - center) * ZIGZAG_SPEED;
     }
   }, { passive: true });
+
+  // ── Drag behavior for Built On Principles stars ────────────────────────────
+  const initDraggable = (elId: string) => {
+    const el = document.getElementById(elId);
+    if (!el) return;
+
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let initialLeft = 0;
+    let initialTop = 0;
+
+    const onMouseDown = (e: MouseEvent) => {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      
+      const rect = el.getBoundingClientRect();
+      const parentRect = el.parentElement?.getBoundingClientRect();
+      
+      if (parentRect) {
+        initialLeft = rect.left - parentRect.left;
+        initialTop = rect.top - parentRect.top;
+      }
+      
+      el.style.left = `${initialLeft}px`;
+      el.style.top = `${initialTop}px`;
+      el.style.bottom = 'auto';
+      el.style.right = 'auto';
+      
+      el.style.cursor = 'grabbing';
+      e.preventDefault();
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      
+      let newLeft = initialLeft + dx;
+      let newTop = initialTop + dy;
+      
+      const parentRect = el.parentElement?.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
+      
+      if (parentRect) {
+        const maxLeft = parentRect.width - rect.width;
+        newLeft = Math.max(0, Math.min(newLeft, maxLeft));
+        
+        const maxTop = parentRect.height - rect.height;
+        newTop = Math.max(0, Math.min(newTop, maxTop));
+      }
+      
+      el.style.left = `${newLeft}px`;
+      el.style.top = `${newTop}px`;
+    };
+
+    const onMouseUp = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      el.style.cursor = 'grab';
+    };
+
+    el.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+
+    const onTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      isDragging = true;
+      startX = touch.clientX;
+      startY = touch.clientY;
+      
+      const rect = el.getBoundingClientRect();
+      const parentRect = el.parentElement?.getBoundingClientRect();
+      
+      if (parentRect) {
+        initialLeft = rect.left - parentRect.left;
+        initialTop = rect.top - parentRect.top;
+      }
+      
+      el.style.left = `${initialLeft}px`;
+      el.style.top = `${initialTop}px`;
+      el.style.bottom = 'auto';
+      el.style.right = 'auto';
+      
+      e.preventDefault();
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDragging) return;
+      const touch = e.touches[0];
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+      
+      let newLeft = initialLeft + dx;
+      let newTop = initialTop + dy;
+      
+      const parentRect = el.parentElement?.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
+      
+      if (parentRect) {
+        const maxLeft = parentRect.width - rect.width;
+        newLeft = Math.max(0, Math.min(newLeft, maxLeft));
+        
+        const maxTop = parentRect.height - rect.height;
+        newTop = Math.max(0, Math.min(newTop, maxTop));
+      }
+      
+      el.style.left = `${newLeft}px`;
+      el.style.top = `${newTop}px`;
+    };
+
+    const onTouchEnd = () => {
+      isDragging = false;
+    };
+
+    el.addEventListener('touchstart', onTouchStart, { passive: false });
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd);
+  };
+
+  // Run draggable initialization
+  setTimeout(() => {
+    initDraggable('bintangIsi');
+    initDraggable('bintangKosong');
+  }, 100);
+
   // ── End About ────────────────────────────────────────────────────────────
 
   // ─────────────────────────────────────────────────────────────────────────

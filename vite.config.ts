@@ -5,6 +5,12 @@ export default defineConfig({
     build: {
         outDir: 'dist',
         emptyOutDir: true,
-    }
+    },
+    server: {
+        watch: {
+            // Abaikan file temp dari image editor & file yang sedang di-lock di Windows
+            ignored: ['**/*.~tmp', '**/*.tmp', '**/.~*'],
+        },
+    },
 });
 

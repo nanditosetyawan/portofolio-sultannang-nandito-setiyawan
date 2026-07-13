@@ -9,6 +9,7 @@ export interface Project {
   techStack: string[];
   tags: string[];
   year: number;
+  role?: string; // e.g. "Individu" atau "Team"
 }
 
 export interface Achievement {

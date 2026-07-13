@@ -373,7 +373,25 @@ export const About = (): string => `
       <div class="about-wpr-card">
         
         <!-- Judul section -->
-        <h2 class="about-wpr-title font-cabinet">my working principles</h2>
+        <h2 class="about-wpr-title font-cabinet">Built On Principles</h2>
+
+        <!-- Decorative Background Elements (Draggable & Static) -->
+        <img src="${new URL('../assets/icons/bintang_isi_hitam.png', import.meta.url).href}" 
+             class="about-wpr-bintang-isi" 
+             id="bintangIsi"
+             alt="Bintang Isi" 
+             draggable="false" />
+        
+        <img src="${new URL('../assets/icons/bintang_kosong_hitam.png', import.meta.url).href}" 
+             class="about-wpr-bintang-kosong" 
+             id="bintangKosong"
+             alt="Bintang Kosong" 
+             draggable="false" />
+             
+        <img src="${new URL('../assets/icons/dragme_putih.png', import.meta.url).href}" 
+             class="about-wpr-dragme" 
+             alt="Drag Me Label" 
+             draggable="false" />
 
         <!-- Container list prinsip -->
         <div class="about-wpr-list">

@@ -10,17 +10,24 @@
 /* Semua angka di sini adalah "knob" yang bisa kamu putar.     */
 :root {
   /* Foto */
-  --about-photo-size: 280px;      /* ✏️ lebar foto / placeholder */
-  --about-photo-ratio: 1.25;      /* ✏️ tinggi = lebar × ratio   */
+  --about-photo-size: 280px;
+  /* ✏️ lebar foto / placeholder */
+  --about-photo-ratio: 1.25;
+  /* ✏️ tinggi = lebar × ratio   */
 
   /* Skill rows */
-  --skill-circle-size: 106px;     /* ✏️ diameter lingkaran skill (76px * 1.4) */
-  --skill-gap: 106px;             /* ✏️ jarak horizontal antar circle seukuran 1 lingkaran */
-  --skills-row-gap: 16px;         /* ✏️ jarak vertikal antar baris    */
+  --skill-circle-size: 106px;
+  /* ✏️ diameter lingkaran skill (76px * 1.4) */
+  --skill-gap: 106px;
+  /* ✏️ jarak horizontal antar circle seukuran 1 lingkaran */
+  --skills-row-gap: 16px;
+  /* ✏️ jarak vertikal antar baris    */
 
   /* Education section */
-  --edu-scroll-height: 180vh;     /* ✏️ total tinggi section — dikurangi keringanan scroll-nya */
-  --edu-dot-size: 14px;           /* ✏️ diameter dot pada garis timeline */
+  --edu-scroll-height: 180vh;
+  /* ✏️ total tinggi section — dikurangi keringanan scroll-nya */
+  --edu-dot-size: 14px;
+  /* ✏️ diameter dot pada garis timeline */
 }
 
 
@@ -90,12 +97,10 @@
   position: relative;
 
   /* Background gradient placeholder */
-  background: linear-gradient(
-    148deg,
-    var(--surface)         0%,
-    rgba(137,215,183,.12) 100%
-  );
-  border: 2px dashed rgba(66,132,117,.35);
+  background: linear-gradient(148deg,
+      var(--surface) 0%,
+      rgba(137, 215, 183, .12) 100%);
+  border: 2px dashed rgba(66, 132, 117, .35);
   box-shadow: var(--shadow2);
 }
 
@@ -144,8 +149,15 @@
 }
 
 @keyframes aboutFloat {
-  0%, 100% { transform: translateY(0px);   }
-  50%       { transform: translateY(-12px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 
@@ -157,9 +169,11 @@
   display: flex;
   flex-direction: column;
   gap: var(--skills-row-gap);
-  overflow: hidden; /* clip parallax overflow */
+  overflow: hidden;
+  /* clip parallax overflow */
   position: relative;
-  background: rgba(26, 49, 44, 0.038); /* ✏️ 1 blok latar belakang agak gelap dari ujung ke ujung */
+  background: rgba(26, 49, 44, 0.038);
+  /* ✏️ 1 blok latar belakang agak gelap dari ujung ke ujung */
   border-top: 1px solid rgba(26, 49, 44, 0.06);
   border-bottom: 1px solid rgba(26, 49, 44, 0.06);
 }
@@ -189,13 +203,11 @@
   position: relative;
 
   /* Background subtle sage tint */
-  background: linear-gradient(
-    148deg,
-    var(--surface)        0%,
-    rgba(137,215,183,.09) 100%
-  );
+  background: linear-gradient(148deg,
+      var(--surface) 0%,
+      rgba(137, 215, 183, .09) 100%);
   border: 1.5px solid var(--border);
-  box-shadow: 0 4px 14px rgba(26,49,44,.07);
+  box-shadow: 0 4px 14px rgba(26, 49, 44, .07);
 
   /* Hover animation (JS parallax overrides transform, hover adds on top) */
   transition:
@@ -205,8 +217,8 @@
 }
 
 .about-skill-circle:hover {
-  box-shadow: 0 12px 30px rgba(66,132,117,.16);
-  border-color: rgba(66,132,117,.4);
+  box-shadow: 0 12px 30px rgba(66, 132, 117, .16);
+  border-color: rgba(66, 132, 117, .4);
 }
 
 /* Icon image */
@@ -316,8 +328,8 @@
   border: 2.5px solid var(--accent);
   /* Halo rings */
   box-shadow:
-    0 0 0 4px  rgba(66,132,117,.20),
-    0 0 0 8px  rgba(66,132,117,.07);
+    0 0 0 4px rgba(66, 132, 117, .20),
+    0 0 0 8px rgba(66, 132, 117, .07);
   transition: top .55s cubic-bezier(.4, 0, .2, 1);
   z-index: 1;
 }
@@ -327,7 +339,8 @@
 .about-edu-items {
   flex: 1;
   overflow: hidden;
-  align-self: flex-start;    /* JANGAN stretch — biarkan JS set height-nya */
+  align-self: flex-start;
+  /* JANGAN stretch — biarkan JS set height-nya */
 }
 
 /* ── Track: bergerak translateY bersama dot ──────────────── */
@@ -335,7 +348,8 @@
 .about-edu-items-track {
   display: flex;
   flex-direction: column;
-  will-change: transform;    /* GPU-accelerated */
+  will-change: transform;
+  /* GPU-accelerated */
 }
 
 /* ── Single education item: normal flow, tinggi tetap ─────── */
@@ -443,6 +457,7 @@
    RESPONSIVE — MOBILE  max 767px
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 767px) {
+
   /* Part 1 */
   .about-hero-part {
     padding: 3.5rem 1.25rem 2.5rem;
@@ -462,7 +477,8 @@
   /* Skill circles lebih kecil di mobile */
   :root {
     --skill-circle-size: 60px;
-    --skill-gap: 60px; /* ✏️ jarak horizontal seukuran 1 lingkaran */
+    --skill-gap: 60px;
+    /* ✏️ jarak horizontal seukuran 1 lingkaran */
     --skills-row-gap: 14px;
   }
 
@@ -472,7 +488,8 @@
 
   /* ── Education: hilangkan sticky, tampilkan semua item ─── */
   .about-edu-section {
-    height: auto !important; /* tidak perlu scroll-space di mobile */
+    height: auto !important;
+    /* tidak perlu scroll-space di mobile */
   }
 
   .about-edu-sticky {
@@ -531,10 +548,14 @@
     --wid-cta-radius    → sudut tombol CTA
 */
 :root {
-  --wid-num-size:   clamp(3.5rem, 7vw, 6.5rem);   /* ✏️ angka statistik besar */
-  --wid-title-size: clamp(2.8rem, 5.5vw, 5rem);    /* ✏️ judul "What I've done?" */
-  --wid-section-py: 7rem;                           /* ✏️ padding atas-bawah */
-  --wid-cta-radius: 0.55rem;                        /* ✏️ sudut tombol agak kotak tapi tumpul */
+  --wid-num-size: clamp(3.5rem, 7vw, 6.5rem);
+  /* ✏️ angka statistik besar */
+  --wid-title-size: clamp(2.8rem, 5.5vw, 5rem);
+  /* ✏️ judul "What I've done?" */
+  --wid-section-py: 7rem;
+  /* ✏️ padding atas-bawah */
+  --wid-cta-radius: 0.55rem;
+  /* ✏️ sudut tombol agak kotak tapi tumpul */
 }
 
 /* ── Section wrapper ──────────────────────────────────────── */
@@ -605,8 +626,14 @@
   background: rgba(26, 49, 44, 0.12);
   pointer-events: none;
 }
-.about-wid-stats::before { left:  33.333%; }
-.about-wid-stats::after  { left:  66.666%; }
+
+.about-wid-stats::before {
+  left: 33.333%;
+}
+
+.about-wid-stats::after {
+  left: 66.666%;
+}
 
 /* ── Single stat cell ────────────────────────────────────── */
 .about-wid-stat {
@@ -660,8 +687,10 @@
   gap: 0.65rem;
   padding: 0.95rem 2.4rem;
   border-radius: var(--wid-cta-radius);
-  background: var(--text);        /* hitam tegas dari palette */
-  color: var(--bg);               /* teks putih / ivory */
+  background: var(--text);
+  /* hitam tegas dari palette */
+  color: var(--bg);
+  /* teks putih / ivory */
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -669,9 +698,9 @@
   text-decoration: none;
   border: 2px solid var(--text);
   transition:
-    background    0.3s ease,
-    color         0.3s ease,
-    border-color  0.3s ease;
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
   white-space: nowrap;
 }
 
@@ -682,10 +711,13 @@
 
 /* ✏️ HOVER STATE: outline abu transparan, teks abu, latar hilang */
 .about-wid-cta:hover {
-  background:   transparent;
-  color:        rgba(26, 49, 44, 0.45);   /* ✏️ warna teks hover */
-  border-color: rgba(26, 49, 44, 0.25);   /* ✏️ warna border hover */
+  background: transparent;
+  color: rgba(26, 49, 44, 0.45);
+  /* ✏️ warna teks hover */
+  border-color: rgba(26, 49, 44, 0.25);
+  /* ✏️ warna border hover */
 }
+
 .about-wid-cta:hover .about-wid-cta-arrow {
   transform: translateX(5px);
 }
@@ -698,6 +730,7 @@
   .about-wid-section {
     padding: 5rem 2.5rem;
   }
+
   .about-wid-stat {
     padding: 1rem 1rem;
   }
@@ -709,7 +742,7 @@
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 767px) {
   :root {
-    --wid-num-size:   clamp(2.8rem, 11vw, 3.8rem);
+    --wid-num-size: clamp(2.8rem, 11vw, 3.8rem);
     --wid-title-size: clamp(2.2rem, 9vw, 3rem);
     --wid-section-py: 4.5rem;
   }
@@ -750,17 +783,40 @@
    ═══════════════════════════════════════════════════════════ */
 .about-wpr-section {
   /* ✏️ KNOB DI BAWAH INI BISA KAMU UBAH MANUAL SESUAI KEINGINAN */
-  --wpr-bg: #8e9e8a;                        /* Warna latar belakang card (sage green sedikit lebih gelap) */
-  --wpr-card-radius-top: 3.5rem;            /* Sudut melengkung atas card (kiri-kanan) */
-  --wpr-desktop-mx: clamp(4rem, 16vw, 20rem); /* Jarak konten kiri-kanan di desktop (diperlebar agar padat ke tengah) */
-  --wpr-num-size: clamp(3.5rem, 6.5vw, 6.2rem); /* Ukuran angka besar kaku */
-  --wpr-item-gap: 2.8rem;                   /* Jarak vertikal antar item */
-  --wpr-divider-thickness: 1.5px;           /* Ketebalan garis pemisah */
-  --wpr-divider-width: 90%;                 /* Panjang garis pemisah (tidak penuh) */
-  --wpr-hover-color: #FBFCF8;               /* Warna hover semua konten (putih butek) */
-  --wpr-text-color: #1A312C;                /* Warna teks default (forest green/hitam) */
-  --wpr-text2-color: #43534e;               /* Warna deskripsi default (sedikit disesuaikan kontrasnya) */
-  --wpr-transition-speed: 0.35s;            /* Kecepatan transisi hover */
+  --wpr-bg: #9bb298;
+  /* Warna latar belakang card (sage green sedikit lebih pekat gelap) */
+  --wpr-card-radius-top: 3.5rem;
+  /* Sudut melengkung atas card (kiri-kanan) */
+  --wpr-desktop-mx: clamp(4rem, 16vw, 20rem);
+  /* Jarak konten kiri-kanan di desktop (diperlebar agar padat ke tengah) */
+  --wpr-num-size: clamp(10rem, 8vw, 12rem);
+  /* Ukuran angka besar kaku */
+  --wpr-num-col-width: clamp(7rem, 10vw, 10rem);
+  /* ✏️ Lebar kolom angka (harus cukup untuk "03") — sesuaikan jika ukuran angka diubah */
+  --wpr-num-gap: clamp(2rem, 3.5vw, 4rem);
+  /* ✏️ Jarak antara kolom angka dan konten kanan */
+  --wpr-item-gap: 2.8rem;
+  /* Jarak vertikal antar item */
+  --wpr-divider-thickness: 1.5px;
+  /* Ketebalan garis pemisah */
+  --wpr-divider-width: 90%;
+  /* Panjang garis pemisah (tidak penuh) */
+  --wpr-hover-color: #F7F7F7;
+  /* Warna hover semua konten (F7F7F7) */
+  --wpr-text-color: #080D0B;
+  /* Warna teks default (hitam pekat murni) */
+  --wpr-text2-color: #111918;
+  /* Warna deskripsi default (hitam gelap) */
+  --wpr-transition-speed: 0.45s;
+  /* Kecepatan transisi hover — lebih lama agar efek hilang smooth */
+
+  /* ✏️ POSISI DEKORASI BINTANG & DRAGME (bisa diedit manual di sini) */
+  --bintang-isi-bottom: 5rem;
+  --bintang-isi-left: 5.5rem;
+  --bintang-kosong-top: 26.5rem;
+  --bintang-kosong-right: 12.5rem;
+  --dragme-top: 20rem;
+  --dragme-right: 4.6rem;
 
   background: var(--surface2);
   padding: 0;
@@ -774,7 +830,7 @@
   background-color: var(--wpr-bg);
   border-top-left-radius: var(--wpr-card-radius-top);
   border-top-right-radius: var(--wpr-card-radius-top);
-  padding: 6.5rem var(--wpr-desktop-mx);
+  padding: 6.5rem var(--wpr-desktop-mx) 12rem;
   box-shadow: 0 -22px 48px rgba(26, 49, 44, 0.05);
   transition: background-color var(--wpr-transition-speed) ease;
 }
@@ -783,18 +839,25 @@
    Hover independen (hanya bagian judul yang berubah warna ketika di-hover) */
 .about-wpr-title {
   font-family: 'CabinetGrotesk-Extrabold', sans-serif;
-  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  /* Diperbesar mendekati ukuran angka 01/02/03 */
+  font-size: clamp(3.8rem, 7vw, 6.5rem);
   font-weight: 900;
   text-align: center;
   color: var(--wpr-text-color);
-  text-transform: lowercase; /* Meniru format referensi "my working principles" */
   margin: 0 0 4.5rem;
   letter-spacing: -0.03em;
-  transition: color var(--wpr-transition-speed) ease;
+  transition:
+    color var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    text-shadow var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: default;
 }
+
 .about-wpr-title:hover {
   color: var(--wpr-hover-color);
+  /* Glow halus pada judul — lebih lembut dari glow item */
+  text-shadow:
+    0 0 22px rgba(247, 247, 247, 0.30),
+    0 0 55px rgba(247, 247, 247, 0.12);
 }
 
 /* List container */
@@ -817,41 +880,64 @@
 .about-wpr-item-inner {
   display: flex;
   flex-direction: row;
-  align-items: center; /* Menjaga agar tinggi nomor dan teks sejajar kompak */
-  gap: 3.5rem;
+  /* align-items flex-start: judul sejajar dengan batas ATAS angka */
+  align-items: flex-start;
+  /* ✏️ ATUR JARAK ANGKA–KONTEN: ubah --wpr-num-gap di bawah */
+  gap: var(--wpr-num-gap, 3.5rem);
   text-align: left;
   cursor: default;
 }
 
 /* Nomor prinsip (kaku / kotak / tegas) */
+/* Masalah: angka "1" slim sehingga 01 terlihat lebih sedikit space.
+   Solusi: fixed width + text-align: right agar semua angka rata kanan
+   dan jarak ke konten kanan selalu konsisten.
+   ✏️ UBAH LEBAR KOLOM ANGKA: --wpr-num-col-width di :root .about-wpr-section */
 .about-wpr-num {
   font-family: 'CabinetGrotesk-Extrabold', sans-serif;
   font-size: var(--wpr-num-size);
   font-weight: 900;
   color: var(--wpr-text-color);
   line-height: 0.85;
-  letter-spacing: -0.06em;
+  /* Kurangi tracking agar angka lebih padat — tidak terlalu lebar */
+  letter-spacing: -0.04em;
+  /* font-variant-numeric tabular: lebar tiap digit sama, angka 1 sama lebar 2/3 */
+  font-variant-numeric: tabular-nums;
   flex-shrink: 0;
-  width: clamp(4.5rem, 8vw, 7.8rem);
-  transition: color var(--wpr-transition-speed) ease;
+  /* Fixed width yang cukup untuk "03" + text-align right agar rata ke konten */
+  width: var(--wpr-num-col-width, 7.5rem);
+  text-align: right;
+  transition:
+    color var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    text-shadow var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Konten kanan (judul & deskripsi) */
+/* justify-content space-between: judul menempel TOP, deskripsi didorong ke BOTTOM
+   min-height disesuaikan dengan tinggi angka agar simetris vertikal */
 .about-wpr-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  justify-content: space-between;
+  /* min-height proporsional dengan tinggi angka (line-height 0.85 × font-size) */
+  min-height: calc(var(--wpr-num-size) * 0.85);
+  gap: 0;
+  padding-bottom: 0;
 }
 
 .about-wpr-item-title {
   font-family: 'CabinetGrotesk-Extrabold', sans-serif;
-  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  /* ✏️ Perbesar judul item agar proporsional dengan angka besar */
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
   font-weight: 800;
   color: var(--wpr-text-color);
   margin: 0;
-  letter-spacing: -0.01em;
-  transition: color var(--wpr-transition-speed) ease;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  transition:
+    color var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    text-shadow var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .about-wpr-item-desc {
@@ -860,7 +946,9 @@
   line-height: 1.6;
   color: var(--wpr-text2-color);
   margin: 0;
-  transition: color var(--wpr-transition-speed) ease;
+  transition:
+    color var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    text-shadow var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Garis pemisah artistik: tebal di tengah, menipis ke samping */
@@ -868,33 +956,114 @@
   width: var(--wpr-divider-width);
   height: var(--wpr-divider-thickness);
   align-self: center;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(26, 49, 44, 0.4) 20%,
-    rgba(26, 49, 44, 0.4) 80%,
-    transparent 100%
-  );
+  background: linear-gradient(to right,
+      transparent 0%,
+      rgba(13, 29, 24, 0.25) 20%,
+      rgba(13, 29, 24, 0.25) 80%,
+      transparent 100%);
   transition: background var(--wpr-transition-speed) ease;
 }
 
 /* ── HOVER STATE INDEPENDEN PER ITEM ─────────────────────────
-   Hover hanya terjadi pada item yang sedang ditunjuk kursor
+   Hover hanya terjadi pada item yang sedang ditunjuk kursor.
+   Glow: text-shadow multi-layer untuk efek cahaya halus di sekitar teks.
+   Efek hilang smooth karena transition cubic-bezier + durasi 0.45s.
 */
 .about-wpr-item:hover .about-wpr-num,
-.about-wpr-item:hover .about-wpr-item-title,
-.about-wpr-item:hover .about-wpr-item-desc {
+.about-wpr-item:hover .about-wpr-item-title {
   color: var(--wpr-hover-color);
+  /* Glow dikurangi kecerahan — lebih subtle */
+  text-shadow:
+    0 0 20px rgba(247, 247, 247, 0.30),
+    0 0 50px rgba(247, 247, 247, 0.10);
+}
+
+.about-wpr-item:hover .about-wpr-item-desc {
+  color: rgba(247, 247, 247, 0.72);
+  /* Glow sangat lembut pada deskripsi */
+  text-shadow:
+    0 0 16px rgba(247, 247, 247, 0.15);
 }
 
 .about-wpr-item:hover .about-wpr-divider {
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(251, 252, 248, 0.35) 20%,
-    rgba(251, 252, 248, 0.35) 80%,
-    transparent 100%
-  );
+  background: linear-gradient(to right,
+      transparent 0%,
+      rgba(247, 247, 247, 0.22) 20%,
+      rgba(247, 247, 247, 0.22) 80%,
+      transparent 100%);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   PART 5 ▸ DECORATIVE IMAGES — Bintang & Dragme
+   ═══════════════════════════════════════════════════════════ */
+
+/*
+  BINTANG DRAGGABLE:
+  Kedua bintang bisa digeser bebas dalam area .about-wpr-card.
+  Posisi awal diatur via --bintang-isi-x/y dan --bintang-kosong-x/y.
+  JS (dom.ts) menangani drag behavior.
+
+  ✏️ ATUR POSISI AWAL:
+    --bintang-isi-bottom / --bintang-isi-left   → bintang kiri bawah
+    --bintang-kosong-top / --bintang-kosong-right → bintang kanan atas
+    --dragme-top / --dragme-right               → label dragme
+*/
+.about-wpr-card {
+  position: relative; /* pastikan children absolute terkurung di dalam card */
+}
+
+/* Bintang isi — kiri bawah, bisa digeser */
+.about-wpr-bintang-isi {
+  position: absolute;
+  /* ✏️ Ubah nilai ini untuk pindah posisi awal */
+  bottom: var(--bintang-isi-bottom, 3rem);
+  left: var(--bintang-isi-left, 2.5rem);
+  width: clamp(80px, 8vw, 130px);
+  height: auto;
+  opacity: 0.55;
+  cursor: grab;
+  user-select: none;
+  pointer-events: auto;
+  z-index: 5;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+.about-wpr-bintang-isi:hover   { opacity: 0.75; transform: scale(1.04); }
+.about-wpr-bintang-isi:active  { cursor: grabbing; }
+
+/* Bintang kosong — kanan atas, bisa digeser */
+.about-wpr-bintang-kosong {
+  position: absolute;
+  /* ✏️ Ubah nilai ini untuk pindah posisi awal */
+  top: var(--bintang-kosong-top, 2.5rem);
+  right: var(--bintang-kosong-right, 3rem);
+  width: clamp(60px, 7vw, 100px);
+  height: auto;
+  opacity: 0.45;
+  cursor: grab;
+  user-select: none;
+  pointer-events: auto;
+  z-index: 5;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+.about-wpr-bintang-kosong:hover  { opacity: 0.65; transform: scale(1.04); }
+.about-wpr-bintang-kosong:active { cursor: grabbing; }
+
+/* Dragme label — static (tidak bisa di-drag user), posisi bisa diatur di CSS */
+/* ✏️ ATUR POSISI: ubah --dragme-top / --dragme-right di .about-wpr-section */
+.about-wpr-dragme {
+  position: absolute;
+  /* Offset relatif terhadap bintang kosong — ubah jika perlu pas */
+  top: var(--dragme-top, 0.5rem);
+  right: var(--dragme-right, 9rem);
+  width: clamp(100px, 10vw, 260px);
+  height: auto;
+  opacity: 0.7;
+  pointer-events: none;  /* tidak interaktif sama sekali */
+  user-select: none;
+  z-index: 6;
+  /* Rotasi sedikit agar terlihat alami */
+  transform: rotate(-8deg);
 }
 
 
@@ -906,9 +1075,11 @@
   .about-wpr-section {
     --wpr-desktop-mx: 4rem;
   }
+
   .about-wpr-card {
     padding: 5rem var(--wpr-desktop-mx);
   }
+
   .about-wpr-item-inner {
     gap: 2.5rem;
   }
@@ -942,5 +1113,3 @@
     width: 3.2rem;
   }
 }
-
-

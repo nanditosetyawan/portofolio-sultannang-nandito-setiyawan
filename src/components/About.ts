@@ -311,7 +311,7 @@ export const About = (): string => `
               ✏️ ANGKA TAHUN: dihitung otomatis dari PROGRAMMING_START_DATE di data/about.ts.
                  Format: angka tahun + "+", contoh: 1+, 2+, dst.
             -->
-            <span class="about-wid-num">${getYearsInProgramming()}</span>
+            <span class="about-wid-num" id="statYears" data-counter data-target="${getYearsInProgramming().replace('+','')}" data-suffix="+">${getYearsInProgramming()}</span>
             <span class="about-wid-label">Years in<br>Programming</span>
           </div>
 
@@ -321,7 +321,17 @@ export const About = (): string => `
               ✏️ JUMLAH PROJECT: dihitung otomatis dari data/projects.ts.
                  Maksimal tampil 99+. Tambah project di sana, angka ini otomatis naik.
             -->
-            <span class="about-wid-num">${
+            <span class="about-wid-num" id="statProjects" data-counter data-target="${
+              (() => {
+                const count = Array.isArray(projects) ? projects.length : 0;
+                return count >= 99 ? '99' : `${count}`;
+              })()
+            }" data-suffix="${
+              (() => {
+                const count = Array.isArray(projects) ? projects.length : 0;
+                return count >= 99 ? '+' : '';
+              })()
+            }">${
               (() => {
                 const count = Array.isArray(projects) ? projects.length : 0;
                 /* ✏️ Batas maksimal tampilan: 99 — baru ada "+" jika ≥99 */
@@ -337,7 +347,7 @@ export const About = (): string => `
               ✏️ HAPPY CLIENTS: ubah HAPPY_CLIENTS di src/data/about.ts.
                  Default 0. Struktur siap diisi kapan saja.
             -->
-            <span class="about-wid-num">${HAPPY_CLIENTS > 0 ? `${Math.min(HAPPY_CLIENTS, 99)}+` : '0'}</span>
+            <span class="about-wid-num" id="statClients" data-counter data-target="${HAPPY_CLIENTS > 0 ? Math.min(HAPPY_CLIENTS, 99) : 0}" data-suffix="${HAPPY_CLIENTS > 0 ? '+' : ''}">${HAPPY_CLIENTS > 0 ? `${Math.min(HAPPY_CLIENTS, 99)}+` : '0'}</span>
             <span class="about-wid-label">Happy<br>Clients</span>
           </div>
 

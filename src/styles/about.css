@@ -811,7 +811,7 @@
   /* Kecepatan transisi hover — lebih lama agar efek hilang smooth */
 
   /* ✏️ POSISI DEKORASI BINTANG & DRAGME (bisa diedit manual di sini) */
-  --bintang-isi-bottom: 5rem;
+  --bintang-isi-bottom: 14rem;
   --bintang-isi-left: 5.5rem;
   --bintang-kosong-top: 26.5rem;
   --bintang-kosong-right: 12.5rem;
@@ -830,7 +830,7 @@
   background-color: var(--wpr-bg);
   border-top-left-radius: var(--wpr-card-radius-top);
   border-top-right-radius: var(--wpr-card-radius-top);
-  padding: 6.5rem var(--wpr-desktop-mx) 12rem;
+  padding: 6.5rem var(--wpr-desktop-mx) 26rem;
   box-shadow: 0 -22px 48px rgba(26, 49, 44, 0.05);
   transition: background-color var(--wpr-transition-speed) ease;
 }

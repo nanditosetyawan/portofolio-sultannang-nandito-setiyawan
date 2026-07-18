@@ -169,7 +169,7 @@ export const initApp = () => {
     // The point on the screen where a section is considered "active"
     const triggerLine = window.innerHeight * 0.35;
     // The height of the transition zone above and below the trigger line (reduced for faster snap)
-    const zoneHalf = window.innerHeight * 0.10; 
+    const zoneHalf = window.innerHeight * 0.10;
 
     let currIdx = 0;
     let nextIdx = 0;
@@ -261,10 +261,10 @@ export const initApp = () => {
   window.addEventListener('scroll', () => {
     requestAnimationFrame(updateActiveFromScroll);
   }, { passive: true });
-  
+
   // Wait a tick for fonts/layout to render before first placement
   setTimeout(() => requestAnimationFrame(updateActiveFromScroll), 100);
-  
+
   // We no longer call positionNavPill from setActiveNav directly, it's driven entirely by scroll
   const setActiveNav = (targetId: string) => {
     // Only used for manual clicks now; scroll listener handles the pill animation
@@ -281,102 +281,102 @@ export const initApp = () => {
   const updateHeroEffects = (currentY: number) => {
     if (!heroSection) return;
     const heroHeight = heroSection.offsetHeight;
- 
+
     if (heroBg) {
-        heroBg.style.opacity = currentY > heroHeight ? "0" : "1";
+      heroBg.style.opacity = currentY > heroHeight ? "0" : "1";
     }
     if (currentY <= heroHeight + 100) {
       // 1. Keep background fixed relative to viewport
-      
+
 
       // 2. Fade out and translate up the content
       if (heroContent) {
-     const fadeStart = heroHeight * 0.78; // mulai pudar saat Hero hampir keluar
-const fadeEnd = heroHeight * 1.05;   // benar-benar hilang saat sudah sangat jauh ke atas
+        const fadeStart = heroHeight * 0.78; // mulai pudar saat Hero hampir keluar
+        const fadeEnd = heroHeight * 1.05;   // benar-benar hilang saat sudah sangat jauh ke atas
 
-const progress = Math.min(
-  Math.max((currentY - fadeStart) / (fadeEnd - fadeStart), 0),
-  1
-);
+        const progress = Math.min(
+          Math.max((currentY - fadeStart) / (fadeEnd - fadeStart), 0),
+          1
+        );
 
-heroContent.style.opacity = `${1 - progress}`;
-heroContent.style.transform = `translateY(${-Math.max(0, currentY - fadeStart) * 0.25}px)`;
+        heroContent.style.opacity = `${1 - progress}`;
+        heroContent.style.transform = `translateY(${-Math.max(0, currentY - fadeStart) * 0.25}px)`;
       }
     }
   };
 
   // ── Navbar: hide only after 3s of CONTINUOUS down-scroll ─────────────────
- let rafId = 0;
-let lastScrollY = window.scrollY;
-let navHidden = false;
+  let rafId = 0;
+  let lastScrollY = window.scrollY;
+  let navHidden = false;
 
-let downScrollAccumMs = 0;
-let lastDownScrollAt: number | null = null;
-let pauseResetTimer: ReturnType<typeof setTimeout> | null = null;
+  let downScrollAccumMs = 0;
+  let lastDownScrollAt: number | null = null;
+  let pauseResetTimer: ReturnType<typeof setTimeout> | null = null;
 
-const hideNav = () => {
-  if (navHidden) return;
-  navHidden = true;
-  topNav?.classList.add('nav-hidden');
-  mobileNav?.classList.add('nav-hidden');
-};
+  const hideNav = () => {
+    if (navHidden) return;
+    navHidden = true;
+    topNav?.classList.add('nav-hidden');
+    mobileNav?.classList.add('nav-hidden');
+  };
 
-const showNav = () => {
-  if (!navHidden) return;
-  navHidden = false;
-  topNav?.classList.remove('nav-hidden');
-  mobileNav?.classList.remove('nav-hidden');
-};
+  const showNav = () => {
+    if (!navHidden) return;
+    navHidden = false;
+    topNav?.classList.remove('nav-hidden');
+    mobileNav?.classList.remove('nav-hidden');
+  };
 
-const resetDownScroll = () => {
-  downScrollAccumMs = 0;
-  lastDownScrollAt = null;
-  if (pauseResetTimer) {
-    clearTimeout(pauseResetTimer);
-    pauseResetTimer = null;
-  }
-};
-
-const schedulePauseReset = () => {
-  if (pauseResetTimer) clearTimeout(pauseResetTimer);
-
-  pauseResetTimer = setTimeout(() => {
-    resetDownScroll();
-  }, 1200); // ✏️ pause reset: 1200ms (dikurangi 40% dari 2000ms)
-
-};
-
-const onScroll = () => {
-  if (rafId) return;
-
-  rafId = window.requestAnimationFrame(() => {
-    const currentY = window.scrollY;
-    const scrollingDown = currentY > lastScrollY;
-    const scrollingUp = currentY < lastScrollY;
-
-    if (scrollingUp) {
-      resetDownScroll();
-      showNav();
-    } else if (scrollingDown && currentY > 80) {
-      const now = Date.now();
-
-      if (lastDownScrollAt !== null) {
-        downScrollAccumMs += now - lastDownScrollAt;
-      }
-      lastDownScrollAt = now;
-
-      schedulePauseReset();
-
-      if (downScrollAccumMs >= 1800) { // ✏️ hide threshold: 1800ms (dikurangi 40% dari 3000ms)
-        hideNav();
-      }
-
+  const resetDownScroll = () => {
+    downScrollAccumMs = 0;
+    lastDownScrollAt = null;
+    if (pauseResetTimer) {
+      clearTimeout(pauseResetTimer);
+      pauseResetTimer = null;
     }
+  };
+
+  const schedulePauseReset = () => {
+    if (pauseResetTimer) clearTimeout(pauseResetTimer);
+
+    pauseResetTimer = setTimeout(() => {
+      resetDownScroll();
+    }, 1200); // ✏️ pause reset: 1200ms (dikurangi 40% dari 2000ms)
+
+  };
+
+  const onScroll = () => {
+    if (rafId) return;
+
+    rafId = window.requestAnimationFrame(() => {
+      const currentY = window.scrollY;
+      const scrollingDown = currentY > lastScrollY;
+      const scrollingUp = currentY < lastScrollY;
+
+      if (scrollingUp) {
+        resetDownScroll();
+        showNav();
+      } else if (scrollingDown && currentY > 80) {
+        const now = Date.now();
+
+        if (lastDownScrollAt !== null) {
+          downScrollAccumMs += now - lastDownScrollAt;
+        }
+        lastDownScrollAt = now;
+
+        schedulePauseReset();
+
+        if (downScrollAccumMs >= 1800) { // ✏️ hide threshold: 1800ms (dikurangi 40% dari 3000ms)
+          hideNav();
+        }
+
+      }
 
 
       lastScrollY = currentY;
       updateHeroEffects(currentY);
-     
+
       syncNavbarState();
       rafId = 0;
     });
@@ -767,21 +767,21 @@ const onScroll = () => {
     EDU_DOT_MS
       Durasi animasi pergerakan dot timeline (ms). Default: 550
   */
-  const ZIGZAG_SPEED      = 0.45; // ✏️ Diperkuat geraknya sesuai permintaan user
-  const EDU_SWITCH_POINT  = 0.45;
-  const DOT_POSITIONS     = ['25%', '72%'] as const;
-  const EDU_DOT_MS        = 550;
+  const ZIGZAG_SPEED = 0.45; // ✏️ Diperkuat geraknya sesuai permintaan user
+  const EDU_SWITCH_POINT = 0.45;
+  const DOT_POSITIONS = ['25%', '72%'] as const;
+  const EDU_DOT_MS = 550;
 
   /* ── DOM refs ─────────────────────────────────────────────── */
   const aboutSkillsWrap = document.getElementById('aboutSkillsSection');
-  const aboutRow1       = aboutSkillsWrap
+  const aboutRow1 = aboutSkillsWrap
     ?.querySelector<HTMLElement>('[data-skills-row="1"]') ?? null;
-  const aboutRow2       = aboutSkillsWrap
+  const aboutRow2 = aboutSkillsWrap
     ?.querySelector<HTMLElement>('[data-skills-row="2"]') ?? null;
 
   const aboutEduSection = document.getElementById('aboutEduSection');
-  const aboutEduDot     = document.getElementById('aboutEduDot') as HTMLElement | null;
-  const aboutEduTrack   = document.getElementById('aboutEduTrack') as HTMLElement | null;
+  const aboutEduDot = document.getElementById('aboutEduDot') as HTMLElement | null;
+  const aboutEduTrack = document.getElementById('aboutEduTrack') as HTMLElement | null;
 
   // Helper untuk mengambil offset zigzag dari CSS runtime
   const getSkillsOffset = (): number => {
@@ -839,9 +839,9 @@ const onScroll = () => {
      OPACITY : 01 fades 1→0 in first half, 02 fades 0→1 in second half
      HEIGHT  : JS clamps items container to exactly one item height (clips 02)
   ─────────────────────────────────────────────────────────────────────── */
-  let itemHeight   = 0;
-  let settledY     = 0;  // Center of "01" relative to top of the line
-  let lineMargin   = 0;  // margin-top of the line in pixels
+  let itemHeight = 0;
+  let settledY = 0;  // Center of "01" relative to top of the line
+  let lineMargin = 0;  // margin-top of the line in pixels
   let itemsClipped = false;
 
   const aboutEduItemsEl = aboutEduTrack?.parentElement as HTMLElement | null;
@@ -864,14 +864,14 @@ const onScroll = () => {
       // Measure number center Y relative to the line's top
       const rectNum = numEl.getBoundingClientRect();
       const rectLine = aboutEduLine.getBoundingClientRect();
-      
+
       // Factoring out current translateY of track in case layout measures mid-scroll
       const trackStyle = getComputedStyle(aboutEduTrack);
       const matrix = new WebKitCSSMatrix(trackStyle.transform);
       const currentTrackY = matrix.m41 || matrix.f || 0;
 
       settledY = (rectNum.top + rectNum.height / 2 - currentTrackY) - rectLine.top;
-      
+
       const lineStyle = getComputedStyle(aboutEduLine);
       lineMargin = Math.abs(parseFloat(lineStyle.marginTop)) || 35;
 
@@ -885,17 +885,17 @@ const onScroll = () => {
     // Ensure we measure layout
     measureLayout();
 
-    const rect     = aboutEduSection.getBoundingClientRect();
+    const rect = aboutEduSection.getBoundingClientRect();
     const sectionH = aboutEduSection.offsetHeight;
-    const viewH    = window.innerHeight;
+    const viewH = window.innerHeight;
 
     // Skip on mobile
     if (sectionH < viewH * 1.2) return;
 
     // progress 0 → 1
-    const scrolled   = -rect.top;
+    const scrolled = -rect.top;
     const scrollable = sectionH - viewH;
-    const progress   = Math.max(0, Math.min(1, scrolled / scrollable));
+    const progress = Math.max(0, Math.min(1, scrolled / scrollable));
 
     const D = settledY;
     const L = itemHeight + 2 * lineMargin; // Total line height
@@ -913,7 +913,7 @@ const onScroll = () => {
     if (H > 0) {
       let trackY = 0;
       const tMid = L - 2 * D - H; // Track Y position at progress = 0.5 (fetches 02)
-      
+
       if (progress < 0.5) {
         // Phase 1: 01 exits, track slides slowly to tMid
         const normP = progress / 0.5;
@@ -967,7 +967,7 @@ const onScroll = () => {
 
     // Update skills parallax target
     if (aboutSkillsWrap) {
-      const rect   = aboutSkillsWrap.getBoundingClientRect();
+      const rect = aboutSkillsWrap.getBoundingClientRect();
       const center = rect.top + rect.height / 2;
       targetScrollOffset = (window.innerHeight / 2 - center) * ZIGZAG_SPEED;
     }
@@ -988,20 +988,20 @@ const onScroll = () => {
       isDragging = true;
       startX = e.clientX;
       startY = e.clientY;
-      
+
       const rect = el.getBoundingClientRect();
       const parentRect = el.parentElement?.getBoundingClientRect();
-      
+
       if (parentRect) {
         initialLeft = rect.left - parentRect.left;
         initialTop = rect.top - parentRect.top;
       }
-      
+
       el.style.left = `${initialLeft}px`;
       el.style.top = `${initialTop}px`;
       el.style.bottom = 'auto';
       el.style.right = 'auto';
-      
+
       el.style.cursor = 'grabbing';
       e.preventDefault();
     };
@@ -1010,21 +1010,21 @@ const onScroll = () => {
       if (!isDragging) return;
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
-      
+
       let newLeft = initialLeft + dx;
       let newTop = initialTop + dy;
-      
+
       const parentRect = el.parentElement?.getBoundingClientRect();
       const rect = el.getBoundingClientRect();
-      
+
       if (parentRect) {
         const maxLeft = parentRect.width - rect.width;
         newLeft = Math.max(0, Math.min(newLeft, maxLeft));
-        
+
         const maxTop = parentRect.height - rect.height;
         newTop = Math.max(0, Math.min(newTop, maxTop));
       }
-      
+
       el.style.left = `${newLeft}px`;
       el.style.top = `${newTop}px`;
     };
@@ -1044,20 +1044,20 @@ const onScroll = () => {
       isDragging = true;
       startX = touch.clientX;
       startY = touch.clientY;
-      
+
       const rect = el.getBoundingClientRect();
       const parentRect = el.parentElement?.getBoundingClientRect();
-      
+
       if (parentRect) {
         initialLeft = rect.left - parentRect.left;
         initialTop = rect.top - parentRect.top;
       }
-      
+
       el.style.left = `${initialLeft}px`;
       el.style.top = `${initialTop}px`;
       el.style.bottom = 'auto';
       el.style.right = 'auto';
-      
+
       e.preventDefault();
     };
 
@@ -1066,21 +1066,21 @@ const onScroll = () => {
       const touch = e.touches[0];
       const dx = touch.clientX - startX;
       const dy = touch.clientY - startY;
-      
+
       let newLeft = initialLeft + dx;
       let newTop = initialTop + dy;
-      
+
       const parentRect = el.parentElement?.getBoundingClientRect();
       const rect = el.getBoundingClientRect();
-      
+
       if (parentRect) {
         const maxLeft = parentRect.width - rect.width;
         newLeft = Math.max(0, Math.min(newLeft, maxLeft));
-        
+
         const maxTop = parentRect.height - rect.height;
         newTop = Math.max(0, Math.min(newTop, maxTop));
       }
-      
+
       el.style.left = `${newLeft}px`;
       el.style.top = `${newTop}px`;
     };
@@ -1099,6 +1099,174 @@ const onScroll = () => {
     initDraggable('bintangIsi');
     initDraggable('bintangKosong');
   }, 100);
+
+  // ── Stats Counter Scramble Animation ─────────────────────────────────────
+  // Animates each [data-counter] span with random numbers (1–99) for 0.6s,
+  // then snaps to the real target value. Re-triggers every time it enters viewport.
+  const initStatsCounter = () => {
+    const statEls = Array.from(document.querySelectorAll<HTMLElement>('[data-counter]'));
+    if (statEls.length === 0) return;
+
+    const DURATION = 600;     // ms total scramble duration
+    const INTERVAL = 60;      // ms between each random number swap
+
+    // Map to track running interval per element
+    const runningIntervals = new Map<HTMLElement, ReturnType<typeof setInterval>>();
+
+    const animateCounter = (el: HTMLElement) => {
+      const target = parseInt(el.getAttribute('data-target') || '0', 10);
+      const suffix = el.getAttribute('data-suffix') || '';
+
+      // Cancel any existing animation on this element first
+      if (runningIntervals.has(el)) {
+        clearInterval(runningIntervals.get(el)!);
+        runningIntervals.delete(el);
+      }
+
+      const startTime = performance.now();
+
+      const intervalId = setInterval(() => {
+        const elapsed = performance.now() - startTime;
+
+        if (elapsed >= DURATION) {
+          clearInterval(intervalId);
+          runningIntervals.delete(el);
+          el.textContent = String(target) + suffix;
+          return;
+        }
+
+        // Random number 1–99, independent per stat
+        const rand = Math.floor(Math.random() * 99) + 1;
+        el.textContent = String(rand) + suffix;
+      }, INTERVAL);
+
+      runningIntervals.set(el, intervalId);
+    };
+
+    // Re-trigger animation every time element enters viewport
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target as HTMLElement);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statEls.forEach(el => observer.observe(el));
+  };
+
+  initStatsCounter();
+
+  // ── Projects Stacked Card Scroll ─────────────────────────────────────────
+  const initProjectsStack = () => {
+    const section = document.getElementById('projects');
+    const sticky = section?.querySelector('.pstack-sticky') as HTMLElement | null;
+    const cardsWrapper = document.getElementById('pstackCardsWrapper');
+    if (!section || !sticky || !cardsWrapper) return;
+
+    const cards = Array.from(cardsWrapper.querySelectorAll('.pstack-card')) as HTMLElement[];
+    if (cards.length < 2) return;
+
+    const card1 = cards[1];
+    const card2 = cards[2];
+
+    const easeOutQuart = (t: number) => 1 - (--t) * t * t * t;
+
+    let ticking = false;
+
+    const updateStack = () => {
+      const rect = section.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      const stickyHeight = sticky.offsetHeight;
+
+      // Stacking animation starts when the sticky card container pins at the top
+      // (after the curved title above it has scrolled past/out of view on standard screen heights)
+      const scrollStart = rect.top + window.scrollY + sticky.offsetTop;
+      const scrollEnd = rect.bottom + window.scrollY - window.innerHeight;
+      const scrollableDistance = scrollEnd - scrollStart;
+
+      if (scrollableDistance <= 0) {
+        ticking = false;
+        return;
+      }
+
+      const currentScroll = window.scrollY;
+      const progress = Math.max(0, Math.min(1, (currentScroll - scrollStart) / scrollableDistance));
+
+      const vh = window.innerHeight;
+
+      // Card 1: Animates from progress 0 to 0.45, then pauses, then stays at 12px
+      if (card1) {
+        const startP = 0;
+        const endP = 0.45;
+        if (progress <= startP) {
+          card1.style.transform = `translateY(${vh}px)`;
+        } else if (progress >= endP) {
+          card1.style.transform = `translateY(12px)`;
+        } else {
+          const t = (progress - startP) / (endP - startP);
+          const ease = easeOutQuart(t);
+          const y = (1 - ease) * vh + ease * 12;
+          card1.style.transform = `translateY(${y}px)`;
+        }
+      }
+
+      // Card 2: Animates from progress 0.55 to 1.0, then stays at 24px
+      if (card2) {
+        const startP = 0.55;
+        const endP = 1.0;
+        if (progress <= startP) {
+          card2.style.transform = `translateY(${vh}px)`;
+        } else if (progress >= endP) {
+          card2.style.transform = `translateY(24px)`;
+        } else {
+          const t = (progress - startP) / (endP - startP);
+          const ease = easeOutQuart(t);
+          const y = (1 - ease) * vh + ease * 24;
+          card2.style.transform = `translateY(${y}px)`;
+        }
+      }
+
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateStack);
+        ticking = true;
+      }
+    };
+
+    // Set initial layout positions
+    updateStack();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+  };
+
+  // ── Project Detail Modal Toggle ─────────────────────────────────────────
+  const initProjectDetailToggle = () => {
+    const openBtn = document.getElementById('openProjectDetail');
+    const closeBtn = document.getElementById('closeProjectDetail');
+    const overlay = document.getElementById('projectDetailOverlay');
+
+    if (!openBtn || !overlay) return;
+
+    openBtn.addEventListener('click', () => {
+      overlay.classList.add('pdetail-visible');
+      document.body.style.overflow = 'hidden';
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        overlay.classList.remove('pdetail-visible');
+        document.body.style.overflow = '';
+      });
+    }
+  };
+
+  initProjectsStack();
+  initProjectDetailToggle();
 
   // ── End About ────────────────────────────────────────────────────────────
 

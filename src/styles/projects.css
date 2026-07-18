@@ -474,12 +474,12 @@
 
 .image-box-left {
   flex: 1; /* lebih sempit */
-  height: 220px;
+  height: 180px;
 }
 
 .image-box-right {
   flex: 1.8; /* lebih lebar */
-  height: 220px;
+  height: 180px;
 }
 
 .project-image-row-bottom {
@@ -488,7 +488,7 @@
 
 .image-box-bottom {
   width: 100%;
-  height: 260px;
+  height: 170px;
 }
 
 .project-grid-img {

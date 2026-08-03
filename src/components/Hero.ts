@@ -39,7 +39,7 @@ export const Hero = (): string => {
           </div>
 
           <div class="hero-right reveal">
-            <div class="relative">
+            <div class="relative" style="visibility: hidden; pointer-events: none;">
               <div class="hero-photo-blob"></div>
               <div class="photo-stack" id="heroPhotoStack">
                 <div class="stack-label">Profile Slideshow</div>

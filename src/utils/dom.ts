@@ -70,8 +70,8 @@ export const initApp = () => {
     const target = document.getElementById(targetId);
     if (!target) return;
 
-    const navHeight = topNav?.getBoundingClientRect().height ?? 0;
-    const top = window.scrollY + target.getBoundingClientRect().top - navHeight - 8;
+    // Scroll to exact top of section (section has its own top-padding for navbar clearance)
+    const top = window.scrollY + target.getBoundingClientRect().top;
 
     window.scrollTo({
       top: Math.max(top, 0),
@@ -498,7 +498,6 @@ export const initApp = () => {
     });
   };
 
-  initToggle("projectsToggle", ".extra-project");
   initToggle("achievementsToggle", ".extra-achieve");
 
 
@@ -1157,116 +1156,378 @@ export const initApp = () => {
 
   initStatsCounter();
 
-  // ── Projects Stacked Card Scroll ─────────────────────────────────────────
-  const initProjectsStack = () => {
-    const section = document.getElementById('projects');
-    const sticky = section?.querySelector('.pstack-sticky') as HTMLElement | null;
-    const cardsWrapper = document.getElementById('pstackCardsWrapper');
-    if (!section || !sticky || !cardsWrapper) return;
+  // ══════════════════════════════════════════════════════════════════════════
+  // PROJECTS CAROUSEL — Coverflow navigation, search, filter, modals
+  // ══════════════════════════════════════════════════════════════════════════
+  const initProjectsCarousel = () => {
+    const track = document.getElementById('projCardsTrack');
+    const prevBtn = document.getElementById('projNavPrev');
+    const nextBtn = document.getElementById('projNavNext');
+    const dotsContainer = document.getElementById('projDots');
+    const searchInput = document.getElementById('projSearch') as HTMLInputElement | null;
+    const noResults = document.getElementById('projNoResults');
+    const filterBtn = document.getElementById('projFilterBtn');
+    const filterPanel = document.getElementById('projFilterPanel');
+    const filterBadge = document.getElementById('projFilterBadge');
+    const filterResetBtn = document.getElementById('projFilterReset');
 
-    const cards = Array.from(cardsWrapper.querySelectorAll('.pstack-card')) as HTMLElement[];
-    if (cards.length < 2) return;
+    if (!track) return;
 
-    const card1 = cards[1];
-    const card2 = cards[2];
+    const cards = Array.from(track.querySelectorAll<HTMLElement>('.proj-card'));
+    if (cards.length === 0) return;
 
-    const easeOutQuart = (t: number) => 1 - (--t) * t * t * t;
+    // ── STATE ──────────────────────────────────────────────────────────────
+    // Visible cards list (dynamically changes based on search & filter)
+    let visibleCards = [...cards];
+    // Start index default is the middle of visible projects list
+    let currentIdx = Math.floor(visibleCards.length / 2);
+    // Active filter selections per group
+    const activeFilters: Record<string, string[]> = { tech: [], year: [], role: [] };
 
-    let ticking = false;
+    // ── POSITION CARDS ─────────────────────────────────────────────────────
+    const positionClasses = ['is-far-left', 'is-left', 'is-active', 'is-right', 'is-far-right'];
 
-    const updateStack = () => {
-      const rect = section.getBoundingClientRect();
-      const sectionHeight = rect.height;
-      const stickyHeight = sticky.offsetHeight;
+    const updateCards = () => {
+      // First, hide all cards and clean up classes
+      cards.forEach(card => {
+        card.style.display = 'none';
+        card.classList.remove(...positionClasses);
+      });
 
-      // Stacking animation starts when the sticky card container pins at the top
-      // (after the curved title above it has scrolled past/out of view on standard screen heights)
-      const scrollStart = rect.top + window.scrollY + sticky.offsetTop;
-      const scrollEnd = rect.bottom + window.scrollY - window.innerHeight;
-      const scrollableDistance = scrollEnd - scrollStart;
+      // Show and position only the currently matching visible cards
+      visibleCards.forEach((card, i) => {
+        card.style.display = 'flex';
+        const diff = i - currentIdx;
+        if      (diff === 0)  card.classList.add('is-active');
+        else if (diff === -1) card.classList.add('is-left');
+        else if (diff === 1)  card.classList.add('is-right');
+        else if (diff < -1)   card.classList.add('is-far-left');
+        else                  card.classList.add('is-far-right');
+      });
 
-      if (scrollableDistance <= 0) {
-        ticking = false;
-        return;
-      }
+      // Re-generate dots based on current visible cards size
+      if (dotsContainer) {
+        dotsContainer.innerHTML = visibleCards.map((_, i) => `
+          <button class="proj-dot${i === currentIdx ? ' is-active' : ''}" data-proj-dot="${i}" type="button" aria-label="Go to project ${i + 1}"></button>
+        `).join('');
 
-      const currentScroll = window.scrollY;
-      const progress = Math.max(0, Math.min(1, (currentScroll - scrollStart) / scrollableDistance));
-
-      const vh = window.innerHeight;
-
-      // Card 1: Animates from progress 0 to 0.45, then pauses, then stays at 12px
-      if (card1) {
-        const startP = 0;
-        const endP = 0.45;
-        if (progress <= startP) {
-          card1.style.transform = `translateY(${vh}px)`;
-        } else if (progress >= endP) {
-          card1.style.transform = `translateY(12px)`;
-        } else {
-          const t = (progress - startP) / (endP - startP);
-          const ease = easeOutQuart(t);
-          const y = (1 - ease) * vh + ease * 12;
-          card1.style.transform = `translateY(${y}px)`;
-        }
-      }
-
-      // Card 2: Animates from progress 0.55 to 1.0, then stays at 24px
-      if (card2) {
-        const startP = 0.55;
-        const endP = 1.0;
-        if (progress <= startP) {
-          card2.style.transform = `translateY(${vh}px)`;
-        } else if (progress >= endP) {
-          card2.style.transform = `translateY(24px)`;
-        } else {
-          const t = (progress - startP) / (endP - startP);
-          const ease = easeOutQuart(t);
-          const y = (1 - ease) * vh + ease * 24;
-          card2.style.transform = `translateY(${y}px)`;
-        }
-      }
-
-      ticking = false;
-    };
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateStack);
-        ticking = true;
+        // Bind click events on the newly generated dots
+        dotsContainer.querySelectorAll<HTMLButtonElement>('.proj-dot').forEach(dot => {
+          dot.addEventListener('click', () => {
+            const idx = parseInt(dot.dataset.projDot ?? '-1', 10);
+            if (!isNaN(idx)) goTo(idx);
+          });
+        });
       }
     };
 
-    // Set initial layout positions
-    updateStack();
+    // Init
+    updateCards();
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
-  };
+    // ── NAVIGATION ─────────────────────────────────────────────────────────
+    const goTo = (idx: number) => {
+      if (visibleCards.length === 0) return;
+      currentIdx = Math.max(0, Math.min(idx, visibleCards.length - 1));
+      updateCards();
+    };
 
-  // ── Project Detail Modal Toggle ─────────────────────────────────────────
-  const initProjectDetailToggle = () => {
-    const openBtn = document.getElementById('openProjectDetail');
-    const closeBtn = document.getElementById('closeProjectDetail');
-    const overlay = document.getElementById('projectDetailOverlay');
+    const advance = (dir: 1 | -1) => {
+      if (visibleCards.length === 0) return;
+      let next = currentIdx + dir;
+      if (next < 0) next = visibleCards.length - 1;
+      if (next >= visibleCards.length) next = 0;
+      goTo(next);
+    };
 
-    if (!openBtn || !overlay) return;
+    prevBtn?.addEventListener('click', () => advance(-1));
+    nextBtn?.addEventListener('click', () => advance(1));
 
-    openBtn.addEventListener('click', () => {
-      overlay.classList.add('pdetail-visible');
-      document.body.style.overflow = 'hidden';
+    // Click on side card → navigate to it
+    track.addEventListener('click', (e) => {
+      const card = (e.target as HTMLElement).closest<HTMLElement>('.proj-card');
+      if (!card) return;
+      
+      // Find its position in the current visible list
+      const idx = visibleCards.indexOf(card);
+      if (idx !== -1 && idx !== currentIdx) {
+        goTo(idx);
+      }
     });
 
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        overlay.classList.remove('pdetail-visible');
-        document.body.style.overflow = '';
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft')  advance(-1);
+      if (e.key === 'ArrowRight') advance(1);
+    });
+
+    // Touch / swipe on carousel
+    let touchStartX = 0;
+    track.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) advance(dx < 0 ? 1 : -1);
+    });
+
+    // ── SEARCH + FILTER LOGIC ───────────────────────────────────────────────
+    const matchesFilter = (card: HTMLElement): boolean => {
+      const title = card.querySelector('.proj-card-title')?.textContent?.toLowerCase() ?? '';
+      const query = searchInput?.value.trim().toLowerCase() ?? '';
+      if (query && !title.includes(query)) return false;
+
+      // Tech/Language filter
+      if (activeFilters.tech.length > 0) {
+        const cardTech = Array.from(card.querySelectorAll('.proj-tag')).map(t => t.textContent?.trim() ?? '');
+        if (!activeFilters.tech.some(f => cardTech.includes(f))) return false;
+      }
+      // Year filter
+      if (activeFilters.year.length > 0) {
+        const badge = card.querySelector('.proj-card-badge')?.textContent ?? '';
+        if (!activeFilters.year.some(y => badge.includes(y))) return false;
+      }
+      // Role filter
+      if (activeFilters.role.length > 0) {
+        const badge = card.querySelector('.proj-card-badge')?.textContent ?? '';
+        if (!activeFilters.role.some(r => badge.toLowerCase().includes(r.toLowerCase()))) return false;
+      }
+
+      return true;
+    };
+
+    const applyFiltersAndSearch = () => {
+      // Re-populate matching visible cards list
+      visibleCards = cards.filter(card => matchesFilter(card));
+
+      // Reset active index to the middle of the new matching set
+      if (visibleCards.length > 0) {
+        currentIdx = Math.floor(visibleCards.length / 2);
+      } else {
+        currentIdx = 0;
+      }
+
+      updateCards();
+
+      // Show/hide "no results" toast
+      const query = searchInput?.value.trim().toLowerCase() ?? '';
+      const hasActiveFilter = Object.values(activeFilters).some(a => a.length > 0);
+      if (noResults) {
+        noResults.classList.toggle('visible', visibleCards.length === 0 && (query !== '' || hasActiveFilter));
+      }
+
+      // Update filter active badge
+      filterBadge?.classList.toggle('visible', hasActiveFilter);
+    };
+
+    searchInput?.addEventListener('input', applyFiltersAndSearch);
+
+    // ── MODAL OPEN / CLOSE ─────────────────────────────────────────────────
+    const topNav = document.getElementById('topNav');
+
+    /** Set up drag-to-move and 8-dir resize on a modal window. Call once. */
+    const setupModalWindow = (overlay: HTMLElement, win: HTMLElement) => {
+      const MIN_W = 360, MIN_H = 260;
+
+      // ── Drag: move window by dragging titlebar ──────────────────────────
+      const titlebar = win.querySelector<HTMLElement>('.proj-modal-titlebar');
+      if (titlebar) {
+        titlebar.style.cursor = 'grab';
+        titlebar.addEventListener('mousedown', (e: MouseEvent) => {
+          // Don't drag if clicking action buttons
+          if ((e.target as HTMLElement).closest('.proj-modal-actions, .proj-modal-dl-btn, .proj-modal-close-btn, .proj-modal-dots')) return;
+          e.preventDefault();
+
+          const startX = e.clientX, startY = e.clientY;
+          const startLeft = win.offsetLeft, startTop = win.offsetTop;
+
+          win.classList.add('is-dragging');
+          titlebar.style.cursor = 'grabbing';
+          document.body.style.userSelect = 'none';
+
+          const onMove = (ev: MouseEvent) => {
+            const dx = ev.clientX - startX, dy = ev.clientY - startY;
+            let newLeft = startLeft + dx, newTop = startTop + dy;
+            // Soft clamp so title bar always stays visible
+            const ow = overlay.clientWidth, oh = overlay.clientHeight;
+            newLeft = Math.max(-win.offsetWidth + 80, Math.min(newLeft, ow - 80));
+            newTop  = Math.max(0, Math.min(newTop,  oh - 40));
+            win.style.left = newLeft + 'px';
+            win.style.top  = newTop  + 'px';
+          };
+          const onUp = () => {
+            win.classList.remove('is-dragging');
+            titlebar.style.cursor = 'grab';
+            document.body.style.userSelect = '';
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+          };
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        });
+      }
+
+      // ── Resize: drag any of the 8 handles ──────────────────────────────
+      const handles = win.querySelectorAll<HTMLElement>('[data-dir]');
+      handles.forEach(handle => {
+        handle.addEventListener('mousedown', (e: MouseEvent) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const dir = handle.dataset.dir ?? '';
+          const startX = e.clientX, startY = e.clientY;
+          const startW = win.offsetWidth,  startH = win.offsetHeight;
+          const startL = win.offsetLeft,   startT = win.offsetTop;
+
+          document.body.style.userSelect = 'none';
+
+          const onMove = (ev: MouseEvent) => {
+            const dx = ev.clientX - startX, dy = ev.clientY - startY;
+            if (dir.includes('e')) win.style.width  = Math.max(MIN_W, startW + dx) + 'px';
+            if (dir.includes('s')) win.style.height = Math.max(MIN_H, startH + dy) + 'px';
+            if (dir.includes('w')) {
+              const nw = Math.max(MIN_W, startW - dx);
+              win.style.width = nw + 'px';
+              win.style.left  = (startL + startW - nw) + 'px';
+            }
+            if (dir.includes('n')) {
+              const nh = Math.max(MIN_H, startH - dy);
+              win.style.height = nh + 'px';
+              win.style.top    = (startT + startH - nh) + 'px';
+            }
+          };
+          const onUp = () => {
+            document.body.style.userSelect = '';
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+          };
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        });
       });
-    }
+    };
+
+    const openModal = (id: string) => {
+      const overlay = document.getElementById(`projModal-${id}`);
+      if (!overlay) return;
+      const win = overlay.querySelector<HTMLElement>('.proj-modal-window');
+
+      if (win && !win.dataset.modalReady) {
+        // Overlay is hidden so use viewport dimensions directly
+        // Default window size matches CSS: width 640, height 580
+        const WIN_W = 640, WIN_H = 580;
+        const ow = window.innerWidth;
+        const oh = window.innerHeight;
+        win.style.left = Math.round((ow - WIN_W) / 2) + 'px';
+        win.style.top  = Math.round((oh - WIN_H) / 2) + 'px';
+        setupModalWindow(overlay, win);
+        win.dataset.modalReady = '1';
+      }
+
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      if (topNav) topNav.classList.add('modal-hidden');
+    };
+
+    const closeModal = (id: string) => {
+      const overlay = document.getElementById(`projModal-${id}`);
+      if (!overlay) return;
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (topNav) topNav.classList.remove('modal-hidden');
+    };
+
+    const closeAllModals = () => {
+      document.querySelectorAll<HTMLElement>('.proj-modal-overlay.is-open').forEach(el => {
+        el.classList.remove('is-open');
+      });
+      document.body.style.overflow = '';
+      if (topNav) topNav.classList.remove('modal-hidden');
+    };
+
+    // "see" buttons on cards
+    track.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-proj-open]');
+      if (!btn) return;
+      e.stopPropagation();
+      const id = btn.dataset.projOpen ?? '';
+      openModal(id);
+    });
+
+    // Close buttons inside modals
+    document.addEventListener('click', (e) => {
+      const closeBtn = (e.target as HTMLElement).closest<HTMLElement>('[data-proj-close]');
+      if (closeBtn) {
+        closeModal(closeBtn.dataset.projClose ?? '');
+        return;
+      }
+      // Click on overlay backdrop
+      const overlay = (e.target as HTMLElement).closest<HTMLElement>('.proj-modal-overlay');
+      if (overlay && e.target === overlay) {
+        closeAllModals();
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAllModals();
+    });
+
+    // ── FILTER PANEL ────────────────────────────────────────────────────────
+    const toggleFilterPanel = (open?: boolean) => {
+      const isOpen = open ?? !filterPanel?.classList.contains('is-open');
+      filterPanel?.classList.toggle('is-open', isOpen);
+      filterBtn?.classList.toggle('is-open', isOpen);
+      filterBtn?.setAttribute('aria-expanded', String(isOpen));
+    };
+
+    filterBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleFilterPanel();
+    });
+
+    // Reset all filters when clicking the reload icon
+    filterResetBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Clear all active filter selections
+      Object.keys(activeFilters).forEach(k => { activeFilters[k] = []; });
+      // De-select all filter option buttons visually
+      filterPanel?.querySelectorAll<HTMLElement>('.proj-filter-opt').forEach(opt => {
+        opt.classList.remove('is-selected');
+      });
+      // Clear search input too
+      if (searchInput) searchInput.value = '';
+      applyFiltersAndSearch();
+      toggleFilterPanel(false);
+    });
+
+    // Close panel on outside click
+    document.addEventListener('click', (e) => {
+      if (filterPanel?.classList.contains('is-open') && !filterPanel.contains(e.target as Node) && e.target !== filterBtn) {
+        toggleFilterPanel(false);
+      }
+    });
+
+    // Filter option clicks
+    filterPanel?.querySelectorAll<HTMLButtonElement>('.proj-filter-opt').forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const group = opt.dataset.filterGroup ?? '';
+        const val   = opt.dataset.filterVal ?? '';
+        if (!group || !val) return;
+
+        const arr = activeFilters[group];
+        const idx = arr.indexOf(val);
+        if (idx === -1) arr.push(val);
+        else arr.splice(idx, 1);
+
+        opt.classList.toggle('is-selected', arr.includes(val));
+        applyFiltersAndSearch();
+      });
+    });
+
   };
 
-  initProjectsStack();
-  initProjectDetailToggle();
+  initProjectsCarousel();
+
+  // ── End Projects ─────────────────────────────────────────────────────────
 
   // ── End About ────────────────────────────────────────────────────────────
 

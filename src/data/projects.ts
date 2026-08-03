@@ -4,46 +4,71 @@ export const projects: Project[] = [
   {
     id: "cashier",
     title: "Web Cashier System",
-    description: "A CRUD-based cashier website for learning transaction flow, admin UI, and database integration.",
-    overview: "This project was created to simulate a small business cashier workflow with product management, cart behavior, and transaction history.",
+    description: "CRUD cashier website with PHP, transaction flow & admin UI.",
+    overview: "A CRUD-based cashier website simulating a small business workflow — product management, cart behavior, and transaction history with a clean admin dashboard.",
     image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80",
-    techStack: ["PHP", "MySQL", "HTML"],
-    tags: ["CRUD", "UI Design", "Database"],
+    techStack: ["PHP", "MySQL", "HTML", "CSS"],
+    tags: ["CRUD", "Web", "2024"],
     year: 2024,
-    role: "Individu"
+    role: "Individual",
+    isWebsite: true,
+    liveUrl: "",
+    githubUrl: ""
+  },
+  {
+    id: "spatial",
+    title: "Spatial Analysis — QGIS",
+    description: "GIS-based choropleth mapping and regional data analysis.",
+    overview: "Used QGIS tools to process regional datasets and visualize spatial trends through choropleth maps, overlays, and thematic analysis with a final presentation report.",
+    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=900&q=80",
+    techStack: ["QGIS", "GIS", "Spatial"],
+    tags: ["GIS", "Mapping", "2023"],
+    year: 2023,
+    role: "Team",
+    isWebsite: false,
+    liveUrl: "",
+    githubUrl: ""
   },
   {
     id: "survey",
     title: "Satisfaction Survey App",
-    description: "A web app to collect feedback with a clean multi-step form and data summary table.",
-    overview: "Focused on form validation and user experience during data collection.",
+    description: "Multi-step survey web app with validation & data summary.",
+    overview: "A web app focused on form validation and UX during data collection. Includes a multi-step form flow, real-time feedback, and a summary table of aggregated responses.",
     image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=900&q=80",
-    techStack: ["Tailwind", "JavaScript", "PHP"],
-    tags: ["Form", "UX", "Data"],
+    techStack: ["PHP", "JavaScript", "Tailwind"],
+    tags: ["Form", "UX", "2023"],
     year: 2023,
-    role: "Individu"
+    role: "Individual",
+    isWebsite: true,
+    liveUrl: "",
+    githubUrl: ""
   },
-  {
-    id: "spatial",
-    title: "Spatial Analysis Project",
-    description: "A map-based analysis project for class, showing data processing, spatial thinking, and presentation.",
-    overview: "Used GIS tools to process data and visualize regional trends.",
-    image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80",
-    techStack: ["QGIS", "GIS", "Analysis"],
-    tags: ["Mapping", "Data processing"],
-    year: 2023,
-    role: "Team"
-  },
-  // Project ke-4 (akan disembunyikan awalnya oleh "Load More")
   {
     id: "admin",
     title: "Admin Dashboard Prototype",
-    description: "A dashboard prototype for admin-style workflows and data monitoring.",
-    overview: "Added later with the same expand pattern.",
+    description: "Dashboard prototype for admin-style workflows & monitoring.",
+    overview: "A dashboard prototype built to explore admin-style data monitoring, featuring data tables, chart placeholders, and responsive layout with a dark sidebar navigation.",
     image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=900&q=80",
-    techStack: ["TypeScript", "API", "Dashboard"],
-    tags: ["Prototype", "UI"],
+    techStack: ["TypeScript", "Chart.js", "CSS"],
+    tags: ["Dashboard", "UI", "2024"],
     year: 2024,
-    role: "Individu"
+    role: "Individual",
+    isWebsite: false,
+    liveUrl: "",
+    githubUrl: ""
+  },
+  {
+    id: "hospital",
+    title: "Hospital Management System",
+    description: "Patient & appointment management system for academic study.",
+    overview: "An academic simulation of a hospital information system covering patient registration, appointment scheduling, doctor management, and basic report generation.",
+    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=80",
+    techStack: ["Laravel", "PHP", "MySQL"],
+    tags: ["Laravel", "Web", "2024"],
+    year: 2024,
+    role: "Team",
+    isWebsite: true,
+    liveUrl: "",
+    githubUrl: ""
   }
 ];

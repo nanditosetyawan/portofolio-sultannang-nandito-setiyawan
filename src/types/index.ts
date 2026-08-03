@@ -9,7 +9,10 @@ export interface Project {
   techStack: string[];
   tags: string[];
   year: number;
-  role?: string; // e.g. "Individu" atau "Team"
+  role?: string;        // e.g. "Individual" atau "Team"
+  isWebsite?: boolean;  // true = open live preview iframe, false = gallery modal
+  liveUrl?: string;     // hosted URL for iframe
+  githubUrl?: string;   // GitHub / download link
 }
 
 export interface Achievement {

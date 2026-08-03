@@ -387,7 +387,6 @@
 
 }
 
-.extra-project,
 .extra-achieve{
 
     opacity:0;
@@ -397,7 +396,6 @@
 
 }
 
-.extra-project.show,
 .extra-achieve.show{
 
     opacity:1;

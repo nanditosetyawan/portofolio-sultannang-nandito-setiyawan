@@ -1527,6 +1527,37 @@ export const initApp = () => {
 
   initProjectsCarousel();
 
+  // ── Client Review Interactivity ──────────────────────────────────────────
+  const initReviewInteractivity = () => {
+    const container = document.querySelector('.review-marquee-container');
+    if (!container) return;
+
+    document.addEventListener('click', (e) => {
+      const clickedCard = (e.target as HTMLElement).closest('.review-card');
+      const allCards = document.querySelectorAll('.review-card');
+
+      if (clickedCard) {
+        e.stopPropagation();
+        // Remove highlight from all other cards
+        allCards.forEach(card => {
+          if (card !== clickedCard) {
+            card.classList.remove('is-highlighted');
+          }
+        });
+        // Add highlight to the clicked card
+        clickedCard.classList.add('is-highlighted');
+        // Pause all marquee movement
+        container.classList.add('is-paused');
+      } else {
+        // Clicked outside any review card: reset everything
+        allCards.forEach(card => card.classList.remove('is-highlighted'));
+        container.classList.remove('is-paused');
+      }
+    });
+  };
+
+  initReviewInteractivity();
+
   // ── End Projects ─────────────────────────────────────────────────────────
 
   // ── End About ────────────────────────────────────────────────────────────

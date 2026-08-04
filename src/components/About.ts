@@ -1,6 +1,7 @@
 import '../styles/about.css';
 import { getYearsInProgramming, HAPPY_CLIENTS, WORKING_PRINCIPLES } from '../data/about';
 import { projects } from '../data/projects';
+import { reviews } from '../data/review';
 
 /* ============================================================
    SKILL DATA
@@ -344,10 +345,9 @@ export const About = (): string => `
           <!-- Stat kanan: happy client -->
           <div class="about-wid-stat">
             <!--
-              ✏️ HAPPY CLIENTS: ubah HAPPY_CLIENTS di src/data/about.ts.
-                 Default 0. Struktur siap diisi kapan saja.
+              ✏️ HAPPY CLIENTS: Dihitung secara otomatis dari data review.tsx.
             -->
-            <span class="about-wid-num" id="statClients" data-counter data-target="${HAPPY_CLIENTS > 0 ? Math.min(HAPPY_CLIENTS, 99) : 0}" data-suffix="${HAPPY_CLIENTS > 0 ? '+' : ''}">${HAPPY_CLIENTS > 0 ? `${Math.min(HAPPY_CLIENTS, 99)}+` : '0'}</span>
+            <span class="about-wid-num" id="statClients" data-counter data-target="${reviews.length}" data-suffix="+">${reviews.length}+</span>
             <span class="about-wid-label">Happy<br>Clients</span>
           </div>
 

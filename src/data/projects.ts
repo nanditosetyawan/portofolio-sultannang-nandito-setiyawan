@@ -27,7 +27,49 @@ export const projects: Project[] = [
     role: "Team",
     isWebsite: false,
     liveUrl: "",
-    githubUrl: ""
+    githubUrl: "",
+    media: [
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=900&q=80",
+        caption: "Choropleth map — regional data visualization"
+      },
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&q=80",
+        caption: "Spatial overlay analysis"
+      },
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
+        caption: "Thematic analysis report"
+      },
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
+        caption: "Thematic analysis report"
+      },
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
+        caption: "Thematic analysis report"
+      },
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
+        caption: "Thematic analysis report"
+      },
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
+        caption: "Thematic analysis report"
+      },
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
+        caption: "Thematic analysis report"
+      }
+    ]
   },
   {
     id: "survey",
@@ -55,7 +97,24 @@ export const projects: Project[] = [
     role: "Individual",
     isWebsite: false,
     liveUrl: "",
-    githubUrl: ""
+    githubUrl: "",
+    media: [
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=900&q=80",
+        caption: "Dashboard overview — data monitoring interface"
+      },
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80",
+        caption: "Analytics charts and data tables"
+      },
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80",
+        caption: "Responsive layout — dark sidebar navigation"
+      }
+    ]
   },
   {
     id: "hospital",

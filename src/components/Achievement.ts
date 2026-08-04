@@ -1,7 +1,58 @@
 import '../styles/achievement.css';
 import { achievements } from '../data/achievements';
+import { reviews } from '../data/review';
+
 const reloadIcon = new URL('../assets/icons/reload.png', import.meta.url).href;
 const arrowListIcon = new URL('../assets/icons/arrowlist.png', import.meta.url).href;
+
+const renderStars = (rating: number, reviewIdx: number): string => {
+  let starsHTML = '';
+  for (let i = 1; i <= 5; i++) {
+    if (rating >= i) {
+      starsHTML += `
+        <svg class="review-star full" viewBox="0 0 24 24" width="16" height="16" fill="#428475">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+      `;
+    } else if (rating > i - 1) {
+      const fillPercent = (rating - (i - 1)) * 100;
+      const gradId = `starGrad-${reviewIdx}-${i}`;
+      starsHTML += `
+        <svg class="review-star partial" viewBox="0 0 24 24" width="16" height="16">
+          <defs>
+            <linearGradient id="${gradId}">
+              <stop offset="${fillPercent}%" stop-color="#428475"/>
+              <stop offset="${fillPercent}%" stop-color="#E8E1D7"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="url(#${gradId})"/>
+        </svg>
+      `;
+    } else {
+      starsHTML += `
+        <svg class="review-star empty" viewBox="0 0 24 24" width="16" height="16" fill="#E8E1D7">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+      `;
+    }
+  }
+  return `<div class="review-stars-wrap">${starsHTML}</div>`;
+};
+
+const renderReviewCard = (rev: typeof reviews[0], idx: number): string => {
+  return `
+    <div class="review-card">
+      <div class="review-card-header">
+        <div>
+          <h4 class="review-card-name">${rev.name}</h4>
+          <p class="review-card-institution">${rev.institution}</p>
+        </div>
+        ${renderStars(rev.rating, idx)}
+      </div>
+      <p class="review-card-comment">"${rev.comment}"</p>
+    </div>
+  `;
+};
 
 export const Achievement = (): string => {
   const renderList = achievements.map((ach, i) => {
@@ -63,6 +114,18 @@ export const Achievement = (): string => {
     `;
   }).join('');
 
+  // Sort reviews newest first (latest is at the bottom of the array, so we reverse it)
+  const sortedReviews = [...reviews].reverse();
+
+  // Duplicate the array to ensure seamless infinite looping marquee
+  const marqueeRow1HTML = [...sortedReviews, ...sortedReviews]
+    .map((rev, idx) => renderReviewCard(rev, idx))
+    .join('');
+
+  const marqueeRow2HTML = [...sortedReviews, ...sortedReviews]
+    .map((rev, idx) => renderReviewCard(rev, idx + 100))
+    .join('');
+
   return `
     <section id="achievements" class="stage alt relative section-wrap achievement-section">
       <div class="achievement-container">
@@ -75,25 +138,48 @@ export const Achievement = (): string => {
           ${renderList}
         </div>
 
-    ${achievements.length > 2 ? `
-<div class="section-arrow-wrapper reveal">
+        ${achievements.length > 2 ? `
+          <div class="section-arrow-wrapper reveal">
+            <button
+              id="achievementsToggle"
+              class="section-arrow"
+              data-tooltip="Load more achievements"
+              type="button"
+            >
+              <img
+                id="achievementsToggleIcon"
+                src="${reloadIcon}"
+                class="reload-icon"
+                alt="Reload"
+              >
+            </button>
+          </div>
+        ` : ''}
+      </div>
 
-<button
-    id="achievementsToggle"
-    class="section-arrow"
-    data-tooltip="Load more achievements"
-    type="button">
+      <!-- New client reviews section — 100px under certificate, padded 100px, darker background tone -->
+      <div class="review-section-wrap">
+        <div class="review-container">
+          <div class="review-header reveal">
+            <h2 class="font-cabinet review-title">Our Client</h2>
+          </div>
 
-        <img
-            id="achievementsToggleIcon"
-            src="${reloadIcon}"
-            class="reload-icon"
-            alt="Reload">
+          <div class="review-marquee-container">
+            <!-- Row 1: moves to the right -->
+            <div class="review-marquee-row">
+              <div class="review-marquee-track to-right">
+                ${marqueeRow1HTML}
+              </div>
+            </div>
 
-    </button>
-
-</div>
-` : ''}
+            <!-- Row 2: moves to the left -->
+            <div class="review-marquee-row">
+              <div class="review-marquee-track to-left">
+                ${marqueeRow2HTML}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   `;

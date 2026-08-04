@@ -18,7 +18,8 @@
     "noUnusedLocals": false, // Ubah ke false agar tidak error saat ada variabel yang belum dipakai (memudahkan development)
     "noUnusedParameters": false,
     "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "jsx": "preserve"
   },
   "include": ["src"]
 }

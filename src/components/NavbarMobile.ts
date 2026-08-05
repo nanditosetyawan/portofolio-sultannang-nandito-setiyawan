@@ -10,7 +10,7 @@ export const NavbarMobile = (): string => {
         <div class="flex items-center justify-between mb-8">
           <div class="font-cabinet text-xl font-extrabold tracking-tight">Nandito Setiyawan</div>
           <button id="closeSidebar" class="w-10 h-10 rounded-full border border-border flex items-center justify-center bg-surface/90 shadow-sm" aria-label="Close menu">
-            <span class="material-symbols-outlined">close</span>
+            <img id="closeSidebarIcon" src="${burgerLightIcon}" alt="Close" class="w-6 h-6 object-contain" data-light="${burgerLightIcon}" data-dark="${burgerDarkIcon}">
           </button>
         </div>
 

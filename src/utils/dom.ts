@@ -20,6 +20,7 @@ export const initApp = () => {
   const menuBtn = document.getElementById('menuBtn');
   const mobileSidebar = document.getElementById('mobileSidebar');
   const closeSidebar = document.getElementById('closeSidebar');
+  const closeSidebarIcon = document.getElementById('closeSidebarIcon') as HTMLImageElement | null;
   const sidebarBackdrop = document.getElementById('sidebarBackdrop');
 
   const sections = ['hero', 'about', 'projects', 'achievements', 'contact']
@@ -96,6 +97,14 @@ export const initApp = () => {
   };
   syncBurgerIcon();
 
+  // ── Mobile sidebar close icon: update to match current theme ─────────────
+  const syncCloseSidebarIcon = () => {
+    if (!closeSidebarIcon) return;
+    const isDark = document.documentElement.classList.contains('dark');
+    closeSidebarIcon.src = isDark ? burgerDarkIcon : burgerLightIcon;
+  };
+  syncCloseSidebarIcon();
+
   const syncNavbarState = () => {
     const scrolled = window.scrollY > 18;
 
@@ -146,6 +155,7 @@ export const initApp = () => {
       themeIcon.alt = isDark ? 'Dark mode' : 'Light mode';
     }
     syncBurgerIcon();
+    syncCloseSidebarIcon();
   });
 
   // Sidebar controls

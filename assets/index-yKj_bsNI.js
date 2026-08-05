@@ -22,7 +22,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         </div>
       </div>
     </header>
-  `,f=new URL(`/portofolio-sultannang-nandito-setiyawan/assets/burger_light-DDxQAe6J.png`,``+import.meta.url).href,p=new URL(`/portofolio-sultannang-nandito-setiyawan/assets/burger_dark-CYqhFF_W.png`,``+import.meta.url).href,m=()=>`
+  `,f=new URL(`/portofolio-sultannang-nandito-setiyawan/assets/burger_light-DROQrPL6.webp`,``+import.meta.url).href,p=new URL(`/portofolio-sultannang-nandito-setiyawan/assets/burger_dark-DMGG1aQ_.webp`,``+import.meta.url).href,m=()=>`
     <!-- Mobile Sidebar -->
     <div id="mobileSidebar" class="fixed inset-0 z-[80] hidden">
       <div id="sidebarBackdrop" class="absolute inset-0 bg-black/60 backdrop-blur-[2px] transition-opacity duration-300 opacity-0"></div>
@@ -30,7 +30,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         <div class="flex items-center justify-between mb-8">
           <div class="font-cabinet text-xl font-extrabold tracking-tight">Nandito Setiyawan</div>
           <button id="closeSidebar" class="w-10 h-10 rounded-full border border-border flex items-center justify-center bg-surface/90 shadow-sm" aria-label="Close menu">
-            <span class="material-symbols-outlined">close</span>
+            <img id="closeSidebarIcon" src="${f}" alt="Close" class="w-6 h-6 object-contain" data-light="${f}" data-dark="${p}">
           </button>
         </div>
 
@@ -58,7 +58,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
   `,h=()=>`
     ${d()}
     ${m()}
-  `,g={name:`Nandito Setiyawan`,badge:`Information Systems Student`,description:`I build clean, modern digital experiences through web development, design thinking, and project-based learning. This portfolio shows the work I have completed and the direction I am growing toward.`,resumeLink:`#`,whatsapp:`#`,instagram:`#`,github:`#`,linkedin:`#`,heroImages:[`https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80`,`https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1200&q=80`,`https://images.unsplash.com/photo-1507591064344-4c6ce005b128?auto=format&fit=crop&w=1200&q=80`,`https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=1200&q=80`,`https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=crop&w=1200&q=80`]},_=()=>`
+  `,g={name:`Nandito Setiyawan`,badge:`Information Systems Student`,description:`I build clean, modern digital experiences through web development, design thinking, and project-based learning. This portfolio shows the work I have completed and the direction I am growing toward.`,resumeLink:`#`,whatsapp:`#`,instagram:`#`,github:`#`,linkedin:`#`},_=()=>`
     <section id="hero" class="stage hero-section">
     <div class="hero-bg-fixed">
     <div class="hero-gradient-overlay"></div>
@@ -99,11 +99,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
               <div class="hero-photo-blob"></div>
               <div class="photo-stack" id="heroPhotoStack">
                 <div class="stack-label">Profile Slideshow</div>
-                ${g.heroImages.map((e,t)=>`
-                  <div class="stack-card pos-${t}" data-stack-card>
-                    <img src="${e}" alt="Portrait ${t+1}">
-                  </div>
-                `).join(``)}
+               
               </div>
             </div>
           </div>
@@ -142,7 +138,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
   <div class="about-skill-circle" title="${e.label}">
     ${e.src?`<img src="${e.src}" alt="${e.label}" class="about-skill-img" />`:`<!-- ✏️ Ganti baris ini dengan <img src="..." class="about-skill-img" /> saat icon tersedia -->
          <span class="about-skill-ph">${e.label}</span>`}
-  </div>`,O=[{idx:`01`,name:`Universitas Pembangunan Nasional "VETERAN" Yogyakarta`,major:`Sistem Informasi`,period:`2024 – sekarang`,desc:`Mempelajari sistem informasi, analisis data, dan teknologi informasi.`},{idx:`02`,name:`SMA Negeri 1 Kasihan`,major:`Ilmu Pengetahuan Sosial`,period:`2021 – 2024`,desc:`Mempelajari ilmu sosial, ekonomi, dan pengembangan diri.`}],k=`
+  </div>`,ee=[{idx:`01`,name:`Universitas Pembangunan Nasional "VETERAN" Yogyakarta`,major:`Sistem Informasi`,period:`2024 – sekarang`,desc:`Mempelajari sistem informasi, analisis data, dan teknologi informasi.`},{idx:`02`,name:`SMA Negeri 1 Kasihan`,major:`Ilmu Pengetahuan Sosial`,period:`2021 – 2024`,desc:`Mempelajari ilmu sosial, ekonomi, dan pengembangan diri.`}],O=`
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
        stroke="currentColor" stroke-width="2.2"
        stroke-linecap="round" stroke-linejoin="round">
@@ -150,19 +146,19 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
     <line x1="16" y1="2" x2="16" y2="6"/>
     <line x1="8" y1="2" x2="8" y2="6"/>
     <line x1="3" y1="10" x2="21" y2="10"/>
-  </svg>`,A=(e,t)=>`
+  </svg>`,k=(e,t)=>`
   <div class="about-edu-item" data-edu-index="${t}">
     <div class="about-edu-num">${e.idx}</div>
     <div class="about-edu-body">
       <h3 class="about-edu-name">${e.name}</h3>
       <div class="about-edu-major">${e.major}</div>
       <div class="about-edu-period">
-        ${k}
+        ${O}
         <span>${e.period}</span>
       </div>
       <p class="about-edu-desc">${e.desc}</p>
     </div>
-  </div>`,j=()=>`
+  </div>`,te=()=>`
   <section id="about" class="about-section">
 
     <!-- ══════════════════════════════════════════════════════
@@ -299,7 +295,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
           <!-- Item pendidikan — track bergerak translateY saat scroll -->
           <div class="about-edu-items">
             <div class="about-edu-items-track" id="aboutEduTrack">
-              ${O.map(A).join(``)}
+              ${ee.map(k).join(``)}
             </div>
           </div>
 
@@ -447,7 +443,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
     </div>
 
   </section>
-`,ee=e=>typeof e==`string`&&e.startsWith(`http`),M=e=>e.isWebsite===!0&&ee(e.liveUrl),N=e=>[`video`,`mp4`,`webm`].includes(e),P=e=>e===`pdf`,F=e=>{let t=e.techStack.map(e=>e.toLowerCase()),n=e.tags.map(e=>e.toLowerCase());return t.some(e=>[`qgis`,`gis`,`spatial`,`arcgis`].includes(e))?`GIS Project • Spatial Analysis`:t.some(e=>[`packet tracer`,`cisco`,`network`].includes(e))||n.some(e=>[`network`,`packet tracer`].includes(e))?`Network Simulation • Packet Tracer`:t.some(e=>[`android`,`kotlin`,`android studio`].includes(e))?`Android Application • Mobile Preview`:t.some(e=>[`figma`,`ui`,`ux`,`design`].includes(e))?`UI/UX Design • Figma Prototype`:t.some(e=>[`c++`,`c`,`java`].includes(e))?`Desktop Application Preview`:n.some(e=>[`pdf`,`documentation`,`docs`,`report`].includes(e))?`Project Documentation Preview`:`Local Project • Screenshots / Demo Preview`},I=e=>e.media&&e.media.length>0?e.media:[{type:`image`,src:e.image}],te=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`,ne=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`,re=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,ie=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,L=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,R=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,z=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,B=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,V=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,H=`<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,U=`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,ae=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.55"/></svg>`,W=(e,t)=>`
+`,A=e=>typeof e==`string`&&e.startsWith(`http`),ne=e=>e.isWebsite===!0&&A(e.liveUrl),j=e=>[`video`,`mp4`,`webm`].includes(e),M=e=>e===`pdf`,N=e=>{let t=e.techStack.map(e=>e.toLowerCase()),n=e.tags.map(e=>e.toLowerCase());return t.some(e=>[`qgis`,`gis`,`spatial`,`arcgis`].includes(e))?`GIS Project • Spatial Analysis`:t.some(e=>[`packet tracer`,`cisco`,`network`].includes(e))||n.some(e=>[`network`,`packet tracer`].includes(e))?`Network Simulation • Packet Tracer`:t.some(e=>[`android`,`kotlin`,`android studio`].includes(e))?`Android Application • Mobile Preview`:t.some(e=>[`figma`,`ui`,`ux`,`design`].includes(e))?`UI/UX Design • Figma Prototype`:t.some(e=>[`c++`,`c`,`java`].includes(e))?`Desktop Application Preview`:n.some(e=>[`pdf`,`documentation`,`docs`,`report`].includes(e))?`Project Documentation Preview`:`Local Project • Screenshots / Demo Preview`},P=e=>e.media&&e.media.length>0?e.media:[{type:`image`,src:e.image}],F=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`,I=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`,re=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,ie=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,ae=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,oe=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,L=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,R=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,z=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,B=`<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,V=`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,H=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.55"/></svg>`,U=(e,t)=>`
     <div class="proj-card" data-proj-idx="${t}" data-proj-id="${e.id}">
       <!-- Thumbnail -->
       <div class="proj-card-thumb">
@@ -476,15 +472,15 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
       <!-- CTA -->
       <div class="proj-card-footer">
         <button class="proj-see-btn" data-proj-open="${e.id}" type="button">
-          see ${L}
+          see ${ae}
         </button>
       </div>
     </div>
-  `,oe=()=>x.map((e,t)=>`
+  `,se=()=>x.map((e,t)=>`
     <button class="proj-dot${t===0?` is-active`:``}" data-proj-dot="${t}" type="button" aria-label="Go to project ${t+1}"></button>
-  `).join(``),G=[...new Set(x.flatMap(e=>e.techStack))].slice(0,8),se=[...new Set(x.map(e=>String(e.year)))].sort((e,t)=>Number(t)-Number(e)),ce=[...new Set(x.map(e=>e.role||`Individual`))],K=(e,t)=>e.map(e=>`
+  `).join(``),W=[...new Set(x.flatMap(e=>e.techStack))].slice(0,8),ce=[...new Set(x.map(e=>String(e.year)))].sort((e,t)=>Number(t)-Number(e)),G=[...new Set(x.map(e=>e.role||`Individual`))],K=(e,t)=>e.map(e=>`
     <button class="proj-filter-opt" data-filter-group="${t}" data-filter-val="${e}" type="button">${e}</button>
-  `).join(``),q=(e,t)=>N(e.type)?`
+  `).join(``),le=(e,t)=>j(e.type)?`
       <video
         class="proj-modal-main-video"
         id="modalMainPreview-${t}"
@@ -493,9 +489,9 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         preload="metadata"
         aria-label="Video preview"
       ></video>
-    `:P(e.type)?`
+    `:M(e.type)?`
       <div class="proj-modal-pdf-preview" id="modalMainPreview-${t}" data-pdf-src="${e.src}">
-        <div class="proj-modal-pdf-icon">${U}</div>
+        <div class="proj-modal-pdf-icon">${V}</div>
         <span class="proj-modal-pdf-label">PDF Document</span>
         <a href="${e.src}" target="_blank" rel="noopener noreferrer" class="proj-modal-pdf-open-btn">Open PDF</a>
       </div>
@@ -507,7 +503,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
       alt="Preview"
       draggable="false"
     >
-  `,J=(e,t,n,r)=>{let i=r?` is-active`:``,a=`
+  `,ue=(e,t,n,r)=>{let i=r?` is-active`:``,a=`
     (function(el){
       var strip = el.parentElement;
       strip.querySelectorAll('.proj-modal-thumb').forEach(function(t){ t.classList.remove('is-active'); });
@@ -516,37 +512,37 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
       if(!wrap) return;
       var mainWrap = wrap.querySelector('.proj-modal-main-preview-wrap');
       if(!mainWrap) return;
-      mainWrap.innerHTML = ${JSON.stringify(q(e,n))};
+      mainWrap.innerHTML = ${JSON.stringify(le(e,n))};
     })(this)
-  `.replace(/\s+/g,` `).trim();if(e.thumbnail){let n=``;return N(e.type)?n=`<div class="proj-modal-thumb-badge-icon">${H}</div>`:P(e.type)&&(n=`<div class="proj-modal-thumb-badge-icon">${U}</div>`),`
+  `.replace(/\s+/g,` `).trim();if(e.thumbnail){let n=``;return j(e.type)?n=`<div class="proj-modal-thumb-badge-icon">${B}</div>`:M(e.type)&&(n=`<div class="proj-modal-thumb-badge-icon">${V}</div>`),`
       <div class="proj-modal-thumb${i}" onclick="${a.replace(/"/g,`&quot;`)}" title="${e.type.toUpperCase()} ${t+1}">
         <img src="${e.thumbnail}" alt="Thumbnail ${t+1}" loading="lazy">
         ${n}
       </div>
-    `}return N(e.type)?`
+    `}return j(e.type)?`
       <div class="proj-modal-thumb${i}" onclick="${a.replace(/"/g,`&quot;`)}" title="Video ${t+1}">
         <video src="${e.src}#t=0.5" muted playsinline preload="metadata" class="proj-modal-thumb-mini-video"></video>
-        <div class="proj-modal-thumb-video-icon">${H}</div>
+        <div class="proj-modal-thumb-video-icon">${B}</div>
       </div>
-    `:P(e.type)?`
+    `:M(e.type)?`
       <div class="proj-modal-thumb${i}" onclick="${a.replace(/"/g,`&quot;`)}" title="PDF ${t+1}">
-        <div class="proj-modal-thumb-pdf-icon">${U}</div>
+        <div class="proj-modal-thumb-pdf-icon">${V}</div>
       </div>
     `:`
     <div class="proj-modal-thumb${i}" onclick="${a.replace(/"/g,`&quot;`)}" title="Image ${t+1}">
       <img src="${e.src}" alt="Thumbnail ${t+1}" loading="lazy">
     </div>
-  `},le=e=>{let t=I(e),n=F(e),r=t[0];if(t.length===0)return`
+  `},q=e=>{let t=P(e),n=N(e),r=t[0];if(t.length===0)return`
       <div class="proj-modal-local-empty">
-        ${V}
+        ${z}
         <span>No preview available for this project</span>
       </div>
-    `;let i=t.map((t,n)=>J(t,n,e.id,n===0)).join(``);return`
+    `;let i=t.map((t,n)=>ue(t,n,e.id,n===0)).join(``);return`
     <div class="proj-modal-gallery-body">
       <!-- Main large preview -->
       <div class="proj-modal-main-preview-wrap">
-        ${q(r,e.id)}
-        ${N(r.type)?``:`
+        ${le(r,e.id)}
+        ${j(r.type)?``:`
           ${r.caption,``}
         `}
       </div>
@@ -556,14 +552,14 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
 
       <!-- Caption -->
       <div class="proj-modal-local-badge">
-        ${V}
+        ${z}
         <span>${n}</span>
       </div>
     </div>
-  `},ue=()=>x.map(e=>{let t=M(e),n=e.isWebsite?`
+  `},J=()=>x.map(e=>{let t=ne(e),n=e.isWebsite?`
       <div class="proj-modal-addrbar-wrap">
         <div class="proj-modal-addrbar">
-          ${z}
+          ${L}
           <span>${e.liveUrl||`https://${e.id}.nanditosetyawan.dev`}</span>
         </div>
       </div>
@@ -575,7 +571,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
           loading="lazy"
         ></iframe>
       </div>
-    `:le(e),i=e.githubUrl||`https://github.com/nanditosetyawan`;return`
+    `:q(e),i=e.githubUrl||`https://github.com/nanditosetyawan`;return`
   <div class="proj-modal-overlay" id="projModal-${e.id}" role="dialog" aria-modal="true" aria-label="${e.title}">
     <div class="proj-modal-window">
 
@@ -610,7 +606,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             class="proj-modal-dl-btn"
             aria-label="Download source (GitHub)"
           >
-            ${B}
+            ${R}
             <span class="proj-tooltip">Download source (GitHub)</span>
           </a>
           <button
@@ -619,7 +615,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             type="button"
             aria-label="Close preview"
           >
-            ${R}
+            ${oe}
             <span class="proj-tooltip proj-tooltip--close">Close preview</span>
           </button>
         </div>
@@ -647,7 +643,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
       </div>
     </div>
   </div>
-  `}).join(``),Y=()=>`
+  `}).join(``),de=()=>`
   <section id="projects" class="projects-section">
     <div class="projects-inner">
 
@@ -670,21 +666,21 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
 
         <!-- Prev / Next -->
         <button class="proj-nav-btn proj-nav-prev" id="projNavPrev" type="button" aria-label="Previous project">
-          ${te}
+          ${F}
         </button>
         <button class="proj-nav-btn proj-nav-next" id="projNavNext" type="button" aria-label="Next project">
-          ${ne}
+          ${I}
         </button>
 
         <!-- Cards track: perspective enables 3D rotateY on side cards -->
         <div class="proj-cards-track" id="projCardsTrack" style="perspective: 1400px; perspective-origin: center center;">
-          ${x.map((e,t)=>W(e,t)).join(``)}
+          ${x.map((e,t)=>U(e,t)).join(``)}
         </div>
       </div>
 
       <!-- Dots -->
       <div class="proj-dots" id="projDots" role="tablist" aria-label="Projects carousel">
-        ${oe()}
+        ${se()}
       </div>
 
       <!-- Bottom bar: Search + Filter -->
@@ -711,7 +707,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
           <div class="proj-filter-ctrl">
             <!-- Reset side -->
             <button class="proj-filter-reset-btn" id="projFilterReset" type="button" aria-label="Reset filters">
-              ${ae}
+              ${H}
             </button>
             <!-- Divider -->
             <span class="proj-filter-sep" aria-hidden="true"></span>
@@ -725,21 +721,21 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
           <div class="proj-filter-panel" id="projFilterPanel" role="listbox">
             <span class="proj-filter-section-label">Language / Stack</span>
             <div class="proj-filter-group-scroll scroll-tech">
-              ${K(G,`tech`)}
+              ${K(W,`tech`)}
             </div>
 
             <div class="proj-filter-divider"></div>
 
             <span class="proj-filter-section-label">Year</span>
             <div class="proj-filter-group-scroll scroll-year">
-              ${K(se,`year`)}
+              ${K(ce,`year`)}
             </div>
 
             <div class="proj-filter-divider"></div>
 
             <span class="proj-filter-section-label">Type</span>
             <div class="proj-filter-group-scroll scroll-role">
-              ${K(ce,`role`)}
+              ${K(G,`role`)}
             </div>
           </div>
         </div>
@@ -748,9 +744,9 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
     </div>
 
     <!-- Project detail modals (one per project) -->
-    ${ue()}
+    ${J()}
   </section>
-`,X=(e,t,n)=>{let r=`<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFFDF8"/><stop offset="100%" stop-color="#FCF8F1"/></linearGradient></defs><rect width="1600" height="1100" fill="url(#g)"/><rect x="60" y="60" width="1480" height="980" fill="none" stroke="#E8E1D7" stroke-width="4"/><text x="800" y="450" font-family="sans-serif" font-size="110" font-weight="800" fill="#1A312C" text-anchor="middle" letter-spacing="-2">${e}</text><text x="800" y="560" font-family="sans-serif" font-size="52" font-weight="600" fill="#428475" text-anchor="middle" letter-spacing="4">${t}</text><text x="800" y="700" font-family="sans-serif" font-size="40" font-weight="500" fill="#53645F" text-anchor="middle" letter-spacing="8">${n}</text></svg>`;return`data:image/svg+xml;charset=UTF-8,`+encodeURIComponent(r)},Z=[{id:`azure`,title:`Official Practice Question Set: AWS Certified Cloud Practitioner (CLF-C02 Bahasa Indonesia)`,description:`A certificate that reflects growing familiarity with cloud concepts, service models, and basic deployment thinking.`,details:`The certification shows initiative in learning cloud fundamentals and complements web development work with broader technical awareness.`,year:2025,tags:[`Certificate`,`2025`],certificates:[new URL(`/portofolio-sultannang-nandito-setiyawan/assets/Official%20Practice%20Question%20Set-DZQnFWXl.jpg`,``+import.meta.url).href],image:new URL(`/portofolio-sultannang-nandito-setiyawan/assets/AWS-BxCWrVfX.jpeg`,``+import.meta.url).href,issuedAt:`12 Mei 2026`},{id:`workshop`,title:`Frontend Workshop Participation`,description:`Completed an intensive frontend engineering workshop.`,details:`The details can be updated later with actual documentation or a certificate image.`,year:2024,tags:[`Workshop`,`2024`],certificates:[X(`WORKSHOP`,`Frontend Practice`,`Participation`)]},{id:`presentation`,title:`Public Speaking Session`,description:`A public speaking and project presentation seminar.`,details:`Focusing on communication and clarity.`,year:2023,tags:[`Seminar`,`2023`],certificates:[X(`CAMPUS`,`Project Presentation`,`Recognition`)]}],Q=new URL(`/portofolio-sultannang-nandito-setiyawan/assets/reload-CPAj83QN.png`,``+import.meta.url).href,$=new URL(`data:image/png;base64,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`,``+import.meta.url).href,de=(e,t)=>{let n=``;for(let r=1;r<=5;r++)if(e>=r)n+=`
+`,Y=(e,t,n)=>{let r=`<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFFDF8"/><stop offset="100%" stop-color="#FCF8F1"/></linearGradient></defs><rect width="1600" height="1100" fill="url(#g)"/><rect x="60" y="60" width="1480" height="980" fill="none" stroke="#E8E1D7" stroke-width="4"/><text x="800" y="450" font-family="sans-serif" font-size="110" font-weight="800" fill="#1A312C" text-anchor="middle" letter-spacing="-2">${e}</text><text x="800" y="560" font-family="sans-serif" font-size="52" font-weight="600" fill="#428475" text-anchor="middle" letter-spacing="4">${t}</text><text x="800" y="700" font-family="sans-serif" font-size="40" font-weight="500" fill="#53645F" text-anchor="middle" letter-spacing="8">${n}</text></svg>`;return`data:image/svg+xml;charset=UTF-8,`+encodeURIComponent(r)},X=[{id:`azure`,title:`Official Practice Question Set: AWS Certified Cloud Practitioner (CLF-C02 Bahasa Indonesia)`,description:`A certificate that reflects growing familiarity with cloud concepts, service models, and basic deployment thinking.`,details:`The certification shows initiative in learning cloud fundamentals and complements web development work with broader technical awareness.`,year:2025,tags:[`Certificate`,`2025`],certificates:[new URL(`/portofolio-sultannang-nandito-setiyawan/assets/Official%20Practice%20Question%20Set-E6RMHTZ4.webp`,``+import.meta.url).href],image:new URL(`/portofolio-sultannang-nandito-setiyawan/assets/AWS-5J7aZdO_.webp`,``+import.meta.url).href,issuedAt:`12 Mei 2026`},{id:`workshop`,title:`Frontend Workshop Participation`,description:`Completed an intensive frontend engineering workshop.`,details:`The details can be updated later with actual documentation or a certificate image.`,year:2024,tags:[`Workshop`,`2024`],certificates:[Y(`WORKSHOP`,`Frontend Practice`,`Participation`)]},{id:`presentation`,title:`Public Speaking Session`,description:`A public speaking and project presentation seminar.`,details:`Focusing on communication and clarity.`,year:2023,tags:[`Seminar`,`2023`],certificates:[Y(`CAMPUS`,`Project Presentation`,`Recognition`)]}],fe=new URL(`/portofolio-sultannang-nandito-setiyawan/assets/reload-CPAj83QN.png`,``+import.meta.url).href,Z=new URL(`data:image/png;base64,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`,``+import.meta.url).href,Q=(e,t)=>{let n=``;for(let r=1;r<=5;r++)if(e>=r)n+=`
         <svg class="review-star full" viewBox="0 0 24 24" width="18" height="18" fill="#FFD700">
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
         </svg>
@@ -768,18 +764,18 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         <svg class="review-star empty" viewBox="0 0 24 24" width="18" height="18" fill="#E8E1D7">
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
         </svg>
-      `;return`<div class="review-stars-wrap">${n}</div>`},fe=(e,t)=>`
+      `;return`<div class="review-stars-wrap">${n}</div>`},$=(e,t)=>`
     <div class="review-card">
       <div class="review-card-header">
         <div>
           <h4 class="review-card-name">${e.name}</h4>
           <p class="review-card-institution">${e.institution}</p>
         </div>
-        ${de(e.rating,t)}
+        ${Q(e.rating,t)}
       </div>
       <p class="review-card-comment">"${e.comment}"</p>
     </div>
-  `,pe=()=>{let e=Z.map((e,t)=>{let n=t>=2?`hidden extra-achieve`:``,r=e.certificates.length>1?`${e.certificates.length} FILES`:`PREVIEW`;return`
+  `,pe=()=>{let e=X.map((e,t)=>{let n=t>=2?`hidden extra-achieve`:``,r=e.certificates.length>1?`${e.certificates.length} FILES`:`PREVIEW`;return`
       <article class="accordion elevated achievement-item ${n}" data-accordion>
         <button class="achievement-btn" data-accordion-btn>
           <div class="achievement-logo-wrapper">
@@ -794,7 +790,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             <p class="achievement-desc">${e.description}</p>
           </div>
           <div class="achievement-toggle">
-            <img src="${$}" class="chev achievement-chev" alt="Toggle">
+            <img src="${Z}" class="chev achievement-chev" alt="Toggle">
           </div>
         </button>
 
@@ -831,7 +827,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
           </div>
         </div>
       </article>
-    `}).join(``),t=[...S].reverse(),n=[...t,...t].map((e,t)=>fe(e,t)).join(``),r=[...t,...t].map((e,t)=>fe(e,t+100)).join(``);return`
+    `}).join(``),t=[...S].reverse(),n=[...t,...t].map((e,t)=>$(e,t)).join(``),r=[...t,...t].map((e,t)=>$(e,t+100)).join(``);return`
     <section id="achievements" class="stage alt relative section-wrap achievement-section">
       <div class="achievement-container">
         <div class="achievement-header reveal">
@@ -843,7 +839,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
           ${e}
         </div>
 
-        ${Z.length>2?`
+        ${X.length>2?`
           <div class="section-arrow-wrapper reveal">
             <button
               id="achievementsToggle"
@@ -853,7 +849,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             >
               <img
                 id="achievementsToggleIcon"
-                src="${Q}"
+                src="${fe}"
                 class="reload-icon"
                 alt="Reload"
               >
@@ -928,7 +924,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
       © ${new Date().getFullYear()} Nandito Setiyawan. Designed with precision.
     </div>
   </footer>
-`,he=`/portofolio-sultannang-nandito-setiyawan/assets/reload-CPAj83QN.png`,ge=`/portofolio-sultannang-nandito-setiyawan/assets/back_load-CEEf4z4X.png`,_e=`/portofolio-sultannang-nandito-setiyawan/assets/white_mode-C2emF1m6.png`,ve=`/portofolio-sultannang-nandito-setiyawan/assets/dark_mode-BcUgIVO5.png`,ye=`/portofolio-sultannang-nandito-setiyawan/assets/burger_light-DDxQAe6J.png`,be=`/portofolio-sultannang-nandito-setiyawan/assets/burger_dark-CYqhFF_W.png`,xe=`modulepreload`,Se=function(e){return`/portofolio-sultannang-nandito-setiyawan/`+e},Ce={},we=function(e,t,n){let r=Promise.resolve();if(t&&t.length>0){let e=document.getElementsByTagName(`link`),i=document.querySelector(`meta[property=csp-nonce]`),a=i?.nonce||i?.getAttribute(`nonce`);function o(e){return Promise.all(e.map(e=>Promise.resolve(e).then(e=>({status:`fulfilled`,value:e}),e=>({status:`rejected`,reason:e}))))}function s(e){return import.meta.resolve?import.meta.resolve(e):new URL(e,new URL(`../../../src/node/plugins/importAnalysisBuild.ts`,import.meta.url)).href}r=o(t.map(t=>{if(t=Se(t,n),t=s(t),t in Ce)return;Ce[t]=!0;let r=t.endsWith(`.css`);for(let n=e.length-1;n>=0;n--){let i=e[n];if(i.href===t&&(!r||i.rel===`stylesheet`))return}let i=document.createElement(`link`);if(i.rel=r?`stylesheet`:xe,r||(i.as=`script`),i.crossOrigin=``,i.href=t,a&&i.setAttribute(`nonce`,a),document.head.appendChild(i),r)return new Promise((e,n)=>{i.addEventListener(`load`,e),i.addEventListener(`error`,()=>n(Error(`Unable to preload CSS for ${t}`)))})}))}function i(e){let t=new Event(`vite:preloadError`,{cancelable:!0});if(t.payload=e,window.dispatchEvent(t),!t.defaultPrevented)throw e}return r.then(t=>{for(let e of t||[])e.status===`rejected`&&i(e.reason);return e().catch(i)})},Te=()=>{let e=document.getElementById(`topNav`),t=document.getElementById(`mobileNav`),n=document.getElementById(`mobileNavShell`),r=document.getElementById(`mobileBurgerBtn`),i=document.getElementById(`mobileBurgerIcon`),a=document.getElementById(`navShell`),o=document.getElementById(`desktopNav`),s=document.getElementById(`navActivePill`),l=Array.from(document.querySelectorAll(`[data-nav-link]`)),u=document.getElementById(`themeToggle`),d=document.getElementById(`themeIcon`),f=document.getElementById(`menuBtn`),p=document.getElementById(`mobileSidebar`),m=document.getElementById(`closeSidebar`),h=document.getElementById(`sidebarBackdrop`),g=[`hero`,`about`,`projects`,`achievements`,`contact`].map(e=>document.getElementById(e)).filter(e=>!!e),_=()=>{p&&(p.classList.remove(`hidden`),p.classList.add(`block`),requestAnimationFrame(()=>{let e=document.getElementById(`sidebarBackdrop`),t=document.getElementById(`sidebarContent`);e&&(e.classList.remove(`opacity-0`),e.classList.add(`opacity-100`)),t&&(t.classList.remove(`-translate-x-full`),t.classList.add(`translate-x-0`))}),document.body.classList.add(`overflow-hidden`))},v=()=>{if(!p)return;let e=document.getElementById(`sidebarBackdrop`),t=document.getElementById(`sidebarContent`);e&&(e.classList.remove(`opacity-100`),e.classList.add(`opacity-0`)),t&&(t.classList.remove(`translate-x-0`),t.classList.add(`-translate-x-full`)),setTimeout(()=>{p.classList.add(`hidden`),p.classList.remove(`block`)},300),document.body.classList.remove(`overflow-hidden`)},y=e=>{let t=document.getElementById(e);if(!t)return;let n=e===`hero`?0:window.scrollY+t.getBoundingClientRect().top;window.scrollTo({top:Math.max(n,0),behavior:`smooth`})},b=Array.from(document.querySelectorAll(`#desktopNav [data-nav-link]`)),x=()=>{i&&(i.src=document.documentElement.classList.contains(`dark`)?be:ye)};x();let S=()=>{let e=window.scrollY>18;if(a&&a.classList.toggle(`is-scrolled`,e),n){n.classList.toggle(`is-scrolled`,e);let t=window.scrollY===0;n.classList.toggle(`at-top`,t)}window.scrollY===0&&ne()};l.forEach(e=>{e.addEventListener(`click`,t=>{let n=e.getAttribute(`href`);if(!n?.startsWith(`#`))return;t.preventDefault();let r=n.slice(1);D(r),v(),y(r)})}),document.getElementById(`aboutWidCta`)?.addEventListener(`click`,e=>{e.preventDefault(),D(`contact`),y(`contact`)}),u?.addEventListener(`click`,()=>{let e=document.documentElement.classList.toggle(`dark`);d&&(d.src=e?ve:_e,d.alt=e?`Dark mode`:`Light mode`),x()}),f?.addEventListener(`click`,_),r?.addEventListener(`click`,_),m?.addEventListener(`click`,v),h?.addEventListener(`click`,v);let C=document.querySelectorAll(`.reveal`),w=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add(`in`)})},{threshold:.12});C.forEach(e=>w.observe(e));let T=`hero`,E=()=>{if(!o||!s||b.length===0)return;let e=window.innerHeight*.35,t=window.innerHeight*.1,n=0,r=0,i=0,a=0;for(let n=0;n<g.length;n++)g[n].getBoundingClientRect().top<=e+t&&(a=n);n=a,r=a;for(let a=1;a<g.length;a++){let o=g[a].getBoundingClientRect().top;if(o>e-t&&o<e+t){n=a-1,r=a,i=1-(o-(e-t))/(2*t);break}}window.innerHeight+window.scrollY>=document.body.offsetHeight-10&&(n=g.length-1,r=g.length-1,i=0);let c=o.getBoundingClientRect(),u=b[n].getBoundingClientRect(),d=b[r].getBoundingClientRect(),f=u.left-c.left,p=f+u.width,m=d.left-c.left,h=m+d.width,_=f,v=p;if(m>f){let e=Math.min(1,i*2),t=Math.max(0,(i-.5)*2);_=f+(m-f)*t,v=p+(h-p)*e}else if(m<f){let e=Math.min(1,i*2),t=Math.max(0,(i-.5)*2);_=f-(f-m)*e,v=p-(p-h)*t}let y=v-_;s.style.transition=`none`,s.style.transform=`translateX(${_}px)`,s.style.width=`${y}px`,s.style.opacity=`1`;let x=g[i<.5?n:r].id;x!==T&&(T=x,l.forEach(e=>{e.classList.toggle(`active`,e.getAttribute(`href`)===`#${T}`)}))};window.addEventListener(`scroll`,()=>{requestAnimationFrame(E)},{passive:!0}),setTimeout(()=>requestAnimationFrame(E),100);let D=e=>{l.forEach(t=>{t.classList.toggle(`active`,t.getAttribute(`href`)===`#${e}`)})};D(`hero`);let O=document.getElementById(`hero`),k=O?.querySelector(`.hero-bg-fixed`),A=O?.querySelector(`.hero-container`),j=e=>{if(!O)return;let t=O.offsetHeight;if(k&&(k.style.opacity=e>t?`0`:`1`),e<=t+100&&A){let n=t*.78,r=t*1.05,i=Math.min(Math.max((e-n)/(r-n),0),1);A.style.opacity=`${1-i}`,A.style.transform=`translateY(${-Math.max(0,e-n)*.25}px)`}},ee=0,M=window.scrollY,N=!1,P=0,F=null,I=null,te=()=>{N||(N=!0,e?.classList.add(`nav-hidden`),t?.classList.add(`nav-hidden`))},ne=()=>{N&&(N=!1,e?.classList.remove(`nav-hidden`),t?.classList.remove(`nav-hidden`))},re=()=>{P=0,F=null,I&&=(clearTimeout(I),null)},ie=()=>{I&&clearTimeout(I),I=setTimeout(()=>{re()},1200)};window.addEventListener(`scroll`,()=>{ee||=window.requestAnimationFrame(()=>{let e=window.scrollY,t=e>M;if(e<M)re(),ne();else if(t&&e>80){let e=Date.now();F!==null&&(P+=e-F),F=e,ie(),P>=1800&&te()}M=e,j(e),S(),ee=0})},{passive:!0}),window.addEventListener(`resize`,()=>{S(),j(window.scrollY)}),S(),j(window.scrollY),document.querySelectorAll(`[data-accordion]`).forEach(e=>{let t=e.querySelector(`[data-accordion-btn]`),n=e.querySelector(`.accordion-body`),r=e.querySelector(`.chev`),i=!1,a=()=>{n&&n.classList.toggle(`hidden`,!i),r&&(r.style.transform=i?`rotate(180deg)`:`rotate(0deg)`),t?.setAttribute(`aria-expanded`,String(i))};a(),t?.addEventListener(`click`,()=>{r&&r.classList.add(`spin`),window.setTimeout(()=>{i=!i,a(),r&&r.classList.remove(`spin`)},280)})}),((e,t)=>{let n=document.getElementById(e),r=document.getElementById(`${e}Icon`);if(!n||!r)return;let i=Array.from(document.querySelectorAll(t)),a=0;n.addEventListener(`click`,()=>{if(r.classList.add(`spin`),a>=i.length)i.forEach(e=>{e.classList.remove(`show`)}),setTimeout(()=>{i.forEach(e=>{e.classList.add(`hidden`)}),r.src=he,r.classList.remove(`spin`)},550),a=0;else{let e=Math.min(a+3,i.length);setTimeout(()=>{for(let t=a;t<e;t++){let e=i[t];e.classList.remove(`hidden`),e.offsetWidth,setTimeout(()=>{e.classList.add(`show`)},(t-a)*220)}a=e,a===i.length&&(r.src=ge)},250),setTimeout(()=>{r.classList.remove(`spin`)},650)}})})(`achievementsToggle`,`.extra-achieve`),document.querySelectorAll(`.certificate-stage`).forEach(e=>{let t=e.getAttribute(`data-cert-images`);if(!t)return;let n=[];try{n=JSON.parse(t)}catch{n=[]}if(!n.length)return;let r=e.getAttribute(`data-cert-title`)||`Certificate`,i=e.querySelector(`.cert-img`),a=e.querySelector(`.download-btn`),o=e.querySelector(`.carousel-prev`),s=e.querySelector(`.carousel-next`),l=e.querySelector(`[data-preview-btn]`),u=e.closest(`[data-accordion]`)?.querySelector(`[data-download-btn]`),d=0,f=e=>{i&&(i.src=n[e],i.style.opacity=`1`)};if(n.length>1&&i){o?.classList.remove(`hidden`),s?.classList.remove(`hidden`);let e=window.setInterval(()=>{i&&(i.style.opacity=`0`,window.setTimeout(()=>{d=(d+1)%n.length,f(d)},280))},5e3);o?.addEventListener(`click`,t=>{t.stopPropagation(),clearInterval(e),d=(d-1+n.length)%n.length,f(d)}),s?.addEventListener(`click`,t=>{t.stopPropagation(),clearInterval(e),d=(d+1)%n.length,f(d)})}else o?.classList.add(`hidden`),s?.classList.add(`hidden`),f(0);l?.addEventListener(`click`,e=>{if(e.stopPropagation(),!(window.innerWidth<768))return;let t=n[d];if(!t)return;let r=document.createElement(`div`);r.className=`fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-[2px] p-4 animate-fade-in`;let i=document.createElement(`img`);i.src=t,i.className=`max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl animate-zoom-in`;let a=document.createElement(`button`);a.className=`absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white z-10 transition`,a.innerHTML=`<span class="material-symbols-outlined text-[28px]">close</span>`,a.setAttribute(`aria-label`,`Close preview`),r.appendChild(i),r.appendChild(a),document.body.appendChild(r),document.body.classList.add(`overflow-hidden`);let o=()=>{r.classList.add(`animate-fade-out`),i.classList.add(`animate-zoom-out`),setTimeout(()=>{r.remove(),document.body.classList.remove(`overflow-hidden`)},250)};a.addEventListener(`click`,o),r.addEventListener(`click`,e=>{e.target===r&&o()})});let p=e=>{if(e.startsWith(`data:`))return{"image/jpeg":`jpg`,"image/jpg":`jpg`,"image/png":`png`,"image/webp":`webp`,"image/gif":`gif`,"image/svg+xml":`svg`}[e.split(`;`)[0].split(`:`)[1]||``]??`jpg`;try{return(new URL(e).pathname.split(`.`).pop()?.toLowerCase()??``)||`jpg`}catch{return(e.split(`?`)[0].split(`.`).pop()?.toLowerCase()??``)||`jpg`}},m=e=>{if(e.startsWith(`data:`)){let[t,n]=e.split(`,`),r=t.split(`:`)[1].split(`;`)[0];if(t.includes(`;base64`)){let e=atob(n),t=new Uint8Array(e.length);for(let n=0;n<e.length;n++)t[n]=e.charCodeAt(n);return Promise.resolve(new Blob([t],{type:r}))}else{let e=decodeURIComponent(n);return Promise.resolve(new Blob([e],{type:r}))}}return fetch(e).then(e=>e.blob())},h=async e=>{if(e.stopPropagation(),n.length===1){let e=n[0],t=p(e),i=await m(e),a=URL.createObjectURL(i),o=document.createElement(`a`);o.href=a,o.download=`${r}.${t}`,document.body.appendChild(o),o.click(),o.remove(),URL.revokeObjectURL(a)}else{let e=(await we(async()=>{let{default:e}=await import(`./jszip.min-BM5YGekf.js`).then(e=>c(e.default,1));return{default:e}},[])).default,t=new e;await Promise.all(n.map(async(e,n)=>{let i=p(e),a=await m(e);t.file(`${r}_${n+1}.${i}`,a)}));let i=await t.generateAsync({type:`blob`}),a=URL.createObjectURL(i),o=document.createElement(`a`);o.href=a,o.download=`${r}.zip`,document.body.appendChild(o),o.click(),o.remove(),URL.revokeObjectURL(a)}};a?.addEventListener(`click`,h),u?.addEventListener(`click`,async e=>{await h(e),u.classList.add(`downloaded`)})});let L=document.getElementById(`heroPhotoStack`);if(L){let e=Array.from(L.querySelectorAll(`[data-stack-card]`)),t=e.length;if(t>1){let n=0,r=()=>{e.forEach((e,n)=>{e.classList.remove(...Array.from({length:t},(e,t)=>`pos-${t}`))}),e.forEach((e,r)=>{let i=(r-n+t)%t;e.classList.add(`pos-${i}`)}),n=(n+1)%t};L.addEventListener(`click`,r),setInterval(r,3e3)}}let R=document.getElementById(`aboutSkillsSection`),z=R?.querySelector(`[data-skills-row="1"]`)??null,B=R?.querySelector(`[data-skills-row="2"]`)??null,V=document.getElementById(`aboutEduSection`),H=document.getElementById(`aboutEduDot`),U=document.getElementById(`aboutEduTrack`),ae=()=>{let e=getComputedStyle(document.documentElement);return parseFloat(e.getPropertyValue(`--skill-circle-size`))||106},W=0,oe=0,G=0,se=Array.from(R?.querySelectorAll(`[data-skills-row="1"] .about-skill-circle`)||[]),ce=Array.from(R?.querySelectorAll(`[data-skills-row="2"] .about-skill-circle`)||[]),K=()=>{if(W+=.35,G+=(oe-G)*.08,R&&z&&B){let e=ae(),t=W+G,n=e-W-G;z.style.transform=`translateX(${t}px)`,B.style.transform=`translateX(${n}px)`;let r=ae(),i=Math.PI*r,a=t/i*360,o=n/i*360;se.forEach(e=>{e.style.transform=`rotate(${a}deg)`}),ce.forEach(e=>{e.style.transform=`rotate(${o}deg)`})}requestAnimationFrame(K)};R&&requestAnimationFrame(K);let q=V?.querySelector(`.about-edu-line`),J=0,le=0,ue=0,Y=!1,X=U?.parentElement,Z=U?Array.from(U.children):[],Q=()=>{if(Y||!U||!q||!X)return;let e=Z[0];if(!e)return;J=e.offsetHeight;let t=e.querySelector(`.about-edu-num`);if(t&&J>0){X.style.height=`${J}px`;let e=t.getBoundingClientRect(),n=q.getBoundingClientRect(),r=getComputedStyle(U),i=new WebKitCSSMatrix(r.transform),a=i.m41||i.f||0;le=e.top+e.height/2-a-n.top;let o=getComputedStyle(q);ue=Math.abs(parseFloat(o.marginTop))||35,Y=!0}},$=()=>{if(!V||!H||!U||!q)return;Q();let e=V.getBoundingClientRect(),t=V.offsetHeight,n=window.innerHeight;if(t<n*1.2)return;let r=-e.top,i=t-n,a=Math.max(0,Math.min(1,r/i)),o=le,s=J+2*ue,c=J,l=Math.sin(a*Math.PI),u=o+(s-2*o)*l;if(H.style.transition=`none`,H.style.top=`${u}px`,c>0){let e=0,t=s-2*o-c;e=a<.5?a/.5*t:u-o-c,U.style.transform=`translateY(${e}px)`}if(Z[0]){let e=a<.5?1-a/.5:0;Z[0].style.opacity=`${e}`}if(Z[1]){let e=a>=.5?(a-.5)/.5:0;Z[1].style.opacity=`${e}`}};requestAnimationFrame(()=>{Q(),Z[1]&&(Z[1].style.opacity=`0`),$()}),document.fonts.ready.then(()=>{Y=!1,Q(),$()}),window.addEventListener(`resize`,()=>{Y=!1,requestAnimationFrame(()=>{Q(),$()})}),window.addEventListener(`scroll`,()=>{if(requestAnimationFrame($),R){let e=R.getBoundingClientRect(),t=e.top+e.height/2;oe=(window.innerHeight/2-t)*.45}},{passive:!0});let de=e=>{let t=document.getElementById(e);if(!t)return;let n=!1,r=0,i=0,a=0,o=0;t.addEventListener(`mousedown`,e=>{n=!0,r=e.clientX,i=e.clientY;let s=t.getBoundingClientRect(),c=t.parentElement?.getBoundingClientRect();c&&(a=s.left-c.left,o=s.top-c.top),t.style.left=`${a}px`,t.style.top=`${o}px`,t.style.bottom=`auto`,t.style.right=`auto`,t.style.cursor=`grabbing`,e.preventDefault()}),window.addEventListener(`mousemove`,e=>{if(!n)return;let s=e.clientX-r,c=e.clientY-i,l=a+s,u=o+c,d=t.parentElement?.getBoundingClientRect(),f=t.getBoundingClientRect();if(d){let e=d.width-f.width;l=Math.max(0,Math.min(l,e));let t=d.height-f.height;u=Math.max(0,Math.min(u,t))}t.style.left=`${l}px`,t.style.top=`${u}px`}),window.addEventListener(`mouseup`,()=>{n&&(n=!1,t.style.cursor=`grab`)}),t.addEventListener(`touchstart`,e=>{let s=e.touches[0];n=!0,r=s.clientX,i=s.clientY;let c=t.getBoundingClientRect(),l=t.parentElement?.getBoundingClientRect();l&&(a=c.left-l.left,o=c.top-l.top),t.style.left=`${a}px`,t.style.top=`${o}px`,t.style.bottom=`auto`,t.style.right=`auto`,e.preventDefault()},{passive:!1}),window.addEventListener(`touchmove`,e=>{if(!n)return;let s=e.touches[0],c=s.clientX-r,l=s.clientY-i,u=a+c,d=o+l,f=t.parentElement?.getBoundingClientRect(),p=t.getBoundingClientRect();if(f){let e=f.width-p.width;u=Math.max(0,Math.min(u,e));let t=f.height-p.height;d=Math.max(0,Math.min(d,t))}t.style.left=`${u}px`,t.style.top=`${d}px`},{passive:!1}),window.addEventListener(`touchend`,()=>{n=!1})};setTimeout(()=>{de(`bintangIsi`),de(`bintangKosong`)},100),(()=>{let e=Array.from(document.querySelectorAll(`[data-counter]`));if(e.length===0)return;let t=new Map,n=e=>{let n=parseInt(e.getAttribute(`data-target`)||`0`,10),r=e.getAttribute(`data-suffix`)||``;t.has(e)&&(clearInterval(t.get(e)),t.delete(e));let i=performance.now(),a=setInterval(()=>{if(performance.now()-i>=600){clearInterval(a),t.delete(e),e.textContent=String(n)+r;return}let o=Math.floor(Math.random()*99)+1;e.textContent=String(o)+r},60);t.set(e,a)},r=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&n(e.target)})},{threshold:.5});e.forEach(e=>r.observe(e))})(),(()=>{let e=document.getElementById(`projCardsTrack`),t=document.getElementById(`projNavPrev`),n=document.getElementById(`projNavNext`),r=document.getElementById(`projDots`),i=document.getElementById(`projSearch`),a=document.getElementById(`projNoResults`),o=document.getElementById(`projFilterBtn`),s=document.getElementById(`projFilterPanel`),c=document.getElementById(`projFilterBadge`),l=document.getElementById(`projFilterReset`);if(!e)return;let u=Array.from(e.querySelectorAll(`.proj-card`));if(u.length===0)return;let d=[...u],f=Math.floor(d.length/2),p={tech:[],year:[],role:[]},m=[`is-far-left`,`is-left`,`is-active`,`is-right`,`is-far-right`],h=()=>{u.forEach(e=>{e.style.display=`none`,e.classList.remove(...m)}),d.forEach((e,t)=>{e.style.display=`flex`;let n=t-f;n===0?e.classList.add(`is-active`):n===-1?e.classList.add(`is-left`):n===1?e.classList.add(`is-right`):n<-1?e.classList.add(`is-far-left`):e.classList.add(`is-far-right`)}),r&&(r.innerHTML=d.map((e,t)=>`
+`,he=`/portofolio-sultannang-nandito-setiyawan/assets/reload-CPAj83QN.png`,ge=`/portofolio-sultannang-nandito-setiyawan/assets/back_load-CEEf4z4X.png`,_e=`/portofolio-sultannang-nandito-setiyawan/assets/white_mode-C2emF1m6.png`,ve=`/portofolio-sultannang-nandito-setiyawan/assets/dark_mode-BcUgIVO5.png`,ye=`/portofolio-sultannang-nandito-setiyawan/assets/burger_light-DROQrPL6.webp`,be=`/portofolio-sultannang-nandito-setiyawan/assets/burger_dark-DMGG1aQ_.webp`,xe=`modulepreload`,Se=function(e){return`/portofolio-sultannang-nandito-setiyawan/`+e},Ce={},we=function(e,t,n){let r=Promise.resolve();if(t&&t.length>0){let e=document.getElementsByTagName(`link`),i=document.querySelector(`meta[property=csp-nonce]`),a=i?.nonce||i?.getAttribute(`nonce`);function o(e){return Promise.all(e.map(e=>Promise.resolve(e).then(e=>({status:`fulfilled`,value:e}),e=>({status:`rejected`,reason:e}))))}function s(e){return import.meta.resolve?import.meta.resolve(e):new URL(e,new URL(`../../../src/node/plugins/importAnalysisBuild.ts`,import.meta.url)).href}r=o(t.map(t=>{if(t=Se(t,n),t=s(t),t in Ce)return;Ce[t]=!0;let r=t.endsWith(`.css`);for(let n=e.length-1;n>=0;n--){let i=e[n];if(i.href===t&&(!r||i.rel===`stylesheet`))return}let i=document.createElement(`link`);if(i.rel=r?`stylesheet`:xe,r||(i.as=`script`),i.crossOrigin=``,i.href=t,a&&i.setAttribute(`nonce`,a),document.head.appendChild(i),r)return new Promise((e,n)=>{i.addEventListener(`load`,e),i.addEventListener(`error`,()=>n(Error(`Unable to preload CSS for ${t}`)))})}))}function i(e){let t=new Event(`vite:preloadError`,{cancelable:!0});if(t.payload=e,window.dispatchEvent(t),!t.defaultPrevented)throw e}return r.then(t=>{for(let e of t||[])e.status===`rejected`&&i(e.reason);return e().catch(i)})},Te=()=>{let e=document.getElementById(`topNav`),t=document.getElementById(`mobileNav`),n=document.getElementById(`mobileNavShell`),r=document.getElementById(`mobileBurgerBtn`),i=document.getElementById(`mobileBurgerIcon`),a=document.getElementById(`navShell`),o=document.getElementById(`desktopNav`),s=document.getElementById(`navActivePill`),l=Array.from(document.querySelectorAll(`[data-nav-link]`)),u=document.getElementById(`themeToggle`),d=document.getElementById(`themeIcon`),f=document.getElementById(`menuBtn`),p=document.getElementById(`mobileSidebar`),m=document.getElementById(`closeSidebar`),h=document.getElementById(`closeSidebarIcon`),g=document.getElementById(`sidebarBackdrop`),_=[`hero`,`about`,`projects`,`achievements`,`contact`].map(e=>document.getElementById(e)).filter(e=>!!e),v=()=>{p&&(p.classList.remove(`hidden`),p.classList.add(`block`),requestAnimationFrame(()=>{let e=document.getElementById(`sidebarBackdrop`),t=document.getElementById(`sidebarContent`);e&&(e.classList.remove(`opacity-0`),e.classList.add(`opacity-100`)),t&&(t.classList.remove(`-translate-x-full`),t.classList.add(`translate-x-0`))}),document.body.classList.add(`overflow-hidden`))},y=()=>{if(!p)return;let e=document.getElementById(`sidebarBackdrop`),t=document.getElementById(`sidebarContent`);e&&(e.classList.remove(`opacity-100`),e.classList.add(`opacity-0`)),t&&(t.classList.remove(`translate-x-0`),t.classList.add(`-translate-x-full`)),setTimeout(()=>{p.classList.add(`hidden`),p.classList.remove(`block`)},300),document.body.classList.remove(`overflow-hidden`)},b=e=>{let t=document.getElementById(e);if(!t)return;let n=e===`hero`?0:window.scrollY+t.getBoundingClientRect().top;window.scrollTo({top:Math.max(n,0),behavior:`smooth`})},x=Array.from(document.querySelectorAll(`#desktopNav [data-nav-link]`)),S=()=>{i&&(i.src=document.documentElement.classList.contains(`dark`)?be:ye)};S();let C=()=>{h&&(h.src=document.documentElement.classList.contains(`dark`)?be:ye)};C();let w=()=>{let e=window.scrollY>18;if(a&&a.classList.toggle(`is-scrolled`,e),n){n.classList.toggle(`is-scrolled`,e);let t=window.scrollY===0;n.classList.toggle(`at-top`,t)}window.scrollY===0&&ie()};l.forEach(e=>{e.addEventListener(`click`,t=>{let n=e.getAttribute(`href`);if(!n?.startsWith(`#`))return;t.preventDefault();let r=n.slice(1);O(r),y(),b(r)})}),document.getElementById(`aboutWidCta`)?.addEventListener(`click`,e=>{e.preventDefault(),O(`contact`),b(`contact`)}),u?.addEventListener(`click`,()=>{let e=document.documentElement.classList.toggle(`dark`);d&&(d.src=e?ve:_e,d.alt=e?`Dark mode`:`Light mode`),S(),C()}),f?.addEventListener(`click`,v),r?.addEventListener(`click`,v),m?.addEventListener(`click`,y),g?.addEventListener(`click`,y);let T=document.querySelectorAll(`.reveal`),E=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add(`in`)})},{threshold:.12});T.forEach(e=>E.observe(e));let D=`hero`,ee=()=>{if(!o||!s||x.length===0)return;let e=window.innerHeight*.35,t=window.innerHeight*.1,n=0,r=0,i=0,a=0;for(let n=0;n<_.length;n++)_[n].getBoundingClientRect().top<=e+t&&(a=n);n=a,r=a;for(let a=1;a<_.length;a++){let o=_[a].getBoundingClientRect().top;if(o>e-t&&o<e+t){n=a-1,r=a,i=1-(o-(e-t))/(2*t);break}}window.innerHeight+window.scrollY>=document.body.offsetHeight-10&&(n=_.length-1,r=_.length-1,i=0);let c=o.getBoundingClientRect(),u=x[n].getBoundingClientRect(),d=x[r].getBoundingClientRect(),f=u.left-c.left,p=f+u.width,m=d.left-c.left,h=m+d.width,g=f,v=p;if(m>f){let e=Math.min(1,i*2),t=Math.max(0,(i-.5)*2);g=f+(m-f)*t,v=p+(h-p)*e}else if(m<f){let e=Math.min(1,i*2),t=Math.max(0,(i-.5)*2);g=f-(f-m)*e,v=p-(p-h)*t}let y=v-g;s.style.transition=`none`,s.style.transform=`translateX(${g}px)`,s.style.width=`${y}px`,s.style.opacity=`1`;let b=_[i<.5?n:r].id;b!==D&&(D=b,l.forEach(e=>{e.classList.toggle(`active`,e.getAttribute(`href`)===`#${D}`)}))};window.addEventListener(`scroll`,()=>{requestAnimationFrame(ee)},{passive:!0}),setTimeout(()=>requestAnimationFrame(ee),100);let O=e=>{l.forEach(t=>{t.classList.toggle(`active`,t.getAttribute(`href`)===`#${e}`)})};O(`hero`);let k=document.getElementById(`hero`),te=k?.querySelector(`.hero-bg-fixed`),A=k?.querySelector(`.hero-container`),ne=e=>{if(!k)return;let t=k.offsetHeight;if(te&&(te.style.opacity=e>t?`0`:`1`),e<=t+100&&A){let n=t*.78,r=t*1.05,i=Math.min(Math.max((e-n)/(r-n),0),1);A.style.opacity=`${1-i}`,A.style.transform=`translateY(${-Math.max(0,e-n)*.25}px)`}},j=0,M=window.scrollY,N=!1,P=0,F=null,I=null,re=()=>{N||(N=!0,e?.classList.add(`nav-hidden`),t?.classList.add(`nav-hidden`))},ie=()=>{N&&(N=!1,e?.classList.remove(`nav-hidden`),t?.classList.remove(`nav-hidden`))},ae=()=>{P=0,F=null,I&&=(clearTimeout(I),null)},oe=()=>{I&&clearTimeout(I),I=setTimeout(()=>{ae()},1200)};window.addEventListener(`scroll`,()=>{j||=window.requestAnimationFrame(()=>{let e=window.scrollY,t=e>M;if(e<M)ae(),ie();else if(t&&e>80){let e=Date.now();F!==null&&(P+=e-F),F=e,oe(),P>=1800&&re()}M=e,ne(e),w(),j=0})},{passive:!0}),window.addEventListener(`resize`,()=>{w(),ne(window.scrollY)}),w(),ne(window.scrollY),document.querySelectorAll(`[data-accordion]`).forEach(e=>{let t=e.querySelector(`[data-accordion-btn]`),n=e.querySelector(`.accordion-body`),r=e.querySelector(`.chev`),i=!1,a=()=>{n&&n.classList.toggle(`hidden`,!i),r&&(r.style.transform=i?`rotate(180deg)`:`rotate(0deg)`),t?.setAttribute(`aria-expanded`,String(i))};a(),t?.addEventListener(`click`,()=>{r&&r.classList.add(`spin`),window.setTimeout(()=>{i=!i,a(),r&&r.classList.remove(`spin`)},280)})}),((e,t)=>{let n=document.getElementById(e),r=document.getElementById(`${e}Icon`);if(!n||!r)return;let i=Array.from(document.querySelectorAll(t)),a=0;n.addEventListener(`click`,()=>{if(r.classList.add(`spin`),a>=i.length)i.forEach(e=>{e.classList.remove(`show`)}),setTimeout(()=>{i.forEach(e=>{e.classList.add(`hidden`)}),r.src=he,r.classList.remove(`spin`)},550),a=0;else{let e=Math.min(a+3,i.length);setTimeout(()=>{for(let t=a;t<e;t++){let e=i[t];e.classList.remove(`hidden`),e.offsetWidth,setTimeout(()=>{e.classList.add(`show`)},(t-a)*220)}a=e,a===i.length&&(r.src=ge)},250),setTimeout(()=>{r.classList.remove(`spin`)},650)}})})(`achievementsToggle`,`.extra-achieve`),document.querySelectorAll(`.certificate-stage`).forEach(e=>{let t=e.getAttribute(`data-cert-images`);if(!t)return;let n=[];try{n=JSON.parse(t)}catch{n=[]}if(!n.length)return;let r=e.getAttribute(`data-cert-title`)||`Certificate`,i=e.querySelector(`.cert-img`),a=e.querySelector(`.download-btn`),o=e.querySelector(`.carousel-prev`),s=e.querySelector(`.carousel-next`),l=e.querySelector(`[data-preview-btn]`),u=e.closest(`[data-accordion]`)?.querySelector(`[data-download-btn]`),d=0,f=e=>{i&&(i.src=n[e],i.style.opacity=`1`)};if(n.length>1&&i){o?.classList.remove(`hidden`),s?.classList.remove(`hidden`);let e=window.setInterval(()=>{i&&(i.style.opacity=`0`,window.setTimeout(()=>{d=(d+1)%n.length,f(d)},280))},5e3);o?.addEventListener(`click`,t=>{t.stopPropagation(),clearInterval(e),d=(d-1+n.length)%n.length,f(d)}),s?.addEventListener(`click`,t=>{t.stopPropagation(),clearInterval(e),d=(d+1)%n.length,f(d)})}else o?.classList.add(`hidden`),s?.classList.add(`hidden`),f(0);l?.addEventListener(`click`,e=>{if(e.stopPropagation(),!(window.innerWidth<768))return;let t=n[d];if(!t)return;let r=document.createElement(`div`);r.className=`fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-[2px] p-4 animate-fade-in`;let i=document.createElement(`img`);i.src=t,i.className=`max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl animate-zoom-in`;let a=document.createElement(`button`);a.className=`absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white z-10 transition`,a.innerHTML=`<span class="material-symbols-outlined text-[28px]">close</span>`,a.setAttribute(`aria-label`,`Close preview`),r.appendChild(i),r.appendChild(a),document.body.appendChild(r),document.body.classList.add(`overflow-hidden`);let o=()=>{r.classList.add(`animate-fade-out`),i.classList.add(`animate-zoom-out`),setTimeout(()=>{r.remove(),document.body.classList.remove(`overflow-hidden`)},250)};a.addEventListener(`click`,o),r.addEventListener(`click`,e=>{e.target===r&&o()})});let p=e=>{if(e.startsWith(`data:`))return{"image/jpeg":`jpg`,"image/jpg":`jpg`,"image/png":`png`,"image/webp":`webp`,"image/gif":`gif`,"image/svg+xml":`svg`}[e.split(`;`)[0].split(`:`)[1]||``]??`jpg`;try{return(new URL(e).pathname.split(`.`).pop()?.toLowerCase()??``)||`jpg`}catch{return(e.split(`?`)[0].split(`.`).pop()?.toLowerCase()??``)||`jpg`}},m=e=>{if(e.startsWith(`data:`)){let[t,n]=e.split(`,`),r=t.split(`:`)[1].split(`;`)[0];if(t.includes(`;base64`)){let e=atob(n),t=new Uint8Array(e.length);for(let n=0;n<e.length;n++)t[n]=e.charCodeAt(n);return Promise.resolve(new Blob([t],{type:r}))}else{let e=decodeURIComponent(n);return Promise.resolve(new Blob([e],{type:r}))}}return fetch(e).then(e=>e.blob())},h=async e=>{if(e.stopPropagation(),n.length===1){let e=n[0],t=p(e),i=await m(e),a=URL.createObjectURL(i),o=document.createElement(`a`);o.href=a,o.download=`${r}.${t}`,document.body.appendChild(o),o.click(),o.remove(),URL.revokeObjectURL(a)}else{let e=(await we(async()=>{let{default:e}=await import(`./jszip.min-Cv1YFWz0.js`).then(e=>c(e.default,1));return{default:e}},[])).default,t=new e;await Promise.all(n.map(async(e,n)=>{let i=p(e),a=await m(e);t.file(`${r}_${n+1}.${i}`,a)}));let i=await t.generateAsync({type:`blob`}),a=URL.createObjectURL(i),o=document.createElement(`a`);o.href=a,o.download=`${r}.zip`,document.body.appendChild(o),o.click(),o.remove(),URL.revokeObjectURL(a)}};a?.addEventListener(`click`,h),u?.addEventListener(`click`,async e=>{await h(e),u.classList.add(`downloaded`)})});let L=document.getElementById(`heroPhotoStack`);if(L){let e=Array.from(L.querySelectorAll(`[data-stack-card]`)),t=e.length;if(t>1){let n=0,r=()=>{e.forEach((e,n)=>{e.classList.remove(...Array.from({length:t},(e,t)=>`pos-${t}`))}),e.forEach((e,r)=>{let i=(r-n+t)%t;e.classList.add(`pos-${i}`)}),n=(n+1)%t};L.addEventListener(`click`,r),setInterval(r,3e3)}}let R=document.getElementById(`aboutSkillsSection`),z=R?.querySelector(`[data-skills-row="1"]`)??null,B=R?.querySelector(`[data-skills-row="2"]`)??null,V=document.getElementById(`aboutEduSection`),H=document.getElementById(`aboutEduDot`),U=document.getElementById(`aboutEduTrack`),se=()=>{let e=getComputedStyle(document.documentElement);return parseFloat(e.getPropertyValue(`--skill-circle-size`))||106},W=0,ce=0,G=0,K=Array.from(R?.querySelectorAll(`[data-skills-row="1"] .about-skill-circle`)||[]),le=Array.from(R?.querySelectorAll(`[data-skills-row="2"] .about-skill-circle`)||[]),ue=()=>{if(W+=.35,G+=(ce-G)*.08,R&&z&&B){let e=se(),t=W+G,n=e-W-G;z.style.transform=`translateX(${t}px)`,B.style.transform=`translateX(${n}px)`;let r=se(),i=Math.PI*r,a=t/i*360,o=n/i*360;K.forEach(e=>{e.style.transform=`rotate(${a}deg)`}),le.forEach(e=>{e.style.transform=`rotate(${o}deg)`})}requestAnimationFrame(ue)};R&&requestAnimationFrame(ue);let q=V?.querySelector(`.about-edu-line`),J=0,de=0,Y=0,X=!1,fe=U?.parentElement,Z=U?Array.from(U.children):[],Q=()=>{if(X||!U||!q||!fe)return;let e=Z[0];if(!e)return;J=e.offsetHeight;let t=e.querySelector(`.about-edu-num`);if(t&&J>0){fe.style.height=`${J}px`;let e=t.getBoundingClientRect(),n=q.getBoundingClientRect(),r=getComputedStyle(U),i=new WebKitCSSMatrix(r.transform),a=i.m41||i.f||0;de=e.top+e.height/2-a-n.top;let o=getComputedStyle(q);Y=Math.abs(parseFloat(o.marginTop))||35,X=!0}},$=()=>{if(!V||!H||!U||!q)return;Q();let e=V.getBoundingClientRect(),t=V.offsetHeight,n=window.innerHeight;if(t<n*1.2)return;let r=-e.top,i=t-n,a=Math.max(0,Math.min(1,r/i)),o=de,s=J+2*Y,c=J,l=Math.sin(a*Math.PI),u=o+(s-2*o)*l;if(H.style.transition=`none`,H.style.top=`${u}px`,c>0){let e=0,t=s-2*o-c;e=a<.5?a/.5*t:u-o-c,U.style.transform=`translateY(${e}px)`}if(Z[0]){let e=a<.5?1-a/.5:0;Z[0].style.opacity=`${e}`}if(Z[1]){let e=a>=.5?(a-.5)/.5:0;Z[1].style.opacity=`${e}`}};requestAnimationFrame(()=>{Q(),Z[1]&&(Z[1].style.opacity=`0`),$()}),document.fonts.ready.then(()=>{X=!1,Q(),$()}),window.addEventListener(`resize`,()=>{X=!1,requestAnimationFrame(()=>{Q(),$()})}),window.addEventListener(`scroll`,()=>{if(requestAnimationFrame($),R){let e=R.getBoundingClientRect(),t=e.top+e.height/2;ce=(window.innerHeight/2-t)*.45}},{passive:!0});let pe=e=>{let t=document.getElementById(e);if(!t)return;let n=!1,r=0,i=0,a=0,o=0;t.addEventListener(`mousedown`,e=>{n=!0,r=e.clientX,i=e.clientY;let s=t.getBoundingClientRect(),c=t.parentElement?.getBoundingClientRect();c&&(a=s.left-c.left,o=s.top-c.top),t.style.left=`${a}px`,t.style.top=`${o}px`,t.style.bottom=`auto`,t.style.right=`auto`,t.style.cursor=`grabbing`,e.preventDefault()}),window.addEventListener(`mousemove`,e=>{if(!n)return;let s=e.clientX-r,c=e.clientY-i,l=a+s,u=o+c,d=t.parentElement?.getBoundingClientRect(),f=t.getBoundingClientRect();if(d){let e=d.width-f.width;l=Math.max(0,Math.min(l,e));let t=d.height-f.height;u=Math.max(0,Math.min(u,t))}t.style.left=`${l}px`,t.style.top=`${u}px`}),window.addEventListener(`mouseup`,()=>{n&&(n=!1,t.style.cursor=`grab`)}),t.addEventListener(`touchstart`,e=>{let s=e.touches[0];n=!0,r=s.clientX,i=s.clientY;let c=t.getBoundingClientRect(),l=t.parentElement?.getBoundingClientRect();l&&(a=c.left-l.left,o=c.top-l.top),t.style.left=`${a}px`,t.style.top=`${o}px`,t.style.bottom=`auto`,t.style.right=`auto`,e.preventDefault()},{passive:!1}),window.addEventListener(`touchmove`,e=>{if(!n)return;let s=e.touches[0],c=s.clientX-r,l=s.clientY-i,u=a+c,d=o+l,f=t.parentElement?.getBoundingClientRect(),p=t.getBoundingClientRect();if(f){let e=f.width-p.width;u=Math.max(0,Math.min(u,e));let t=f.height-p.height;d=Math.max(0,Math.min(d,t))}t.style.left=`${u}px`,t.style.top=`${d}px`},{passive:!1}),window.addEventListener(`touchend`,()=>{n=!1})};setTimeout(()=>{pe(`bintangIsi`),pe(`bintangKosong`)},100),(()=>{let e=Array.from(document.querySelectorAll(`[data-counter]`));if(e.length===0)return;let t=new Map,n=e=>{let n=parseInt(e.getAttribute(`data-target`)||`0`,10),r=e.getAttribute(`data-suffix`)||``;t.has(e)&&(clearInterval(t.get(e)),t.delete(e));let i=performance.now(),a=setInterval(()=>{if(performance.now()-i>=600){clearInterval(a),t.delete(e),e.textContent=String(n)+r;return}let o=Math.floor(Math.random()*99)+1;e.textContent=String(o)+r},60);t.set(e,a)},r=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&n(e.target)})},{threshold:.5});e.forEach(e=>r.observe(e))})(),(()=>{let e=document.getElementById(`projCardsTrack`),t=document.getElementById(`projNavPrev`),n=document.getElementById(`projNavNext`),r=document.getElementById(`projDots`),i=document.getElementById(`projSearch`),a=document.getElementById(`projNoResults`),o=document.getElementById(`projFilterBtn`),s=document.getElementById(`projFilterPanel`),c=document.getElementById(`projFilterBadge`),l=document.getElementById(`projFilterReset`);if(!e)return;let u=Array.from(e.querySelectorAll(`.proj-card`));if(u.length===0)return;let d=[...u],f=Math.floor(d.length/2),p={tech:[],year:[],role:[]},m=[`is-far-left`,`is-left`,`is-active`,`is-right`,`is-far-right`],h=()=>{u.forEach(e=>{e.style.display=`none`,e.classList.remove(...m)}),d.forEach((e,t)=>{e.style.display=`flex`;let n=t-f;n===0?e.classList.add(`is-active`):n===-1?e.classList.add(`is-left`):n===1?e.classList.add(`is-right`):n<-1?e.classList.add(`is-far-left`):e.classList.add(`is-far-right`)}),r&&(r.innerHTML=d.map((e,t)=>`
           <button class="proj-dot${t===f?` is-active`:``}" data-proj-dot="${t}" type="button" aria-label="Go to project ${t+1}"></button>
         `).join(``),r.querySelectorAll(`.proj-dot`).forEach(e=>{e.addEventListener(`click`,()=>{let t=parseInt(e.dataset.projDot??`-1`,10);isNaN(t)||g(t)})}))};h();let g=e=>{d.length!==0&&(f=Math.max(0,Math.min(e,d.length-1)),h())},_=e=>{if(d.length===0)return;let t=f+e;t<0&&(t=d.length-1),t>=d.length&&(t=0),g(t)};t?.addEventListener(`click`,()=>_(-1)),n?.addEventListener(`click`,()=>_(1)),e.addEventListener(`click`,e=>{let t=e.target.closest(`.proj-card`);if(!t)return;let n=d.indexOf(t);n!==-1&&n!==f&&g(n)}),document.addEventListener(`keydown`,e=>{e.key===`ArrowLeft`&&_(-1),e.key===`ArrowRight`&&_(1)});let v=0;e.addEventListener(`touchstart`,e=>{v=e.touches[0].clientX},{passive:!0}),e.addEventListener(`touchend`,e=>{let t=e.changedTouches[0].clientX-v;Math.abs(t)>40&&_(t<0?1:-1)});let y=e=>{let t=e.querySelector(`.proj-card-title`)?.textContent?.toLowerCase()??``,n=i?.value.trim().toLowerCase()??``;if(n&&!t.includes(n))return!1;if(p.tech.length>0){let t=Array.from(e.querySelectorAll(`.proj-tag`)).map(e=>e.textContent?.trim()??``);if(!p.tech.some(e=>t.includes(e)))return!1}if(p.year.length>0){let t=e.querySelector(`.proj-card-badge`)?.textContent??``;if(!p.year.some(e=>t.includes(e)))return!1}if(p.role.length>0){let t=e.querySelector(`.proj-card-badge`)?.textContent??``;if(!p.role.some(e=>t.toLowerCase().includes(e.toLowerCase())))return!1}return!0},b=()=>{d=u.filter(e=>y(e)),f=d.length>0?Math.floor(d.length/2):0,h();let e=i?.value.trim().toLowerCase()??``,t=Object.values(p).some(e=>e.length>0);a&&a.classList.toggle(`visible`,d.length===0&&(e!==``||t)),c?.classList.toggle(`visible`,t)};i?.addEventListener(`input`,b);let x=document.getElementById(`topNav`),S=(e,t)=>{let n=t.querySelector(`.proj-modal-titlebar`);n&&(n.style.cursor=`grab`,n.addEventListener(`mousedown`,r=>{if(r.target.closest(`.proj-modal-actions, .proj-modal-dl-btn, .proj-modal-close-btn, .proj-modal-dots`))return;r.preventDefault();let i=r.clientX,a=r.clientY,o=t.offsetLeft,s=t.offsetTop;t.classList.add(`is-dragging`),n.style.cursor=`grabbing`,document.body.style.userSelect=`none`;let c=n=>{let r=n.clientX-i,c=n.clientY-a,l=o+r,u=s+c,d=e.clientWidth,f=e.clientHeight;l=Math.max(-t.offsetWidth+80,Math.min(l,d-80)),u=Math.max(0,Math.min(u,f-40)),t.style.left=l+`px`,t.style.top=u+`px`},l=()=>{t.classList.remove(`is-dragging`),n.style.cursor=`grab`,document.body.style.userSelect=``,document.removeEventListener(`mousemove`,c),document.removeEventListener(`mouseup`,l)};document.addEventListener(`mousemove`,c),document.addEventListener(`mouseup`,l)})),t.querySelectorAll(`[data-dir]`).forEach(e=>{e.addEventListener(`mousedown`,n=>{n.preventDefault(),n.stopPropagation();let r=e.dataset.dir??``,i=n.clientX,a=n.clientY,o=t.offsetWidth,s=t.offsetHeight,c=t.offsetLeft,l=t.offsetTop;document.body.style.userSelect=`none`;let u=e=>{let n=e.clientX-i,u=e.clientY-a;if(r.includes(`e`)&&(t.style.width=Math.max(360,o+n)+`px`),r.includes(`s`)&&(t.style.height=Math.max(260,s+u)+`px`),r.includes(`w`)){let e=Math.max(360,o-n);t.style.width=e+`px`,t.style.left=c+o-e+`px`}if(r.includes(`n`)){let e=Math.max(260,s-u);t.style.height=e+`px`,t.style.top=l+s-e+`px`}},d=()=>{document.body.style.userSelect=``,document.removeEventListener(`mousemove`,u),document.removeEventListener(`mouseup`,d)};document.addEventListener(`mousemove`,u),document.addEventListener(`mouseup`,d)})})},C=e=>{let t=document.getElementById(`projModal-${e}`);if(!t)return;let n=t.querySelector(`.proj-modal-window`);if(n&&!n.dataset.modalReady){let e=window.innerWidth,r=window.innerHeight;n.style.left=Math.round((e-640)/2)+`px`,n.style.top=Math.round((r-580)/2)+`px`,S(t,n),n.dataset.modalReady=`1`}t.classList.add(`is-open`),document.body.style.overflow=`hidden`,x&&x.classList.add(`modal-hidden`)},w=e=>{let t=document.getElementById(`projModal-${e}`);t&&(t.classList.remove(`is-open`),document.body.style.overflow=``,x&&x.classList.remove(`modal-hidden`))},T=()=>{document.querySelectorAll(`.proj-modal-overlay.is-open`).forEach(e=>{e.classList.remove(`is-open`)}),document.body.style.overflow=``,x&&x.classList.remove(`modal-hidden`)};e.addEventListener(`click`,e=>{let t=e.target.closest(`[data-proj-open]`);t&&(e.stopPropagation(),C(t.dataset.projOpen??``))}),document.addEventListener(`click`,e=>{let t=e.target.closest(`[data-proj-close]`);if(t){w(t.dataset.projClose??``);return}let n=e.target.closest(`.proj-modal-overlay`);n&&e.target===n&&T()}),document.addEventListener(`keydown`,e=>{e.key===`Escape`&&T()});let E=e=>{let t=e??!s?.classList.contains(`is-open`);s?.classList.toggle(`is-open`,t),o?.classList.toggle(`is-open`,t),o?.setAttribute(`aria-expanded`,String(t))};o?.addEventListener(`click`,e=>{e.stopPropagation(),E()}),l?.addEventListener(`click`,e=>{e.stopPropagation(),Object.keys(p).forEach(e=>{p[e]=[]}),s?.querySelectorAll(`.proj-filter-opt`).forEach(e=>{e.classList.remove(`is-selected`)}),i&&(i.value=``),b(),E(!1)}),document.addEventListener(`click`,e=>{s?.classList.contains(`is-open`)&&!s.contains(e.target)&&e.target!==o&&E(!1)}),s?.querySelectorAll(`.proj-filter-opt`).forEach(e=>{e.addEventListener(`click`,t=>{t.stopPropagation();let n=e.dataset.filterGroup??``,r=e.dataset.filterVal??``;if(!n||!r)return;let i=p[n],a=i.indexOf(r);a===-1?i.push(r):i.splice(a,1),e.classList.toggle(`is-selected`,i.includes(r)),b()})})})(),(()=>{let e=document.querySelector(`.review-marquee-container`);e&&document.addEventListener(`click`,t=>{let n=t.target.closest(`.review-card`),r=document.querySelectorAll(`.review-card`);n?(t.stopPropagation(),r.forEach(e=>{e!==n&&e.classList.remove(`is-highlighted`)}),n.classList.add(`is-highlighted`),e.classList.add(`is-paused`)):(r.forEach(e=>e.classList.remove(`is-highlighted`)),e.classList.remove(`is-paused`))})})()},Ee=document.querySelector(`#app`);Ee.innerHTML=`
   <div id="loadingScreen" class="loading-screen">
@@ -951,8 +947,8 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
 
   <main class="main-content">
     ${_()}
-    ${j()}
-    ${Y()}
+    ${te()}
+    ${de()}
     ${pe()}
     ${me()}
   </main>

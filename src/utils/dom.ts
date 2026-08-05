@@ -74,9 +74,19 @@ export const initApp = () => {
     // Hero sits inside .main-content which adds padding-top; scroll to absolute 0
     // so the hero lands flush below the full-width navbar box.
     // Other sections rely on their own internal top-padding.
-    const top = targetId === 'hero'
-      ? 0
-      : window.scrollY + target.getBoundingClientRect().top;
+    const top = (() => {
+      if (targetId === 'hero') return 0;
+      const sectionTop = window.scrollY + target.getBoundingClientRect().top;
+      if (targetId === 'about' && window.innerWidth >= 768) {
+        const nav = document.getElementById('topNav');
+        const navHeight = nav?.offsetHeight ?? 0;
+        const titleOffset = 46;       // posisi judul "ABOUT ME" dari atas #about (1.4rem + 1.5rem)
+        const gap = 20;               // jarak bebas navbar → judul (sedang)
+        const offset = Math.max(navHeight - titleOffset + gap, 0);
+        return sectionTop - offset;
+      }
+      return sectionTop;
+    })();
 
     window.scrollTo({
       top: Math.max(top, 0),

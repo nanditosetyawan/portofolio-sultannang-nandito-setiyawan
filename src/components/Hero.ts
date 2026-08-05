@@ -43,11 +43,7 @@ export const Hero = (): string => {
               <div class="hero-photo-blob"></div>
               <div class="photo-stack" id="heroPhotoStack">
                 <div class="stack-label">Profile Slideshow</div>
-                ${profile.heroImages.map((img, index) => `
-                  <div class="stack-card pos-${index}" data-stack-card>
-                    <img src="${img}" alt="Portrait ${index + 1}">
-                  </div>
-                `).join('')}
+               
               </div>
             </div>
           </div>

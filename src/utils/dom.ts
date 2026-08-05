@@ -820,25 +820,56 @@ export const initApp = () => {
   const skillCirclesRow1 = Array.from(aboutSkillsWrap?.querySelectorAll('[data-skills-row="1"] .about-skill-circle') || []) as HTMLElement[];
   const skillCirclesRow2 = Array.from(aboutSkillsWrap?.querySelectorAll('[data-skills-row="2"] .about-skill-circle') || []) as HTMLElement[];
 
+  /* ── Infinite loop: duplicate circles & compute cycle widths ── */
+  const circleSize = getSkillsOffset();
+  const skillGap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--skill-gap')) || 106;
+  const row2Offset = getSkillsOffset();
+
+  const duplicateCircles = (rowEl: HTMLElement | null, circles: HTMLElement[]) => {
+    if (!rowEl || circles.length === 0) return 0;
+    circles.forEach(c => rowEl.appendChild(c.cloneNode(true)));
+    return (circleSize + skillGap) * circles.length;
+  };
+
+  const row1CycleWidth = duplicateCircles(aboutRow1, skillCirclesRow1);
+  const row2CycleWidth = duplicateCircles(aboutRow2, skillCirclesRow2);
+
+  /* Re-query all circles (originals + clones) for rotation */
+  const allCirclesRow1 = aboutRow1 ? Array.from(aboutRow1.querySelectorAll<HTMLElement>('.about-skill-circle')) : [];
+  const allCirclesRow2 = aboutRow2 ? Array.from(aboutRow2.querySelectorAll<HTMLElement>('.about-skill-circle')) : [];
+
+  /* Initial offsets so circles fill the viewport at t=0 (not from corner) */
+  const viewportWidth = () => aboutSkillsWrap?.clientWidth || window.innerWidth || 0;
+  const initialOffset1 = Math.max((row1CycleWidth - viewportWidth()) / 2, 0);
+  const initialOffset2 = Math.max((row2CycleWidth - viewportWidth()) / 2, 0);
+
+  /* Normalize any number to [0, cycleWidth) */
+  const wrap = (x: number, cycleWidth: number) =>
+    cycleWidth > 0 ? ((x % cycleWidth) + cycleWidth) % cycleWidth : x;
+
   const animateSkills = () => {
     autoScrollPos += 0.35;
     currentScrollOffset += (targetScrollOffset - currentScrollOffset) * 0.08;
 
     if (aboutSkillsWrap && aboutRow1 && aboutRow2) {
-      const row2Offset = getSkillsOffset();
-      const t1 = autoScrollPos + currentScrollOffset;
-      const t2 = row2Offset - autoScrollPos - currentScrollOffset;
+      /* Raw (unbounded) positions — row 1 right, row 2 left */
+      const raw1 = autoScrollPos + currentScrollOffset + initialOffset1;
+      const raw2 = row2Offset - autoScrollPos - currentScrollOffset + initialOffset2;
+
+      /* Wrap for seamless loop */
+      const t1 = wrap(raw1, row1CycleWidth);
+      const t2 = wrap(raw2, row2CycleWidth);
 
       aboutRow1.style.transform = `translateX(${t1}px)`;
       aboutRow2.style.transform = `translateX(${t2}px)`;
 
-      const circleSize = getSkillsOffset();
+      /* Rotation keeps unbounded so the wheel rolls smoothly */
       const circumference = Math.PI * circleSize;
-      const r1 = (t1 / circumference) * 360;
-      const r2 = (t2 / circumference) * 360;
+      const r1 = (raw1 / circumference) * 360;
+      const r2 = (raw2 / circumference) * 360;
 
-      skillCirclesRow1.forEach(circle => { circle.style.transform = `rotate(${r1}deg)`; });
-      skillCirclesRow2.forEach(circle => { circle.style.transform = `rotate(${r2}deg)`; });
+      allCirclesRow1.forEach(circle => { circle.style.transform = `rotate(${r1}deg)`; });
+      allCirclesRow2.forEach(circle => { circle.style.transform = `rotate(${r2}deg)`; });
     }
 
     requestAnimationFrame(animateSkills);

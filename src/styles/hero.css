@@ -166,6 +166,8 @@
     /* lg:col-span-7 xl:col-span-7 */
     padding-top: 0rem;
     /* lg:pt-14 */
+    transform: translateX(12px);
+    /* slight right shift (desktop only) */
   }
 }
 
@@ -318,16 +320,112 @@
   /* gap-3 */
 }
 
-/* Social chip (used alongside chip-dark) */
-.hero-chip {
-  padding: 0.5rem 1rem;
-  /* px-4 py-2 */
-  border-radius: 9999px;
-  /* rounded-full */
-  font-size: 0.875rem;
-  /* text-sm */
-  font-weight: 600;
-  /* font-semibold */
+/* ── Social chips wrapper ───────────────────────────────── */
+.hero-socials {
+  margin-top: 2rem;
+  /* mt-8 */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  /* gap-3 */
+}
+
+/* Social icon-only chip — no background, icon stands alone */
+.hero-wa-chip {
+  position: relative;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 0 !important;
+  font-weight: 400 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-wa-icon {
+  width: 3.8rem;
+  height: 3.8rem;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.25));
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.hero-wa-chip:hover .hero-wa-icon {
+  transform: translateY(-2px) scale(1.08);
+}
+
+/* Hover tooltip — small label rising from the icon */
+.hero-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: #1F2A28;
+  color: #FFFDF8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  line-height: 1;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,.35);
+  transition:
+    opacity .25s ease,
+    transform .25s cubic-bezier(.34,1.56,.64,1),
+    visibility .25s;
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Tooltip arrow */
+.hero-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #1F2A28;
+}
+
+/* Appear on hover, from bottom moving up */
+.hero-wa-chip:hover .hero-tooltip,
+.hero-wa-chip:focus-visible .hero-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Tooltip color accent per platform */
+.hero-wa-chip[aria-label="WhatsApp"] .hero-tooltip {
+  background: #25D366;
+  color: #0B2B1A;
+}
+.hero-wa-chip[aria-label="WhatsApp"] .hero-tooltip::after {
+  border-top-color: #25D366;
+}
+.hero-wa-chip[aria-label="Instagram"] .hero-tooltip {
+  background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+  color: #fff;
+}
+.hero-wa-chip[aria-label="Instagram"] .hero-tooltip::after {
+  border-top-color: #DD2A7B;
+}
+.hero-wa-chip[aria-label="GitHub"] .hero-tooltip {
+  background: #24292F;
+  color: #fff;
+}
+.hero-wa-chip[aria-label="GitHub"] .hero-tooltip::after {
+  border-top-color: #24292F;
+}
+
+/* Keep tooltips usable on desktop only */
+@media (max-width: 767px) {
+  .hero-tooltip {
+    display: none;
+  }
 }
 
 /* ── Right column ───────────────────────────────────────── */

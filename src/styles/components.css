@@ -31,11 +31,6 @@
 
 .hero-name { letter-spacing: -0.05em; text-wrap: balance; line-height: .95; }
 .chip { background: rgba(137,215,183,.16); color: var(--accent); border: 1px solid rgba(137,215,183,.34); }
-.chip-dark {
-    background: #ffffff;
-    color: var(--text);
-    border: 1px solid rgba(255,255,255,.18);
-}
 .btn-primary { background: var(--accent); color: white; box-shadow: 0 14px 28px rgba(66,132,117,.22); }
 .btn-primary:hover { transform: translateY(-1px); background: #32685C; }
 .btn-secondary {

@@ -70,8 +70,12 @@ export const initApp = () => {
     const target = document.getElementById(targetId);
     if (!target) return;
 
-    // Scroll to exact top of section (section has its own top-padding for navbar clearance)
-    const top = window.scrollY + target.getBoundingClientRect().top;
+    // Hero sits inside .main-content which adds padding-top; scroll to absolute 0
+    // so the hero lands flush below the full-width navbar box.
+    // Other sections rely on their own internal top-padding.
+    const top = targetId === 'hero'
+      ? 0
+      : window.scrollY + target.getBoundingClientRect().top;
 
     window.scrollTo({
       top: Math.max(top, 0),

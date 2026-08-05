@@ -10,7 +10,7 @@ const renderStars = (rating: number, reviewIdx: number): string => {
   for (let i = 1; i <= 5; i++) {
     if (rating >= i) {
       starsHTML += `
-        <svg class="review-star full" viewBox="0 0 24 24" width="16" height="16" fill="#428475">
+        <svg class="review-star full" viewBox="0 0 24 24" width="18" height="18" fill="#FFD700">
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
         </svg>
       `;
@@ -18,10 +18,10 @@ const renderStars = (rating: number, reviewIdx: number): string => {
       const fillPercent = (rating - (i - 1)) * 100;
       const gradId = `starGrad-${reviewIdx}-${i}`;
       starsHTML += `
-        <svg class="review-star partial" viewBox="0 0 24 24" width="16" height="16">
+        <svg class="review-star partial" viewBox="0 0 24 24" width="18" height="18">
           <defs>
             <linearGradient id="${gradId}">
-              <stop offset="${fillPercent}%" stop-color="#428475"/>
+              <stop offset="${fillPercent}%" stop-color="#FFD700"/>
               <stop offset="${fillPercent}%" stop-color="#E8E1D7"/>
             </linearGradient>
           </defs>
@@ -30,7 +30,7 @@ const renderStars = (rating: number, reviewIdx: number): string => {
       `;
     } else {
       starsHTML += `
-        <svg class="review-star empty" viewBox="0 0 24 24" width="16" height="16" fill="#E8E1D7">
+        <svg class="review-star empty" viewBox="0 0 24 24" width="18" height="18" fill="#E8E1D7">
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
         </svg>
       `;

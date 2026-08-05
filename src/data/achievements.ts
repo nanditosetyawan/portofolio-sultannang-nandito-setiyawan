@@ -14,9 +14,9 @@ export const achievements: Achievement[] = [
     year: 2025,
     tags: ["Certificate", "2025"],
     certificates: [
-      new URL('../assets/achievement/Official Practice Question Set.jpg', import.meta.url).href
+      new URL('../assets/achievement/Official Practice Question Set.webp', import.meta.url).href
     ],
-    image: new URL('../assets/achievement/AWS.JPEG', import.meta.url).href,
+    image: new URL('../assets/achievement/AWS.webp', import.meta.url).href,
     issuedAt: "12 Mei 2026",
   },
   {

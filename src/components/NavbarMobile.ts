@@ -1,5 +1,5 @@
-const burgerLightIcon = new URL('../assets/icons/burger_light.png', import.meta.url).href;
-const burgerDarkIcon  = new URL('../assets/icons/burger_dark.png',  import.meta.url).href;
+const burgerLightIcon = new URL('../assets/icons/burger_light.webp', import.meta.url).href;
+const burgerDarkIcon  = new URL('../assets/icons/burger_dark.webp',  import.meta.url).href;
 
 export const NavbarMobile = (): string => {
   return `

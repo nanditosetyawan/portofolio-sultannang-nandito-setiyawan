@@ -5,63 +5,79 @@ import { reviews } from '../data/review';
 
 /* ============================================================
    SKILL DATA
-   ✏️ CARA GANTI ICON (3 langkah):
-      1. Siapkan file icon (PNG/SVG) di folder public/icons/
-      2. Ubah src dari null menjadi path, contoh:
-         { label: 'PHP', src: '/icons/php.png' }
-      3. Simpan — placeholder teks otomatis terganti gambar
-
-   ✏️ TAMBAH SKILL BARU:
-      Tambahkan entry baru di array SKILLS di bawah.
-      5 item pertama = baris atas, 5 berikutnya = baris bawah.
-      Jika ingin ubah jumlah per baris → ubah ROW_SPLIT.
+   ✏️ CARA TAMBAH ICON:
+      1. Taruh file .svg di public/icons/ (nama file = label.lowercase())
+      2. Tambah entry di array SKILLS di bawah — urut: atas = lama, bawah = terbaru
+   ✏️ LOGIKA DINAMIS:
+      - Array dibalik → skill terbaru tampil PALING AWAL (paling kiri)
+      - Target total slot T = max(SKILLS.length, 24)
+      - Jika SKILLS < 24 → sisa diisi random dari SKILLS tanpa duplikat berdekatan
+      - Jika SKILLS >= 24 → semua tampil sekali, tanpa looping
+      - Row 1 = ceil(T/2), Row 2 = sisanya
    ============================================================ */
 interface Skill {
   label: string;
-  src: string | null;
+  src: string;
 }
 
 const SKILLS: Skill[] = [
-  /* ── Baris 1 (atas, gerak ke kanan saat scroll) ─────────── */
-  { label: 'PHP',     src: null },
-  { label: 'HTML',    src: null },
-  { label: 'CSS',     src: null },
-  { label: 'C++',     src: null },
-  { label: 'Laravel', src: null },
-  { label: 'JS',      src: null },
-  { label: 'React',   src: null },
-  { label: 'Python',  src: null },
-  { label: 'Java',    src: null },
-  { label: 'Go',      src: null },
-  { label: 'Swift',   src: null },
-  { label: 'Ruby',    src: null },
-  /* ── Baris 2 (bawah, zigzag + gerak ke kiri saat scroll) ── */
-  { label: 'XAMPP',   src: null },
-  { label: 'Laragon', src: null },
-  { label: 'TS',      src: null },
-  { label: 'Cisco',   src: null },
-  { label: 'QGIS',    src: null },
-  { label: 'Figma',   src: null },
-  { label: 'Git',     src: null },
-  { label: 'Node',    src: null },
-  { label: 'Docker',  src: null },
-  { label: 'MySQL',   src: null },
-  { label: 'Vue',     src: null },
-  { label: 'Tailwind',src: null },
+  /* Lama (atas array) → akan tampil di akhir */
+  { label: 'PHP',     src: '/icons/php.svg' },
+  { label: 'HTML',    src: '/icons/html.svg' },
+  { label: 'CSS',     src: '/icons/css.svg' },
+  { label: 'C++',     src: '/icons/cpp.svg' },
+  { label: 'Laravel', src: '/icons/laravel.svg' },
+  { label: 'JS',      src: '/icons/js.svg' },
+  { label: 'React',   src: '/icons/react.svg' },
+  { label: 'Python',  src: '/icons/python.svg' },
+  { label: 'Java',    src: '/icons/java.svg' },
+  /* Baru (bawah array) → akan tampil di awal */
+  { label: 'XAMPP',   src: '/icons/xampp.svg' },
+  { label: 'Laragon', src: '/icons/laragon.svg' },
+  { label: 'TS',      src: '/icons/typescript.svg' },
+  { label: 'Cisco',   src: '/icons/cisco.svg' },
+  { label: 'QGIS',    src: '/icons/qgis.svg' },
+  { label: 'Figma',   src: '/icons/figma.svg' },
+  { label: 'Git',     src: '/icons/git.svg' },
+  { label: 'Docker',  src: '/icons/docker.svg' },
+  { label: 'MySQL',   src: '/icons/mysql.svg' },
+  { label: 'Tailwind',src: '/icons/tailwind.svg' },
 ];
 
-/* ✏️ Jumlah skill per baris (default: 12) */
-const ROW_SPLIT = 12;
-const row1Skills = SKILLS.slice(0, ROW_SPLIT);
-const row2Skills = SKILLS.slice(ROW_SPLIT);
+/* ── Logika dinamis: reverse → pad to 24 (random, no adjacent dupes) → split rows ── */
+function buildSkillRows(skills: Skill[]): { row1: Skill[], row2: Skill[] } {
+  /* 1. Reverse agar terbaru di awal (index 0 = kiri paling awal) */
+  const reversed = [...skills].reverse();
+
+  /* 2. Target total slot */
+  const T = Math.max(reversed.length, 24);
+
+  /* 3. Jika < 24, isi sisa dengan random tanpa duplikat berdekatan */
+  let pool = [...reversed];
+  while (pool.length < T) {
+    /* Pilih kandidat yang tidak sama dengan terakhir & pertama (untuk wrap loop) */
+    const candidates = skills.filter(s =>
+      s.label !== pool[pool.length - 1].label &&
+      s.label !== pool[0].label
+    );
+    if (candidates.length === 0) break; // fallback (semua sama labelnya)
+    const pick = candidates[Math.floor(Math.random() * candidates.length)];
+    pool.push(pick);
+  }
+
+  /* 4. Split dinamis */
+  const row1Count = Math.ceil(T / 2);
+  const row1 = pool.slice(0, row1Count);
+  const row2 = pool.slice(row1Count);
+
+  return { row1, row2 };
+}
+
+const { row1: row1Skills, row2: row2Skills } = buildSkillRows(SKILLS);
 
 const skillCircleHTML = (s: Skill): string => `
   <div class="about-skill-circle" title="${s.label}">
-    ${s.src
-      ? `<img src="${s.src}" alt="${s.label}" class="about-skill-img" />`
-      : `<!-- ✏️ Ganti baris ini dengan <img src="..." class="about-skill-img" /> saat icon tersedia -->
-         <span class="about-skill-ph">${s.label}</span>`
-    }
+    <img src="${s.src}" alt="${s.label}" class="about-skill-img" />
   </div>`;
 
 /* ============================================================

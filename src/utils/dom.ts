@@ -828,9 +828,9 @@ export const initApp = () => {
   const duplicateCircles = (rowEl: HTMLElement | null, circles: HTMLElement[]) => {
     if (!rowEl || circles.length === 0) return 0;
     // 4× copy: original + 3 clones → konten selalu menutupi viewport
-    circles.forEach(c => {
-      for (let i = 0; i < 3; i++) rowEl.appendChild(c.cloneNode(true));
-    });
+    for (let i = 0; i < 3; i++) {
+      circles.forEach(c => rowEl.appendChild(c.cloneNode(true)));
+    }
     return (circleSize + skillGap) * circles.length; // cycleWidth = 1 set
   };
 

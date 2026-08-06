@@ -820,15 +820,18 @@ export const initApp = () => {
   const skillCirclesRow1 = Array.from(aboutSkillsWrap?.querySelectorAll('[data-skills-row="1"] .about-skill-circle') || []) as HTMLElement[];
   const skillCirclesRow2 = Array.from(aboutSkillsWrap?.querySelectorAll('[data-skills-row="2"] .about-skill-circle') || []) as HTMLElement[];
 
-  /* ── Infinite loop: duplicate circles & compute cycle widths ── */
+  /* ── Infinite loop: duplicate circles (4× copy for guaranteed coverage) ── */
   const circleSize = getSkillsOffset();
   const skillGap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--skill-gap')) || 106;
   const row2Offset = getSkillsOffset();
 
   const duplicateCircles = (rowEl: HTMLElement | null, circles: HTMLElement[]) => {
     if (!rowEl || circles.length === 0) return 0;
-    circles.forEach(c => rowEl.appendChild(c.cloneNode(true)));
-    return (circleSize + skillGap) * circles.length;
+    // 4× copy: original + 3 clones → konten selalu menutupi viewport
+    circles.forEach(c => {
+      for (let i = 0; i < 3; i++) rowEl.appendChild(c.cloneNode(true));
+    });
+    return (circleSize + skillGap) * circles.length; // cycleWidth = 1 set
   };
 
   const row1CycleWidth = duplicateCircles(aboutRow1, skillCirclesRow1);
@@ -837,11 +840,6 @@ export const initApp = () => {
   /* Re-query all circles (originals + clones) for rotation */
   const allCirclesRow1 = aboutRow1 ? Array.from(aboutRow1.querySelectorAll<HTMLElement>('.about-skill-circle')) : [];
   const allCirclesRow2 = aboutRow2 ? Array.from(aboutRow2.querySelectorAll<HTMLElement>('.about-skill-circle')) : [];
-
-  /* Initial offsets so circles fill the viewport at t=0 (not from corner) */
-  const viewportWidth = () => aboutSkillsWrap?.clientWidth || window.innerWidth || 0;
-  const initialOffset1 = Math.max((row1CycleWidth - viewportWidth()) / 2, 0);
-  const initialOffset2 = Math.max((row2CycleWidth - viewportWidth()) / 2, 0);
 
   /* Normalize any number to [0, cycleWidth) */
   const wrap = (x: number, cycleWidth: number) =>
@@ -852,21 +850,21 @@ export const initApp = () => {
     currentScrollOffset += (targetScrollOffset - currentScrollOffset) * 0.08;
 
     if (aboutSkillsWrap && aboutRow1 && aboutRow2) {
-      /* Raw (unbounded) positions — row 1 right, row 2 left */
-      const raw1 = autoScrollPos + currentScrollOffset + initialOffset1;
-      const raw2 = row2Offset - autoScrollPos - currentScrollOffset + initialOffset2;
+      /* Posisi linear kontinu (unbounded) */
+      const p = autoScrollPos + currentScrollOffset;
 
-      /* Wrap for seamless loop */
-      const t1 = wrap(raw1, row1CycleWidth);
-      const t2 = wrap(raw2, row2CycleWidth);
-
+      /* Row 1: bergerak ke KANAN — translateX positif, wrap per cycleWidth */
+      const t1 = wrap(p, row1CycleWidth);
       aboutRow1.style.transform = `translateX(${t1}px)`;
-      aboutRow2.style.transform = `translateX(${t2}px)`;
 
-      /* Rotation keeps unbounded so the wheel rolls smoothly */
+      /* Row 2: bergerak ke KIRI + zigzag offset — translateX negatif */
+      const t2 = wrap(p + row2Offset, row2CycleWidth);
+      aboutRow2.style.transform = `translateX(-${t2}px)`;
+
+      /* Rotasi tetap unbounded agar roda berputar halus */
       const circumference = Math.PI * circleSize;
-      const r1 = (raw1 / circumference) * 360;
-      const r2 = (raw2 / circumference) * 360;
+      const r1 = (p / circumference) * 360;
+      const r2 = (-p / circumference) * 360;
 
       allCirclesRow1.forEach(circle => { circle.style.transform = `rotate(${r1}deg)`; });
       allCirclesRow2.forEach(circle => { circle.style.transform = `rotate(${r2}deg)`; });

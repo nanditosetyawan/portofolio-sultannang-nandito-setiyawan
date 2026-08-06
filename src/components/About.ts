@@ -74,17 +74,34 @@ function buildSkillRows(skills: Skill[]): { row1: Skill[], row2: Skill[] } {
   /* 2. Target total slot */
   const T = Math.max(reversed.length, 24);
 
-  /* 3. Jika < 24, isi sisa dengan random tanpa duplikat berdekatan */
-  let pool = [...reversed];
+  /* 3. Round-robin: setiap icon muncul 1× per siklus, merata, tanpa cluster.
+        Jika total kurang dari T, ulang dari awal setelah semua icon keluar. */
+  const pool: Skill[] = [];
+  let idx = 0;
   while (pool.length < T) {
-    /* Pilih kandidat yang tidak sama dengan terakhir & pertama (untuk wrap loop) */
-    const candidates = skills.filter(s =>
-      s.label !== pool[pool.length - 1].label &&
-      s.label !== pool[0].label
-    );
-    if (candidates.length === 0) break; // fallback (semua sama labelnya)
-    const pick = candidates[Math.floor(Math.random() * candidates.length)];
-    pool.push(pick);
+    const candidate = reversed[idx % reversed.length];
+
+    /* Cegah duplikat berdekatan (termasuk saat wrap start→end) */
+    if (
+      pool.length > 0 &&
+      pool[pool.length - 1].label === candidate.label
+    ) {
+      idx++; // lompat ke icon berikutnya
+      continue;
+    }
+
+    /* Cegah item pertama dan terakhir sama (untuk wrap yang seamless) */
+    if (
+      pool.length === T - 1 &&
+      pool.length > 0 &&
+      pool[0].label === candidate.label
+    ) {
+      idx++; // lompat agar start & end berbeda
+      continue;
+    }
+
+    pool.push(candidate);
+    idx++;
   }
 
   /* 4. Split dinamis */

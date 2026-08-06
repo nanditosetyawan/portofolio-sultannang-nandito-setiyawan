@@ -194,7 +194,6 @@
 .about-skill-circle {
   width: var(--skill-circle-size);
   height: var(--skill-circle-size);
-  border-radius: 50%;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -202,12 +201,10 @@
   overflow: hidden;
   position: relative;
 
-  /* Background subtle sage tint */
-  background: linear-gradient(148deg,
-      var(--surface) 0%,
-      rgba(137, 215, 183, .09) 100%);
-  border: 1.5px solid var(--border);
-  box-shadow: 0 4px 14px rgba(26, 49, 44, .07);
+  /* No background circle — icon only */
+  background: transparent;
+  border: none;
+  box-shadow: none;
 
   /* Hover animation (JS parallax overrides transform, hover adds on top) */
   transition:

@@ -3,11 +3,33 @@ import { getYearsInProgramming, HAPPY_CLIENTS, WORKING_PRINCIPLES } from '../dat
 import { projects } from '../data/projects';
 import { reviews } from '../data/review';
 
+// Icon imports from src/assets/icons/
+import phpIcon from '../assets/icons/php.webp';
+import htmlIcon from '../assets/icons/html.webp';
+import cssIcon from '../assets/icons/css.webp';
+import cppIcon from '../assets/icons/cplusplus.webp';
+import laravelIcon from '../assets/icons/laravel.webp';
+import jsIcon from '../assets/icons/js.webp';
+import reactIcon from '../assets/icons/react.webp';
+import pythonIcon from '../assets/icons/python.webp';
+import javaIcon from '../assets/icons/java.webp';
+import xamppIcon from '../assets/icons/xampp.webp';
+import laragonIcon from '../assets/icons/laragon.webp';
+import tsIcon from '../assets/icons/ts.webp';
+import ciscoIcon from '../assets/icons/cisco.webp';
+import qgisIcon from '../assets/icons/qgis.webp';
+import figmaIcon from '../assets/icons/figma.webp';
+import gitIcon from '../assets/icons/githubb.webp';
+import dockerIcon from '../assets/icons/docker.webp';
+import mysqlIcon from '../assets/icons/mysql.webp';
+import tailwindIcon from '../assets/icons/tailwind.webp';
+
 /* ============================================================
    SKILL DATA
    ✏️ CARA TAMBAH ICON:
-      1. Taruh file .svg di public/icons/ (nama file = label.lowercase())
-      2. Tambah entry di array SKILLS di bawah — urut: atas = lama, bawah = terbaru
+      1. Taruh file .webp di src/assets/icons/ (nama file = label.lowercase())
+      2. Import di atas, lalu tambah entry di array SKILLS di bawah
+         — urut: atas = lama, bawah = terbaru
    ✏️ LOGIKA DINAMIS:
       - Array dibalik → skill terbaru tampil PALING AWAL (paling kiri)
       - Target total slot T = max(SKILLS.length, 24)
@@ -22,26 +44,26 @@ interface Skill {
 
 const SKILLS: Skill[] = [
   /* Lama (atas array) → akan tampil di akhir */
-  { label: 'PHP',     src: '/icons/php.svg' },
-  { label: 'HTML',    src: '/icons/html.svg' },
-  { label: 'CSS',     src: '/icons/css.svg' },
-  { label: 'C++',     src: '/icons/cpp.svg' },
-  { label: 'Laravel', src: '/icons/laravel.svg' },
-  { label: 'JS',      src: '/icons/js.svg' },
-  { label: 'React',   src: '/icons/react.svg' },
-  { label: 'Python',  src: '/icons/python.svg' },
-  { label: 'Java',    src: '/icons/java.svg' },
+  { label: 'PHP',     src: phpIcon },
+  { label: 'HTML',    src: htmlIcon },
+  { label: 'CSS',     src: cssIcon },
+  { label: 'C++',     src: cppIcon },
+  { label: 'Laravel', src: laravelIcon },
+  { label: 'JS',      src: jsIcon },
+  { label: 'React',   src: reactIcon },
+  { label: 'Python',  src: pythonIcon },
+  { label: 'Java',    src: javaIcon },
   /* Baru (bawah array) → akan tampil di awal */
-  { label: 'XAMPP',   src: '/icons/xampp.svg' },
-  { label: 'Laragon', src: '/icons/laragon.svg' },
-  { label: 'TS',      src: '/icons/typescript.svg' },
-  { label: 'Cisco',   src: '/icons/cisco.svg' },
-  { label: 'QGIS',    src: '/icons/qgis.svg' },
-  { label: 'Figma',   src: '/icons/figma.svg' },
-  { label: 'Git',     src: '/icons/git.svg' },
-  { label: 'Docker',  src: '/icons/docker.svg' },
-  { label: 'MySQL',   src: '/icons/mysql.svg' },
-  { label: 'Tailwind',src: '/icons/tailwind.svg' },
+  { label: 'XAMPP',   src: xamppIcon },
+  { label: 'Laragon', src: laragonIcon },
+  { label: 'TS',      src: tsIcon },
+  { label: 'Cisco',   src: ciscoIcon },
+  { label: 'QGIS',    src: qgisIcon },
+  { label: 'Figma',   src: figmaIcon },
+  { label: 'Git',     src: gitIcon },
+  { label: 'Docker',  src: dockerIcon },
+  { label: 'MySQL',   src: mysqlIcon },
+  { label: 'Tailwind',src: tailwindIcon },
 ];
 
 /* ── Logika dinamis: reverse → pad to 24 (random, no adjacent dupes) → split rows ── */

@@ -231,24 +231,8 @@
   border-radius: 50%;
 }
 
-/* Placeholder teks (sebelum icon dipasang) */
-/* ✏️ Warna teks placeholder: ubah color di sini */
-.about-skill-ph {
-  font-size: 0.55rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  color: var(--accent);
-  text-transform: uppercase;
-  text-align: center;
-  line-height: 1.3;
-  padding: 2px 3px;
-  pointer-events: none;
-  user-select: none;
-}
-
-
 /* ═══════════════════════════════════════════════════════════
-   PART 3 ▸ EDUCATION — STICKY SPLIT LAYOUT (DESKTOP)
+    PART 3 ▸ EDUCATION — STICKY SPLIT LAYOUT (DESKTOP)
    ═══════════════════════════════════════════════════════════ */
 
 /* Section dengan tinggi ekstra untuk menciptakan scroll-space.
@@ -481,10 +465,6 @@
     --skill-gap: 60px;
     /* ✏️ jarak horizontal seukuran 1 lingkaran */
     --skills-row-gap: 14px;
-  }
-
-  .about-skill-ph {
-    font-size: 0.5rem;
   }
 
   /* ── Education: hilangkan sticky, tampilkan semua item ─── */

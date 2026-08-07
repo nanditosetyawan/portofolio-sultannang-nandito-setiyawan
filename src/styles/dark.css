@@ -1037,3 +1037,4 @@
 .dark .download-img { filter: invert(1); }
 .dark .mobile-download-btn img { filter: invert(1); }
 .dark .reload-icon { filter: invert(1); }
+.dark #themeIcon { filter: invert(1); }

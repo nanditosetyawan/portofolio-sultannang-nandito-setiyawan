@@ -17,6 +17,8 @@ export const initApp = () => {
   const navLinks = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-link]'));
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon = document.getElementById('themeIcon') as HTMLImageElement | null;
+  const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+  const mobileThemeLabel = document.getElementById('mobileThemeLabel');
   const menuBtn = document.getElementById('menuBtn');
   const mobileSidebar = document.getElementById('mobileSidebar');
   const closeSidebar = document.getElementById('closeSidebar');
@@ -158,14 +160,42 @@ export const initApp = () => {
   // ─────────────────────────────────────────────────────────────────────────
 
   // Theme toggle
-  themeToggle?.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.toggle('dark');
+  const syncThemeToggle = () => {
+    const isDark = document.documentElement.classList.contains('dark');
     if (themeIcon) {
       themeIcon.src = isDark ? darkModeIcon : whiteModeIcon;
       themeIcon.alt = isDark ? 'Dark mode' : 'Light mode';
     }
+    if (mobileThemeLabel) {
+      mobileThemeLabel.textContent = isDark ? 'ON' : 'OFF';
+    }
     syncBurgerIcon();
     syncCloseSidebarIcon();
+  };
+
+  // Init theme from localStorage (fallback to OS preference)
+  (() => {
+    const saved   = localStorage.getItem('theme');
+    const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark  = saved === 'dark' || (saved !== 'light' && prefers);
+    if (isDark) document.documentElement.classList.add('dark');
+    else        document.documentElement.classList.remove('dark');
+    syncThemeToggle();
+  })();
+
+  themeToggle?.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    syncThemeToggle();
+  });
+
+  // Mobile theme toggle (sidebar — always visible)
+  mobileThemeToggle?.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    syncThemeToggle();
   });
 
   // Sidebar controls

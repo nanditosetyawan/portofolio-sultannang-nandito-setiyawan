@@ -1,0 +1,724 @@
+/* ============================================================
+   DARK MODE — Dark Green Tint
+   Semua override di sini hanya berlaku saat <html> punya class .dark
+   Light mode tidak tersentuh sama sekali.
+   ============================================================ */
+
+/* ── CSS Custom Properties ─────────────────────────────────── */
+.dark {
+  --bg: #0F1411;
+  --surface: #151C18;
+  --surface2: #1A2320;
+  --border: #2A3832;
+  --text: #E4ECE8;
+  --text2: #8BA89A;
+  --accent: #5CC8A1;
+  --accent2: #3AB88A;
+  --shadow: 0 12px 36px rgba(0, 0, 0, 0.50);
+  --shadow2: 0 18px 52px rgba(0, 0, 0, 0.60);
+}
+
+/* ── Smooth transition on toggle ───────────────────────────── */
+.dark * {
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+/* ── Global body ───────────────────────────────────────────── */
+.dark body,
+.dark .global-bg-layer {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.dark .global-bg-overlay {
+  background: linear-gradient(to bottom,
+    rgba(15, 20, 17, 0),
+    rgba(15, 20, 17, 0.15));
+}
+
+.dark .global-blob-1 {
+  background: radial-gradient(circle at 30% 30%,
+    rgba(66, 132, 117, 0.12),
+    rgba(66, 132, 117, 0.03) 50%,
+    transparent 72%);
+}
+
+.dark .global-blob-2 {
+  background: radial-gradient(circle at 30% 30%,
+    rgba(92, 200, 161, 0.08),
+    rgba(92, 200, 161, 0.02) 56%,
+    transparent 74%);
+}
+
+.dark .global-blob-3 {
+  background: radial-gradient(circle at 30% 30%,
+    rgba(66, 132, 117, 0.06),
+    rgba(66, 132, 117, 0.015) 52%,
+    transparent 76%);
+}
+
+/* ── HERO ──────────────────────────────────────────────────── */
+.dark .hero-bg-fixed {
+  background-image: url('../assets/background.webp');
+  filter: brightness(0.7);
+}
+
+.dark .hero-badge-text,
+.dark .hero-title,
+.dark .hero-desc {
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
+/* Wave strokes - abu-abu gelap, hanya garis, tidak terisi */
+.dark .hero-wave-top path {
+  stroke: #58655F;
+  stroke-width: 2.5px;
+  fill: none !important;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Wave bawah - warna mengikuti about section (#0A0F0D) */
+.dark .hero-wave path {
+  fill: #58655F;
+}
+
+/* ── ABOUT ─────────────────────────────────────────────────── */
+.dark .about-section {
+  background: #58655f; /* match hero-wave */
+}
+
+.dark .about-curved-text {
+  fill: #ffffff;
+}
+
+.dark .about-photo-frame {
+  background: linear-gradient(148deg,
+    var(--surface) 0%,
+    rgba(66, 132, 117, 0.08) 100%);
+  border-color: rgba(66, 132, 117, 0.25);
+}
+
+.dark .about-wpr-section {
+  background: #0A0F0D;
+}
+
+.dark .about-skills-section {
+  background: #6E7773 !important; /* lebih terang dari about (#0A0F0D) */
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+.dark .about-skill-circle {
+  background: transparent !important;
+  border: none !important;
+}
+
+.dark .about-skill-circle:hover {
+  box-shadow: 0 12px 30px rgba(92, 200, 161, 0.16);
+  border: none !important;
+}
+
+/* Education section — PERTAHANKAN warna accent hijau */
+.dark .about-edu-section {
+  background: #58655f; /* match hero-wave */
+
+}
+
+.dark .about-edu-heading {
+  color: #ffffff;
+}
+
+/* Education text — putih di dark mode */
+.dark .about-edu-name {
+  color: #ffffff;
+}
+
+.dark .about-edu-period {
+  color: #ffffff;
+}
+
+.dark .about-edu-desc {
+  color: #e8e8e8;
+}
+
+.dark .about-edu-num {
+  color: #ffffff;
+}
+
+.dark .about-edu-major {
+  color: #ffffff;
+}
+
+.dark .about-edu-line {
+  background: #ffffff;
+}
+
+.dark .about-edu-dot {
+  background: #ffffff;
+  border-color: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.20),
+    0 0 0 8px rgba(255, 255, 255, 0.07);
+}
+
+/* What I've Done */
+.dark .about-wid-section {
+  background: var(--surface2);
+  border-top-color: var(--border);
+}
+
+.dark .about-wid-num {
+  color: var(--text);
+}
+
+.dark .about-wid-label {
+  color: var(--text2);
+}
+
+.dark .about-wid-cta {
+  background: #F8F3E7;
+  border-color: #F8F3E7;
+  color: #0F1411;
+}
+
+.dark .about-wid-cta:hover,
+.dark .about-wid-cta:active {
+  background: transparent;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+/* Working Principles */
+.dark .about-wpr-section {
+  background: var(--surface2);
+}
+
+.dark .about-wpr-card {
+  background-color: #9BB298;
+  box-shadow: 0 -22px 48px rgba(0, 0, 0, 0.2);
+}
+
+.dark .about-wpr-title {
+  color: var(--wpr-text-color, #080D0B);
+}
+
+.dark .about-wpr-num {
+  color: var(--wpr-text-color, #080D0B);
+}
+
+.dark .about-wpr-item-title {
+  color: var(--wpr-text-color, #080D0B);
+}
+
+.dark .about-wpr-item-desc {
+  color: var(--wpr-text2-color, #111918);
+}
+
+/* ── PROJECTS ──────────────────────────────────────────────── */
+/* PERTAHANKAN background #5A5D45 — tidak diubah */
+.dark .projects-section {
+  background: #5A5D55;
+}
+
+.dark .proj-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.dark .proj-card.is-active {
+  background: var(--surface);
+}
+
+.dark .proj-card-title {
+  color: var(--text);
+}
+
+.dark .proj-card-desc {
+  color: var(--text2);
+}
+
+.dark .proj-tag {
+  background: rgba(92, 200, 161, 0.12);
+  color: var(--accent);
+  border-color: rgba(92, 200, 161, 0.25);
+}
+
+.dark .proj-fade-left {
+  background: linear-gradient(to right,
+    rgba(90, 93, 85, 0.95),
+    transparent);
+}
+
+.dark .proj-fade-right {
+  background: linear-gradient(to left,
+    rgba(90, 93, 85, 0.95),
+    transparent);
+}
+
+.dark .proj-see-btn {
+  background: linear-gradient(135deg, #5CC8A1, #3AB88A);
+  color: #0F1411;
+}
+
+.dark .proj-see-btn:hover {
+  background: linear-gradient(135deg, #6DD8B1, #4AC89A);
+}
+
+.dark .proj-modal-main-preview-wrap {
+  background: var(--surface);
+}
+
+/* ── ACHIEVEMENTS ──────────────────────────────────────────── */
+.dark .achievement-section {
+  background: var(--surface2);
+}
+
+.dark .achievement-item {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.dark .achievement-item:hover {
+  background: #1E2824;
+}
+
+.dark .achievement-logo-wrapper {
+  background: linear-gradient(135deg,
+    rgba(66, 132, 117, 0.10),
+    rgba(21, 28, 24, 0.95));
+  border-color: var(--border);
+}
+
+.dark .achievement-title,
+.dark .achievement-subtitle,
+.dark .achievement-name,
+.dark .achievement-date,
+.dark .achievement-desc,
+.dark .achievement-details-title,
+.dark .achievement-details-text {
+  color: #ffffff;
+}
+
+/* Review section — slightly different shade */
+.dark .review-section-wrap {
+  background: #18221D;
+  border-top-color: var(--border);
+}
+
+.dark .review-title {
+  color: var(--text);
+}
+
+.dark .review-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.dark .review-card::before {
+  background: var(--surface);
+  border-left-color: var(--border);
+  border-bottom-color: var(--border);
+}
+
+.dark .review-card.is-highlighted {
+  background: rgba(92, 200, 161, 0.18) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 12px 36px rgba(92, 200, 161, 0.15);
+}
+
+.dark .review-card-name {
+  color: var(--text);
+}
+
+.dark .review-card-text {
+  color: var(--text2);
+}
+
+.dark .review-marquee-container::before {
+  background: linear-gradient(to right, #18221D 15%, transparent);
+}
+
+.dark .review-marquee-container::after {
+  background: linear-gradient(to left, #18221D 15%, transparent);
+}
+
+/* ── CONTACT ───────────────────────────────────────────────── */
+.dark .contact-section {
+  background: var(--bg);
+}
+
+.dark .contact-title,
+.dark .contact-subtitle {
+  color: var(--text);
+}
+
+.dark .contact-info-card {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+}
+
+.dark .contact-info-label {
+  color: var(--text);
+}
+
+.dark .contact-info-value {
+  color: var(--text2);
+}
+
+.dark .contact-form-wrapper {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.dark .contact-form-inner {
+  background: var(--surface);
+}
+
+.dark .contact-form-title {
+  color: var(--text);
+}
+
+.dark .contact-input,
+.dark .contact-textarea {
+  background: #0F1411;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .contact-input::placeholder,
+.dark .contact-textarea::placeholder {
+  color: #5A6B62;
+}
+
+.dark .contact-input:focus,
+.dark .contact-textarea:focus {
+  box-shadow: 0 0 0 2px rgba(92, 200, 161, 0.2);
+}
+
+.dark .contact-send-btn {
+  background: var(--accent);
+  color: #0F1411;
+}
+
+.dark .contact-send-btn:hover {
+  background: #6DD8B1;
+}
+
+/* Contact modal */
+.dark .contact-modal-overlay {
+  background: rgba(8, 12, 10, 0.85);
+}
+
+.dark .contact-modal {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow2);
+}
+
+.dark .contact-modal-title {
+  color: var(--text);
+}
+
+.dark .contact-modal-desc {
+  color: var(--text2);
+}
+
+.dark .contact-modal-close {
+  color: var(--text2);
+}
+
+.dark .contact-modal-close:hover {
+  color: var(--text);
+}
+
+.dark .contact-modal-btn--gmail,
+.dark .contact-modal-btn--outlook {
+  background: #0F1411;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.dark .contact-modal-btn--gmail:hover,
+.dark .contact-modal-btn--outlook:hover {
+  background: var(--accent);
+  color: #0F1411;
+  border-color: var(--accent);
+}
+
+.dark .contact-modal-btn--accent {
+  background: var(--accent);
+  color: #0F1411;
+}
+
+.dark .contact-modal-btn--accent:hover {
+  background: #6DD8B1;
+}
+
+/* Form validation error */
+.dark .contact-input.is-error,
+.dark .contact-textarea.is-error {
+  border-color: #f56565;
+}
+
+/* Footer */
+.dark .site-footer {
+  background: var(--bg);
+  border-top-color: var(--border);
+}
+
+/* ── NAVBAR DESKTOP ────────────────────────────────────────── */
+.dark .nav-shell {
+  background: rgba(15, 20, 17, 0.92);
+  border-bottom-color: transparent;
+}
+
+.dark .nav-shell.is-scrolled {
+  border-color: transparent;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.40);
+}
+
+.dark #navShell a.font-cabinet {
+  color: #ffffff;
+}
+
+.dark .nav-item,
+.dark .nav-link {
+  color: #ffffff;
+}
+
+.dark .nav-item:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.dark .nav-item.active {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.dark .nav-active-pill {
+  background: var(--accent);
+  box-shadow: 0 8px 24px rgba(92, 200, 161, 0.30);
+}
+
+.dark .nav-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.dark .nav-link.active {
+  color: #ffffff;
+}
+
+/* Theme toggle button */
+.dark #themeToggle {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.dark #themeToggle:hover {
+  background: #1E2824;
+}
+
+/* ── NAVBAR MOBILE ─────────────────────────────────────────── */
+.dark .mobile-nav-shell {
+  background: rgba(15, 20, 17, 0.98);
+  border-color: var(--border);
+}
+
+.dark .mobile-nav-shell.is-scrolled {
+  border-color: var(--border);
+}
+
+.dark .mobile-nav-shell.at-top {
+  border-bottom-color: var(--border);
+}
+
+.dark .mobile-nav-name {
+  color: var(--text);
+}
+
+.dark .mobile-burger-btn {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Mobile sidebar */
+.dark #sidebarContent {
+  background: var(--surface);
+  border-right-color: var(--border);
+}
+
+.dark #sidebarContent .font-cabinet {
+  color: var(--text);
+}
+
+.dark #sidebarContent .nav-item {
+  color: var(--text2);
+}
+
+.dark #sidebarContent .nav-item:hover {
+  background: rgba(42, 56, 50, 0.35);
+}
+
+.dark #sidebarContent .nav-item.active {
+  background: var(--accent);
+  color: #0F1411;
+}
+
+.dark #closeSidebar {
+  background: rgba(15, 20, 17, 0.90);
+  border-color: var(--border);
+}
+
+/* Floating burger */
+.dark .floating-burger {
+  background: rgba(15, 20, 17, 0.95);
+  border-color: var(--border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+}
+
+/* ── LOADING SCREEN ────────────────────────────────────────── */
+.dark .loading-screen {
+  background: rgba(15, 20, 17, 0.98);
+}
+
+.dark .loading-screen__title {
+  color: var(--text);
+}
+
+.dark .loading-screen__bar {
+  background: rgba(42, 56, 50, 0.80);
+}
+
+.dark .loading-screen__fill {
+  background: var(--accent);
+}
+
+/* ── SECTION ARROW (load more) ─────────────────────────────── */
+.dark .section-arrow {
+  background: rgba(21, 28, 24, 0.80);
+  border-color: var(--border);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.30);
+}
+
+.dark .section-arrow::after {
+  background: rgba(92, 200, 161, 0.90);
+  color: #0F1411;
+}
+
+.dark .section-arrow:hover {
+  background: rgba(30, 40, 36, 0.95);
+}
+
+/* ── CERTIFICATE PREVIEW ───────────────────────────────────── */
+.dark .certificate-stage .cert-img {
+  background: linear-gradient(135deg,
+    rgba(21, 28, 24, 0.95),
+    rgba(15, 20, 17, 0.98));
+}
+
+.dark .certificate-stage .cert-badge {
+  background: rgba(21, 28, 24, 0.88);
+  border-color: var(--border);
+  color: #ffffff;
+}
+
+.dark .certificate-stage .download-btn {
+  background: rgba(21, 28, 24, 0.92);
+  border-color: var(--border);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.30);
+}
+
+.dark .certificate-stage .download-btn:hover {
+  background: rgba(30, 40, 36, 0.95);
+}
+
+.dark .certificate-stage .download-btn::after {
+  background: var(--surface);
+  color: #ffffff;
+}
+
+.dark .certificate-stage .download-btn .material-symbols-outlined {
+  color: #ffffff;
+}
+
+.dark .mobile-download-btn {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+.dark .mobile-download-btn:hover {
+  box-shadow: 0 12px 30px rgba(92, 200, 161, 0.50);
+}
+
+.dark .mobile-download-btn.downloaded {
+  background-color: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ── PHOTO STACK ───────────────────────────────────────────── */
+.dark .stack-card {
+  background: rgba(21, 28, 24, 0.97);
+  border-color: var(--border);
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.40);
+}
+
+.dark .stack-label {
+  background: rgba(21, 28, 24, 0.82);
+  border-color: var(--border);
+  color: var(--text2);
+}
+
+/* ── SECTION CARD / ELEVATED ───────────────────────────────── */
+.dark .section-card,
+.dark .elevated {
+  background: rgba(21, 28, 24, 0.92);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+
+.dark .card-line {
+  border-top-color: rgba(42, 56, 50, 0.82);
+}
+
+/* ── BTN PRIMARY / SECONDARY ───────────────────────────────── */
+.dark .btn-primary {
+  background: var(--accent);
+  color: #0F1411;
+  box-shadow: 0 14px 28px rgba(92, 200, 161, 0.22);
+}
+
+.dark .btn-primary:hover {
+  background: #6DD8B1;
+}
+
+.dark .btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.dark .btn-secondary:hover {
+  background: #1E2824;
+  box-shadow: var(--shadow);
+}
+
+/* ── CHIP / HERO BADGE ─────────────────────────────────────── */
+.dark .chip {
+  background: rgba(92, 200, 161, 0.12);
+  color: var(--accent);
+  border-color: rgba(92, 200, 161, 0.25);
+}
+
+/* ── EXTRA ACHIEVE ─────────────────────────────────────────── */
+.dark .extra-achieve {
+  background: transparent;
+}

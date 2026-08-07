@@ -9,6 +9,8 @@ import { Achievement } from './components/Achievement';
 import { Contact } from './components/Contact';
 import { initApp } from './utils/dom';
 
+import './styles/dark.css';
+
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
 app.innerHTML = `

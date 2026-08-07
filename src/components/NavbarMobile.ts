@@ -1,5 +1,7 @@
 const burgerLightIcon = new URL('../assets/icons/burger_light.webp', import.meta.url).href;
 const burgerDarkIcon  = new URL('../assets/icons/burger_dark.webp',  import.meta.url).href;
+const darkModeIcon    = new URL('../assets/icons/dark_mode.png',   import.meta.url).href;
+const whiteModeIcon   = new URL('../assets/icons/white_mode.png',  import.meta.url).href;
 
 export const NavbarMobile = (): string => {
   return `
@@ -21,6 +23,14 @@ export const NavbarMobile = (): string => {
           <a class="block px-4 py-3 rounded-2xl nav-item" href="#achievements" data-nav-link data-target="achievements">Achievement</a>
           <a class="block px-4 py-3 rounded-2xl nav-item" href="#contact" data-nav-link data-target="contact">Contact</a>
         </nav>
+
+        <!-- Dark Mode Toggle -->
+        <div class="pt-4 mt-4 border-t border-border">
+          <button id="mobileThemeToggle" class="w-full flex items-center justify-between px-4 py-3 rounded-2xl font-semibold text-text hover:bg-surface transition" aria-label="Toggle theme">
+            <span>Dark Mode</span>
+            <span id="mobileThemeLabel" class="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-accent/10 text-accent">OFF</span>
+          </button>
+        </div>
       </aside>
     </div>
 

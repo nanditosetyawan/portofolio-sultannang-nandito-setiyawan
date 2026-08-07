@@ -4,6 +4,7 @@ import whiteModeIcon from '../assets/icons/white_mode.webp';
 import darkModeIcon from '../assets/icons/dark_mode.webp';
 import burgerLightIcon from '../assets/icons/burger_light.webp';
 import burgerDarkIcon from '../assets/icons/burger_dark.webp';
+import { getLenis } from '../animations';
 
 export const initApp = () => {
   const topNav = document.getElementById('topNav');
@@ -70,30 +71,41 @@ export const initApp = () => {
   };
 
   const scrollToSection = (targetId: string) => {
+    // Use Lenis smooth scroll if available (falls back to native smooth scroll).
+    const lenis = getLenis();
+    if (lenis) {
+      // Lenis scrollTo dengan string memakai querySelector → wajib prefix "#"
+      const selector = `#${targetId}`;
+      let offset = 0;
+      if (targetId === 'about' && window.innerWidth >= 768) {
+        const nav = document.getElementById('topNav');
+        const navHeight = nav?.offsetHeight ?? 0;
+        const titleOffset = 46;
+        const gap = 20;
+        offset = Math.max(navHeight - titleOffset + gap, 0);
+      }
+      lenis.scrollTo(selector, { offset: -offset, duration: 1.1 });
+      return;
+    }
+
     const target = document.getElementById(targetId);
     if (!target) return;
 
-    // Hero sits inside .main-content which adds padding-top; scroll to absolute 0
-    // so the hero lands flush below the full-width navbar box.
-    // Other sections rely on their own internal top-padding.
     const top = (() => {
       if (targetId === 'hero') return 0;
       const sectionTop = window.scrollY + target.getBoundingClientRect().top;
       if (targetId === 'about' && window.innerWidth >= 768) {
         const nav = document.getElementById('topNav');
         const navHeight = nav?.offsetHeight ?? 0;
-        const titleOffset = 46;       // posisi judul "ABOUT ME" dari atas #about (1.4rem + 1.5rem)
-        const gap = 20;               // jarak bebas navbar → judul (sedang)
+        const titleOffset = 46;
+        const gap = 20;
         const offset = Math.max(navHeight - titleOffset + gap, 0);
         return sectionTop - offset;
       }
       return sectionTop;
     })();
 
-    window.scrollTo({
-      top: Math.max(top, 0),
-      behavior: 'smooth',
-    });
+    window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
   };
 
   // Only desktop nav links — sidebar links are hidden and would give wrong measurements
@@ -203,16 +215,6 @@ export const initApp = () => {
   mobileBurgerBtn?.addEventListener('click', openSidebar);
   closeSidebar?.addEventListener('click', closeSidebarMenu);
   sidebarBackdrop?.addEventListener('click', closeSidebarMenu);
-
-  // Reveal elements
-  const revealElements = document.querySelectorAll<HTMLElement>('.reveal');
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('in');
-    });
-  }, { threshold: 0.12 });
-
-  revealElements.forEach(el => revealObserver.observe(el));
 
   // ── Continuous Liquid Nav Pill Interpolation ──────────────────────────────
   let activeSection = 'hero';
@@ -407,36 +409,14 @@ export const initApp = () => {
     navActivePill.style.opacity = '1';
     requestAnimationFrame(() => { navActivePill!.style.transition = ''; });
   }
-  // ── Hero Background & Content Parallax ──────────────────────────────────
+  // ── Hero Background Parallax (GSAP handles heroContainer fade; keep heroBg opacity) ──
   const heroSection = document.getElementById('hero');
   const heroBg = heroSection?.querySelector('.hero-bg-fixed') as HTMLElement | null;
-  const heroContent = heroSection?.querySelector('.hero-container') as HTMLElement | null;
 
-  const updateHeroEffects = (currentY: number) => {
-    if (!heroSection) return;
+  const updateHeroBg = (currentY: number) => {
+    if (!heroSection || !heroBg) return;
     const heroHeight = heroSection.offsetHeight;
-
-    if (heroBg) {
-      heroBg.style.opacity = currentY > heroHeight ? "0" : "1";
-    }
-    if (currentY <= heroHeight + 100) {
-      // 1. Keep background fixed relative to viewport
-
-
-      // 2. Fade out and translate up the content
-      if (heroContent) {
-        const fadeStart = heroHeight * 0.78; // mulai pudar saat Hero hampir keluar
-        const fadeEnd = heroHeight * 1.05;   // benar-benar hilang saat sudah sangat jauh ke atas
-
-        const progress = Math.min(
-          Math.max((currentY - fadeStart) / (fadeEnd - fadeStart), 0),
-          1
-        );
-
-        heroContent.style.opacity = `${1 - progress}`;
-        heroContent.style.transform = `translateY(${-Math.max(0, currentY - fadeStart) * 0.25}px)`;
-      }
-    }
+    heroBg.style.opacity = currentY > heroHeight ? "0" : "1";
   };
 
   // ── Navbar: hide only after 3s of CONTINUOUS down-scroll ─────────────────
@@ -509,7 +489,7 @@ export const initApp = () => {
 
 
       lastScrollY = currentY;
-      updateHeroEffects(currentY);
+      updateHeroBg(currentY);
 
       syncNavbarState();
       rafId = 0;
@@ -519,10 +499,10 @@ export const initApp = () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', () => {
     syncNavbarState();
-    updateHeroEffects(window.scrollY);
+    updateHeroBg(window.scrollY);
   });
   syncNavbarState();
-  updateHeroEffects(window.scrollY);
+  updateHeroBg(window.scrollY);
   // ─────────────────────────────────────────────────────────────────────────
 
   // Accordions
@@ -1262,62 +1242,7 @@ export const initApp = () => {
     initDraggable('bintangKosong');
   }, 100);
 
-  // ── Stats Counter Scramble Animation ─────────────────────────────────────
-  // Animates each [data-counter] span with random numbers (1–99) for 0.6s,
-  // then snaps to the real target value. Re-triggers every time it enters viewport.
-  const initStatsCounter = () => {
-    const statEls = Array.from(document.querySelectorAll<HTMLElement>('[data-counter]'));
-    if (statEls.length === 0) return;
-
-    const DURATION = 600;     // ms total scramble duration
-    const INTERVAL = 60;      // ms between each random number swap
-
-    // Map to track running interval per element
-    const runningIntervals = new Map<HTMLElement, ReturnType<typeof setInterval>>();
-
-    const animateCounter = (el: HTMLElement) => {
-      const target = parseInt(el.getAttribute('data-target') || '0', 10);
-      const suffix = el.getAttribute('data-suffix') || '';
-
-      // Cancel any existing animation on this element first
-      if (runningIntervals.has(el)) {
-        clearInterval(runningIntervals.get(el)!);
-        runningIntervals.delete(el);
-      }
-
-      const startTime = performance.now();
-
-      const intervalId = setInterval(() => {
-        const elapsed = performance.now() - startTime;
-
-        if (elapsed >= DURATION) {
-          clearInterval(intervalId);
-          runningIntervals.delete(el);
-          el.textContent = String(target) + suffix;
-          return;
-        }
-
-        // Random number 1–99, independent per stat
-        const rand = Math.floor(Math.random() * 99) + 1;
-        el.textContent = String(rand) + suffix;
-      }, INTERVAL);
-
-      runningIntervals.set(el, intervalId);
-    };
-
-    // Re-trigger animation every time element enters viewport
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target as HTMLElement);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    statEls.forEach(el => observer.observe(el));
-  };
-
-  initStatsCounter();
+  // ── Stats Counter handled by GSAP (src/animations/about.ts) ─────────────
 
   // ══════════════════════════════════════════════════════════════════════════
   // PROJECTS CAROUSEL — Coverflow navigation, search, filter, modals

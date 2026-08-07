@@ -8,6 +8,7 @@ import { Projects } from './components/Projects';
 import { Achievement } from './components/Achievement';
 import { Contact } from './components/Contact';
 import { initApp } from './utils/dom';
+import { initAnimations } from './animations';
 
 import './styles/dark.css';
 
@@ -43,13 +44,5 @@ app.innerHTML = `
 
 window.addEventListener('DOMContentLoaded', () => {
   initApp();
-
-  window.addEventListener('load', () => {
-    const loading = document.getElementById('loadingScreen');
-    if (!loading) return;
-    window.setTimeout(() => {
-      loading.classList.add('is-hidden');
-      window.setTimeout(() => loading.remove(), 500);
-    }, 1800);
-  });
+  initAnimations();
 });

@@ -191,20 +191,17 @@
   letter-spacing: -0.03em;
 }
 
-/* Override typing animation to work on both desktop & mobile and scale with ch */
+/* Override typing animation to work on desktop & mobile and scale with ch */
 .typing-animation {
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 2px solid var(--accent);
   width: 0;
 }
 
 /* Typing only starts once hero loads (class added by JS after loading screen) */
 .typing-animation.typing-active {
-  animation:
-    typing-smooth 1s cubic-bezier(0.4, 0, 0.2, 1) forwards,
-    blink-cursor 0.75s step-end 3 alternate forwards;
+  animation: typing-smooth 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   animation-delay: 0.6s;
 }
 
@@ -218,18 +215,6 @@
   }
 
   /* scales with font-size */
-}
-
-@keyframes blink-cursor {
-
-  from,
-  to {
-    border-color: transparent
-  }
-
-  50% {
-    border-color: var(--accent)
-  }
 }
 
 .hero-title {

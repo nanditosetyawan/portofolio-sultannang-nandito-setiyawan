@@ -767,3 +767,262 @@
 .dark .extra-achieve {
   background: transparent;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   TRANSITIONS — Pulihkan animasi yang tertimpa `.dark *`
+   Rule `.dark *` hanya menyisakan background-color, color,
+   border-color, box-shadow. Semua properti lain (transform,
+   opacity, width, height, dll) dimatikan.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── NAVBAR ─────────────────────────────────────────────────── */
+.dark #topNav {
+  transition: transform .42s cubic-bezier(.2,.9,.2,1), opacity .36s ease;
+}
+
+.dark .nav-pill {
+  transition: all .35s cubic-bezier(.2,.9,.2,1);
+}
+
+.dark .nav-item {
+  transition: all .22s ease;
+}
+
+.dark .nav-shell {
+  transition: all .44s cubic-bezier(.2,.9,.2,1);
+}
+
+.dark .nav-link {
+  transition: color .22s ease, background .22s ease, transform .22s ease;
+}
+
+.dark .nav-active-pill {
+  transition:
+    transform .42s cubic-bezier(0.16, 1, 0.3, 1),
+    width     .38s cubic-bezier(0.16, 1, 0.3, 1),
+    height    .32s cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity   .2s ease;
+}
+
+.dark #mobileNav {
+  transition: transform .55s cubic-bezier(.2,.9,.2,1), opacity .45s ease;
+}
+
+.dark .mobile-nav-shell {
+  transition:
+    width     .55s cubic-bezier(.2,.9,.2,1),
+    height    .55s cubic-bezier(.2,.9,.2,1),
+    margin    .55s cubic-bezier(.2,.9,.2,1),
+    padding   .55s cubic-bezier(.2,.9,.2,1),
+    border-radius .55s cubic-bezier(.2,.9,.2,1),
+    opacity   .4s ease,
+    transform .55s cubic-bezier(.2,.9,.2,1);
+}
+
+.dark .mobile-nav-name {
+  transition:
+    opacity   .3s ease,
+    max-width .44s cubic-bezier(.2,.9,.2,1);
+}
+
+.dark .mobile-burger-btn {
+  transition: transform .18s ease;
+}
+
+.dark .floating-burger {
+  transition: opacity .35s ease, transform .42s cubic-bezier(.2,.9,.2,1), left .42s cubic-bezier(.2,.9,.2,1), right .42s cubic-bezier(.2,.9,.2,1);
+}
+
+/* ── HERO ───────────────────────────────────────────────────── */
+.dark .hero-bg-fixed {
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.dark .hero-btn {
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .hero-wa-icon {
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+
+.dark .hero-tooltip {
+  transition: opacity .25s ease, transform .25s cubic-bezier(.34,1.56,.64,1), visibility .25s ease;
+}
+
+/* ── ABOUT ──────────────────────────────────────────────────── */
+.dark .about-wid-cta {
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.dark .about-wid-cta-arrow {
+  transition: transform 0.3s ease;
+}
+
+.dark .about-edu-dot {
+  transition: top .55s cubic-bezier(.4,0,.2,1);
+}
+
+.dark .about-wpr-title {
+  transition:
+    color var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    text-shadow var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.dark .about-wpr-num {
+  transition:
+    color var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    text-shadow var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.dark .about-wpr-item-title {
+  transition:
+    color var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    text-shadow var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.dark .about-wpr-item-desc {
+  transition:
+    color var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    text-shadow var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.dark .about-wpr-divider {
+  transition: background var(--wpr-transition-speed) ease;
+}
+
+.dark .about-wpr-bintang-isi {
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.dark .about-wpr-bintang-kosong {
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+/* ── PROJECTS (beyond the 6 already restored) ───────────────── */
+.dark .proj-no-results {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dark .proj-filter-reset-btn {
+  transition: color 0.22s ease, background 0.22s ease;
+}
+
+.dark .proj-filter-reset-btn svg {
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.dark .proj-filter-btn {
+  transition: background 0.22s ease;
+}
+
+.dark .proj-filter-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.dark .proj-filter-opt {
+  transition: background 0.18s ease;
+}
+
+.dark #topNav.modal-hidden {
+  transition: opacity 0.35s ease, transform 0.35s ease !important;
+}
+
+.dark .proj-modal-overlay {
+  transition: opacity 0.32s ease, visibility 0.32s ease;
+}
+
+.dark .proj-modal-dl-btn {
+  transition: all 0.2s ease;
+}
+
+.dark .proj-modal-dl-btn .proj-tooltip {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dark .proj-modal-close-btn {
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.dark .proj-modal-close-btn .proj-tooltip--close {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dark .proj-modal-main-img {
+  transition: opacity 0.22s ease;
+}
+
+.dark .proj-modal-pdf-open-btn {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dark .proj-modal-thumb {
+  transition: border-color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ── ACHIEVEMENT / REVIEW ───────────────────────────────────── */
+.dark .achievement-chev {
+  transition: transform 500ms;
+}
+
+.dark .review-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+
+/* ── CONTACT ────────────────────────────────────────────────── */
+.dark .contact-input {
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .contact-textarea {
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .contact-modal-btn {
+  transition: all 0.2s ease;
+}
+
+/* ── GLOBAL / COMPONENTS ────────────────────────────────────── */
+.dark .reveal {
+  transition: opacity .8s ease, transform .8s ease, visibility .8s ease;
+}
+
+.dark .stack-card {
+  transition: transform .95s cubic-bezier(.2,.9,.2,1), opacity .75s ease, z-index .75s ease, filter .75s ease;
+}
+
+.dark .loading-screen {
+  transition: opacity .45s ease, visibility .45s ease;
+}
+
+.dark .section-arrow {
+  transition: all .3s ease;
+}
+
+.dark .section-arrow::after {
+  transition: all .25s ease;
+}
+
+.dark .reload-icon {
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), opacity .25s ease;
+}
+
+.dark .extra-achieve.show {
+  transition: opacity .55s ease, transform .55s cubic-bezier(.19,1,.22,1);
+}
+
+.dark .cert-img {
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.dark .certificate-stage .download-btn {
+  transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
+}
+
+.dark .certificate-stage .download-btn::after {
+  transition: opacity .2s ease;
+}
+
+.dark .mobile-download-btn {
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease, transform .18s ease;
+}

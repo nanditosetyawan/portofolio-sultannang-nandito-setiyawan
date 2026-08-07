@@ -1026,3 +1026,14 @@
 .dark .mobile-download-btn {
   transition: background-color .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease, transform .18s ease;
 }
+
+/* ── DARK MODE: Basic Icon White-overlay ────────────────────────
+   Convert black/transparent PNG icons to white via CSS filter.
+   No new image files needed. */
+.dark .about-wpr-bintang-isi { filter: invert(1); }
+.dark .about-wpr-bintang-kosong { filter: invert(1); }
+.dark .achievement-chev { filter: invert(1); }
+.dark .arrow-left, .dark .arrow-right { filter: invert(1); }
+.dark .download-img { filter: invert(1); }
+.dark .mobile-download-btn img { filter: invert(1); }
+.dark .reload-icon { filter: invert(1); }

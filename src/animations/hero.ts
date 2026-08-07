@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const initHeroAnimations = (): void => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const badgeText = document.querySelector<HTMLElement>('.hero-badge-text');
   const heroName = document.querySelector<HTMLElement>('.hero-name');
   const heroDesc = document.querySelector<HTMLElement>('.hero-desc');

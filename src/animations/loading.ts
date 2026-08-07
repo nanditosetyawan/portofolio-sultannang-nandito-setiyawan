@@ -4,6 +4,15 @@ export const initLoadingAnimation = (): void => {
   const loading = document.getElementById('loadingScreen');
   if (!loading) return;
 
+  // Reduced motion: skip fill-bar animation, dismiss immediately
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.dispatchEvent(new CustomEvent('app:loading-done'));
+    loading.style.visibility = 'hidden';
+    loading.style.pointerEvents = 'none';
+    if (loading.parentNode) loading.remove();
+    return;
+  }
+
   const fillBar = loading.querySelector<HTMLElement>('.loading-screen__fill');
   const title = loading.querySelector<HTMLElement>('.loading-screen__title');
 

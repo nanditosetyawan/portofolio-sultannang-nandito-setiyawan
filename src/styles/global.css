@@ -1,5 +1,4 @@
-/* 1. Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@700&display=swap');
+/* Google Fonts moved to index.html <link> for parallel loading */
 
 @font-face {
   font-family: 'CabinetGrotesk-Extrabold';
@@ -95,5 +94,18 @@
 @media (min-width: 768px) {
   .main-content {
     padding-top: 7rem; /* md:pt-28 */
+  }
+}
+
+/* ── Reduced motion: disable all CSS animations/transitions ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  body.modal-open {
+    overscroll-behavior: none;
   }
 }

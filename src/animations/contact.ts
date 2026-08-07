@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const initContactAnimations = (): void => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const contactLeft = document.querySelector<HTMLElement>('.contact-left');
 
   if (contactLeft) {

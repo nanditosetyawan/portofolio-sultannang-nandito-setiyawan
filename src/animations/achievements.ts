@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const initAchievementAnimations = (): void => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const achievementHeader = document.querySelector<HTMLElement>('.achievement-header');
 
   if (achievementHeader) {

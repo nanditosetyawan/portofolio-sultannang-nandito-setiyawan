@@ -45,22 +45,27 @@ export const smoothScrollTo = (targetId: string) => {
 };
 
 export const initAnimations = (): void => {
-  /* ── Lenis smooth scroll ───────────────────────────────────── */
-  lenis = new Lenis({
-    duration: 1.15,
-    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    touchMultiplier: 1.5,
-  });
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 768px)').matches;
 
-  lenis.on('scroll', ScrollTrigger.update);
+  /* ── Lenis smooth scroll (desktop only, skip on reduced-motion) ── */
+  if (isDesktop && !reducedMotion) {
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+    });
 
-  gsap.ticker.add((time) => {
-    lenis?.raf(time * 1000);
-  });
-  gsap.ticker.lagSmoothing(0);
+    lenis.on('scroll', ScrollTrigger.update);
 
-  /* ── Init section animations (order matters: loading last so it overlays) ── */
+    gsap.ticker.add((time) => {
+      lenis?.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  /* ── Init section animations ── */
   initNavbarAnimations();
   initHeroAnimations();
   initAboutAnimations();

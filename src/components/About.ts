@@ -116,7 +116,7 @@ const { row1: row1Skills, row2: row2Skills } = buildSkillRows(SKILLS);
 
 const skillCircleHTML = (s: Skill): string => `
   <div class="about-skill-circle" title="${s.label}">
-    <img src="${s.src}" alt="${s.label}" class="about-skill-img" />
+    <img src="${s.src}" alt="${s.label}" class="about-skill-img" loading="lazy" decoding="async" />
   </div>`;
 
 /* ============================================================

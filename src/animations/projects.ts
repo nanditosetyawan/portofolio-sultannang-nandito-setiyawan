@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const initProjectsAnimations = (): void => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const projectsHeader = document.querySelector<HTMLElement>('.projects-header');
 
   if (projectsHeader) {

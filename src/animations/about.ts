@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const initAboutAnimations = (): void => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   /* ── Part 1: Curved title + Photo ────────────────────────── */
   const curvedWrap = document.querySelector<HTMLElement>('.about-curved-wrap');
 

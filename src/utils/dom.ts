@@ -921,6 +921,15 @@ const onScroll = () => {
   let targetScrollOffset = 0;
   let currentScrollOffset = 0;
 
+  /*
+     Skills zigzag runs a continuous requestAnimationFrame loop that
+     transforms ~96 DOM elements every frame. On low-end mobile this is the
+     single biggest CPU/battery drain. Disable the entire effect on mobile
+     (< 768px) — the skill rows then render statically (clipped by
+     overflow:hidden on .about-skills-section), which is plenty.
+  */
+  const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+
   const skillCirclesRow1 = Array.from(aboutSkillsWrap?.querySelectorAll('[data-skills-row="1"] .about-skill-circle') || []) as HTMLElement[];
   const skillCirclesRow2 = Array.from(aboutSkillsWrap?.querySelectorAll('[data-skills-row="2"] .about-skill-circle') || []) as HTMLElement[];
 
@@ -938,46 +947,46 @@ const onScroll = () => {
     return (circleSize + skillGap) * circles.length; // cycleWidth = 1 set
   };
 
-  const row1CycleWidth = duplicateCircles(aboutRow1, skillCirclesRow1);
-  const row2CycleWidth = duplicateCircles(aboutRow2, skillCirclesRow2);
+  if (isDesktop) {
+    const row1CycleWidth = duplicateCircles(aboutRow1, skillCirclesRow1);
+    const row2CycleWidth = duplicateCircles(aboutRow2, skillCirclesRow2);
 
-  /* Re-query all circles (originals + clones) for rotation */
-  const allCirclesRow1 = aboutRow1 ? Array.from(aboutRow1.querySelectorAll<HTMLElement>('.about-skill-circle')) : [];
-  const allCirclesRow2 = aboutRow2 ? Array.from(aboutRow2.querySelectorAll<HTMLElement>('.about-skill-circle')) : [];
+    /* Re-query all circles (originals + clones) for rotation */
+    const allCirclesRow1 = aboutRow1 ? Array.from(aboutRow1.querySelectorAll<HTMLElement>('.about-skill-circle')) : [];
+    const allCirclesRow2 = aboutRow2 ? Array.from(aboutRow2.querySelectorAll<HTMLElement>('.about-skill-circle')) : [];
 
-  /* Normalize any number to [0, cycleWidth) */
-  const wrap = (x: number, cycleWidth: number) =>
-    cycleWidth > 0 ? ((x % cycleWidth) + cycleWidth) % cycleWidth : x;
+    /* Normalize any number to [0, cycleWidth) */
+    const wrap = (x: number, cycleWidth: number) =>
+      cycleWidth > 0 ? ((x % cycleWidth) + cycleWidth) % cycleWidth : x;
 
-  const animateSkills = () => {
-    autoScrollPos += 0.35;
-    currentScrollOffset += (targetScrollOffset - currentScrollOffset) * 0.08;
+    const animateSkills = () => {
+      autoScrollPos += 0.35;
+      currentScrollOffset += (targetScrollOffset - currentScrollOffset) * 0.08;
 
-    if (aboutSkillsWrap && aboutRow1 && aboutRow2) {
-      /* Posisi linear kontinu (unbounded) */
-      const p = autoScrollPos + currentScrollOffset;
+      if (aboutSkillsWrap && aboutRow1 && aboutRow2) {
+        /* Posisi linear kontinu (unbounded) */
+        const p = autoScrollPos + currentScrollOffset;
 
-      /* Row 1: bergerak ke KANAN — translateX positif, wrap per cycleWidth */
-      const t1 = wrap(p, row1CycleWidth);
-      aboutRow1.style.transform = `translateX(${t1}px)`;
+        /* Row 1: bergerak ke KANAN — translateX positif, wrap per cycleWidth */
+        const t1 = wrap(p, row1CycleWidth);
+        aboutRow1.style.transform = `translateX(${t1}px)`;
 
-      /* Row 2: bergerak ke KIRI + zigzag offset — translateX negatif */
-      const t2 = wrap(p + row2Offset, row2CycleWidth);
-      aboutRow2.style.transform = `translateX(-${t2}px)`;
+        /* Row 2: bergerak ke KIRI + zigzag offset — translateX negatif */
+        const t2 = wrap(p + row2Offset, row2CycleWidth);
+        aboutRow2.style.transform = `translateX(-${t2}px)`;
 
-      /* Rotasi tetap unbounded agar roda berputar halus */
-      const circumference = Math.PI * circleSize;
-      const r1 = (p / circumference) * 360;
-      const r2 = (-p / circumference) * 360;
+        /* Rotasi tetap unbounded agar roda berputar halus */
+        const circumference = Math.PI * circleSize;
+        const r1 = (p / circumference) * 360;
+        const r2 = (-p / circumference) * 360;
 
-      allCirclesRow1.forEach(circle => { circle.style.transform = `rotate(${r1}deg)`; });
-      allCirclesRow2.forEach(circle => { circle.style.transform = `rotate(${r2}deg)`; });
-    }
+        allCirclesRow1.forEach(circle => { circle.style.transform = `rotate(${r1}deg)`; });
+        allCirclesRow2.forEach(circle => { circle.style.transform = `rotate(${r2}deg)`; });
+      }
 
-    requestAnimationFrame(animateSkills);
-  };
+      requestAnimationFrame(animateSkills);
+    };
 
-  if (aboutSkillsWrap) {
     requestAnimationFrame(animateSkills);
   }
 
@@ -1094,15 +1103,15 @@ const onScroll = () => {
 
   // Measure and init on first paint
   requestAnimationFrame(() => {
+    if (!isDesktop) return;
     measureLayout();
     if (eduItems[1]) eduItems[1].style.opacity = '0';
     updateAbout();
   });
 
   // Re-measure after all fonts are loaded.
-  // CabinetGrotesk-Extrabold changes item01's height (fewer line wraps than the
-  // fallback font), so the cached itemHeight / settledY would be wrong without this.
   document.fonts.ready.then(() => {
+    if (!isDesktop) return;
     itemsClipped = false;
     measureLayout();
     updateAbout();
@@ -1110,6 +1119,7 @@ const onScroll = () => {
 
   // Re-measure on resize so the layout stays correct if the window is resized.
   window.addEventListener('resize', () => {
+    if (!isDesktop) return;
     itemsClipped = false;
     requestAnimationFrame(() => {
       measureLayout();
@@ -1119,6 +1129,7 @@ const onScroll = () => {
 
   // Scroll listener
   window.addEventListener('scroll', () => {
+    if (!isDesktop) return;
     requestAnimationFrame(updateAbout);
 
     // Update skills parallax target

@@ -17,6 +17,15 @@
   100% { transform: translateY(0) scale(1); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
 }
 
+/* Reduce blob complexity on mobile to avoid GPU software rendering */
+@media (max-width: 767px) {
+  .blob {
+    filter: blur(30px);
+    animation-play-state: paused;
+    opacity: 0.15;
+  }
+}
+
 .section-card { background: rgba(255,253,248,.92); border: 1px solid rgba(232,225,215,.92); box-shadow: var(--shadow); backdrop-filter: blur(12px); }
 .elevated { background: rgba(255,253,248,.96); border: 1px solid rgba(232,225,215,.95); box-shadow: var(--shadow); }
 

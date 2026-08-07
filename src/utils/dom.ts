@@ -71,6 +71,15 @@ export const initApp = () => {
   };
 
   const scrollToSection = (targetId: string) => {
+    // Programmatic scroll: make navbar visible & prevent auto-hide during smooth scroll.
+    showNav();
+    resetDownScroll();
+    suppressNavHide = true;
+    setTimeout(() => {
+      suppressNavHide = false;
+      resetDownScroll();
+    }, 1300);
+
     // Use Lenis smooth scroll if available (falls back to native smooth scroll).
     const lenis = getLenis();
     if (lenis) {
@@ -432,6 +441,7 @@ export const initApp = () => {
   let downScrollAccumMs = 0;
   let lastDownScrollAt: number | null = null;
   let pauseResetTimer: ReturnType<typeof setTimeout> | null = null;
+  let suppressNavHide = false; // suppress navbar hide during programmatic smooth scroll
 
   const hideNav = () => {
     if (navHidden) return;
@@ -465,7 +475,7 @@ export const initApp = () => {
 
   };
 
-  const onScroll = () => {
+const onScroll = () => {
     if (rafId) return;
 
     rafId = window.requestAnimationFrame(() => {
@@ -486,10 +496,9 @@ export const initApp = () => {
 
         schedulePauseReset();
 
-        if (downScrollAccumMs >= 1800) { // ✏️ hide threshold: 1800ms (dikurangi 40% dari 3000ms)
+        if (downScrollAccumMs >= 1800 && !suppressNavHide) {
           hideNav();
         }
-
       }
 
 

@@ -216,14 +216,35 @@ export const initApp = () => {
 
   // ── Continuous Liquid Nav Pill Interpolation ──────────────────────────────
   let activeSection = 'hero';
+  let isAnimatingClick = false;
+  let clickTargetId: string | null = null;
 
   const updateActiveFromScroll = () => {
     if (!desktopNav || !navActivePill || desktopNavLinks.length === 0) return;
+    // Don't fight with click-driven pill animation — lock until scroll reaches target
+    if (isAnimatingClick) {
+      const targetSection = clickTargetId ? document.getElementById(clickTargetId) : null;
+      if (targetSection) {
+        const rect = targetSection.getBoundingClientRect();
+        const reached = clickTargetId === 'hero'
+          ? window.scrollY <= 1
+          : rect.top <= window.innerHeight * 0.35;
+        if (reached) {
+          isAnimatingClick = false;
+          clickTargetId = null;
+          clearTimeout((animatePillTo as any)._timer);
+        } else {
+          return;
+        }
+      } else {
+        return;
+      }
+    }
 
     // The point on the screen where a section is considered "active"
     const triggerLine = window.innerHeight * 0.35;
-    // The height of the transition zone above and below the trigger line (reduced for faster snap)
-    const zoneHalf = window.innerHeight * 0.10;
+    // The height of the transition zone above and below the trigger line (wider for smoother stretch)
+    const zoneHalf = window.innerHeight * 0.15;
 
     let currIdx = 0;
     let nextIdx = 0;
@@ -295,7 +316,8 @@ export const initApp = () => {
 
     const targetWidth = targetRight - targetLeft;
 
-    navActivePill.style.transition = 'none'; // Disable CSS transition for continuous liquid feel
+    // Disable inline transition override so CSS transitions can work for scroll-driven updates
+    navActivePill.style.transition = '';
     navActivePill.style.transform = `translateX(${targetLeft}px)`;
     navActivePill.style.width = `${targetWidth}px`;
     navActivePill.style.opacity = '1';
@@ -319,12 +341,37 @@ export const initApp = () => {
   // Wait a tick for fonts/layout to render before first placement
   setTimeout(() => requestAnimationFrame(updateActiveFromScroll), 100);
 
-  // We no longer call positionNavPill from setActiveNav directly, it's driven entirely by scroll
+  // ── Animate pill to target section (click-driven) ────────────────────────
+  const animatePillTo = (targetId: string) => {
+    const targetLink = document.querySelector<HTMLElement>(`#desktopNav [data-nav-link][href="#${targetId}"]`);
+    if (!targetLink || !desktopNav || !navActivePill) return;
+
+    const navRect = desktopNav.getBoundingClientRect();
+    const linkRect = targetLink.getBoundingClientRect();
+    const targetLeft = linkRect.left - navRect.left;
+    const targetWidth = linkRect.width;
+
+    // Enable CSS transition for this click-driven animation
+    navActivePill.style.transition = 'transform .42s cubic-bezier(0.16, 1, 0.3, 1), width .38s cubic-bezier(0.16, 1, 0.3, 1), opacity .2s ease';
+    navActivePill.style.transform = `translateX(${targetLeft}px)`;
+    navActivePill.style.width = `${targetWidth}px`;
+    navActivePill.style.opacity = '1';
+
+    // Mark as animating so scroll handler pauses until target is reached
+    clickTargetId = targetId;
+    isAnimatingClick = true;
+    clearTimeout((animatePillTo as any)._timer);
+    (animatePillTo as any)._timer = setTimeout(() => {
+      isAnimatingClick = false;
+      clickTargetId = null;
+    }, 2000);
+  };
+
   const setActiveNav = (targetId: string) => {
-    // Only used for manual clicks now; scroll listener handles the pill animation
     navLinks.forEach(link => {
       link.classList.toggle('active', link.getAttribute('href') === `#${targetId}`);
     });
+    animatePillTo(targetId);
   };
   setActiveNav('hero');
   // ── Hero Background & Content Parallax ──────────────────────────────────

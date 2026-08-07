@@ -66,17 +66,6 @@ export const initHeroAnimations = (): void => {
     tl.fromTo(heroRight, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '+=0.15');
   }
 
-  // Handle typing animation completion (CSS-based)
-  if (badgeText && badgeText.classList.contains('typing-animation')) {
-    const onTypingEnd = () => {
-      badgeText.classList.remove('typing-animation');
-      badgeText.style.opacity = '1';
-      badgeText.style.visibility = 'visible';
-      badgeText.removeEventListener('animationend', onTypingEnd);
-    };
-    badgeText.addEventListener('animationend', onTypingEnd);
-  }
-
   // Hero container parallax on scroll (unchanged)
   if (heroContainer && heroSection) {
     gsap.fromTo(
@@ -97,7 +86,10 @@ export const initHeroAnimations = (): void => {
   }
 
   // Play timeline when loading screen finishes
-  const playTimeline = () => tl.play();
+  const playTimeline = () => {
+    badgeText?.classList.add('typing-active');
+    tl.play();
+  };
   if (document.getElementById('loadingScreen')) {
     window.addEventListener('app:loading-done', playTimeline, { once: true });
     // Safety fallback: if event never fires, play after 3s

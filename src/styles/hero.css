@@ -198,6 +198,10 @@
   overflow: hidden;
   border-right: 2px solid var(--accent);
   width: 0;
+}
+
+/* Typing only starts once hero loads (class added by JS after loading screen) */
+.typing-animation.typing-active {
   animation:
     typing-smooth 1s cubic-bezier(0.4, 0, 0.2, 1) forwards,
     blink-cursor 0.75s step-end 3 alternate forwards;

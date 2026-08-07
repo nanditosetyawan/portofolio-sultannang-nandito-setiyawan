@@ -305,7 +305,7 @@ const renderModals = (): string => projects.map(p => {
       </div>
 
       <!-- Scrollable content area -->
-      <div class="proj-modal-content-scroll">
+      <div class="proj-modal-content-scroll" data-lenis-prevent>
 
         ${addrBarHTML}
 

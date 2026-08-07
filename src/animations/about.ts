@@ -72,13 +72,13 @@ export const initAboutAnimations = (): void => {
   if (skillCircles.length > 0) {
     gsap.fromTo(
       skillCircles,
-      { opacity: 0, y: 15 },
+      { opacity: 0, scale: 0.6, y: 15 },
       {
         opacity: 1,
+        scale: 1,
         y: 0,
-        duration: 0.4,
-        stagger: 0.02,
-        ease: 'power2.out',
+        duration: 0.5,
+        ease: 'back.out(1.7)',
         scrollTrigger: {
           trigger: '#aboutSkillsSection',
           start: 'top 70%',

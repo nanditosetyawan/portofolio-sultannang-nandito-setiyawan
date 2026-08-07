@@ -1524,7 +1524,8 @@ const onScroll = () => {
       }
 
       overlay.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('modal-open');
+      getLenis()?.stop();
       if (topNav) topNav.classList.add('modal-hidden');
     };
 
@@ -1532,7 +1533,8 @@ const onScroll = () => {
       const overlay = document.getElementById(`projModal-${id}`);
       if (!overlay) return;
       overlay.classList.remove('is-open');
-      document.body.style.overflow = '';
+      document.body.classList.remove('modal-open');
+      getLenis()?.start();
       if (topNav) topNav.classList.remove('modal-hidden');
     };
 
@@ -1540,7 +1542,8 @@ const onScroll = () => {
       document.querySelectorAll<HTMLElement>('.proj-modal-overlay.is-open').forEach(el => {
         el.classList.remove('is-open');
       });
-      document.body.style.overflow = '';
+      document.body.classList.remove('modal-open');
+      getLenis()?.start();
       if (topNav) topNav.classList.remove('modal-hidden');
     };
 
@@ -1553,23 +1556,13 @@ const onScroll = () => {
       openModal(id);
     });
 
-    // Close buttons inside modals
+    // Close buttons inside modals (only close method — backdrop & Escape disabled)
     document.addEventListener('click', (e) => {
       const closeBtn = (e.target as HTMLElement).closest<HTMLElement>('[data-proj-close]');
       if (closeBtn) {
         closeModal(closeBtn.dataset.projClose ?? '');
         return;
       }
-      // Click on overlay backdrop
-      const overlay = (e.target as HTMLElement).closest<HTMLElement>('.proj-modal-overlay');
-      if (overlay && e.target === overlay) {
-        closeAllModals();
-      }
-    });
-
-    // Close on Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeAllModals();
     });
 
     // ── FILTER PANEL ────────────────────────────────────────────────────────

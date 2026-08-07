@@ -66,6 +66,15 @@
   filter: brightness(0.7);
 }
 
+/* Beri #58655F pada section hero: saat bg-fixed fade (opacity 0),
+   area di atas About tampil #58655F (menyatu dgn about-section),
+   bukan gelap #0F1411. Gambar tetap terlihat karena hero-bg-fixed
+   (z-index:-20) paint di atas background section.
+   JANGAN ubah hero-gradient-overlay ke hijau — biar gambar tak keruh. */
+.dark .hero-section {
+  background: #58655f;
+}
+
 .dark .hero-badge-text,
 .dark .hero-title,
 .dark .hero-desc {

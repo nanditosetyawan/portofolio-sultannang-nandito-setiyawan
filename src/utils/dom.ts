@@ -233,6 +233,11 @@ export const initApp = () => {
           isAnimatingClick = false;
           clickTargetId = null;
           clearTimeout((animatePillTo as any)._timer);
+          // Snap tanpa overshoot saat tiba di target, lalu restore transition untuk scroll berikutnya
+          navActivePill.style.transition = 'none';
+          requestAnimationFrame(() => {
+            navActivePill.style.transition = '';
+          });
         } else {
           return;
         }
@@ -373,7 +378,35 @@ export const initApp = () => {
     });
     animatePillTo(targetId);
   };
-  setActiveNav('hero');
+  // Detect initial section from actual scroll position (handles refresh on non-hero sections)
+  const getInitialSectionId = (): string => {
+    const triggerLine = window.innerHeight * 0.35;
+    const sectionIds = ['hero', 'about', 'projects', 'achievements', 'contact'];
+    for (let i = sectionIds.length - 1; i >= 0; i--) {
+      const el = document.getElementById(sectionIds[i]);
+      if (el && el.getBoundingClientRect().top <= triggerLine) {
+        return sectionIds[i];
+      }
+    }
+    return 'hero';
+  };
+
+  const initialSection = getInitialSectionId();
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === `#${initialSection}`);
+  });
+
+  // Position pill instantly (no animation) for correct initial state
+  const targetLink = document.querySelector<HTMLElement>(`#desktopNav [data-nav-link][href="#${initialSection}"]`);
+  if (targetLink && desktopNav && navActivePill) {
+    const navRect = desktopNav.getBoundingClientRect();
+    const linkRect = targetLink.getBoundingClientRect();
+    navActivePill.style.transition = 'none';
+    navActivePill.style.transform = `translateX(${linkRect.left - navRect.left}px)`;
+    navActivePill.style.width = `${linkRect.width}px`;
+    navActivePill.style.opacity = '1';
+    requestAnimationFrame(() => { navActivePill!.style.transition = ''; });
+  }
   // ── Hero Background & Content Parallax ──────────────────────────────────
   const heroSection = document.getElementById('hero');
   const heroBg = heroSection?.querySelector('.hero-bg-fixed') as HTMLElement | null;

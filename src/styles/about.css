@@ -37,8 +37,7 @@
 .about-section {
   position: relative;
   background: var(--surface2);
-  /* overflow-x removed — it breaks position:sticky on .about-edu-sticky.
-     Skills section has its own overflow:hidden so nothing leaks. */
+  padding-top: 4rem;
   z-index: 10;
 }
 

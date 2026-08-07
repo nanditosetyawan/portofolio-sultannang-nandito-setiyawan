@@ -1534,7 +1534,12 @@ const onScroll = () => {
         win.dataset.modalReady = '1';
       }
 
-      overlay.classList.add('is-open');
+       overlay.classList.add('is-open');
+      // Reparent to <body>: the modal markup lives inside #projects which has
+      // z-index:10, which traps the z-index:9999 overlay behind sibling sections
+      // (eg. achievements) when the viewport scrolls to them. Moving it to body
+      // puts it at the top layer of the document stacking context.
+      document.body.appendChild(overlay);
       document.body.classList.add('modal-open');
       getLenis()?.stop();
       if (topNav) topNav.classList.add('modal-hidden');

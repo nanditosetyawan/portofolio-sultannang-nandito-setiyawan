@@ -31,6 +31,11 @@ const refreshScrollTriggers = () => {
 /* ── Scroll helper used by nav links ─────────────────────────── */
 export const smoothScrollTo = (targetId: string) => {
   if (lenis) {
+    // Hero → scroll to absolute top (0) so navbar returns to box/kotak state
+    if (targetId === 'hero') {
+      lenis.scrollTo(0, { duration: 1.1 });
+      return;
+    }
     // Lenis scrollTo dengan string memakai querySelector → wajib prefix "#"
     lenis.scrollTo(`#${targetId}`, { offset: 0, duration: 1.1 });
   } else {

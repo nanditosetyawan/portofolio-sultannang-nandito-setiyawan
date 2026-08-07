@@ -74,6 +74,11 @@ export const initApp = () => {
     // Use Lenis smooth scroll if available (falls back to native smooth scroll).
     const lenis = getLenis();
     if (lenis) {
+      // Hero → scroll to absolute top (0) so navbar returns to box/kotak state
+      if (targetId === 'hero') {
+        lenis.scrollTo(0, { duration: 1.1 });
+        return;
+      }
       // Lenis scrollTo dengan string memakai querySelector → wajib prefix "#"
       const selector = `#${targetId}`;
       let offset = 0;

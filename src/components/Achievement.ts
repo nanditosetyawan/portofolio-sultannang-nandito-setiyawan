@@ -2,8 +2,8 @@ import '../styles/achievement.css';
 import { achievements } from '../data/achievements';
 import { reviews } from '../data/review';
 
-const reloadIcon = new URL('../assets/icons/reload.png', import.meta.url).href;
-const arrowListIcon = new URL('../assets/icons/arrowlist.png', import.meta.url).href;
+const reloadIcon = new URL('../assets/icons/reload.webp', import.meta.url).href;
+const arrowListIcon = new URL('../assets/icons/arrowlist.webp', import.meta.url).href;
 
 const renderStars = (rating: number, reviewIdx: number): string => {
   let starsHTML = '';
@@ -91,20 +91,20 @@ export const Achievement = (): string => {
                   <img class="cert-img" src="${ach.certificates[0]}" alt="${ach.title}">
                   <button type="button" class="cert-badge" data-preview-btn>${badgeText}</button>
                     <button type="button" class="download-btn hidden md:flex" aria-label="Download" title="Download Sertifikat">
-                      <img src="${new URL('../assets/icons/download.png', import.meta.url).href}" alt="Download" class="download-img" />
+                      <img src="${new URL('../assets/icons/download.webp', import.meta.url).href}" alt="Download" class="download-img" />
                     </button>
                     <button type="button" class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 hidden" aria-label="Previous">
-                      <img src="${new URL('../assets/icons/arrowlist.png', import.meta.url).href}" alt="Previous" class="arrow-left" />
+                      <img src="${new URL('../assets/icons/arrowlist.webp', import.meta.url).href}" alt="Previous" class="arrow-left" />
                     </button>
                     <button type="button" class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 hidden" aria-label="Next">
-                      <img src="${new URL('../assets/icons/arrowlist.png', import.meta.url).href}" alt="Next" class="arrow-right" />
+                      <img src="${new URL('../assets/icons/arrowlist.webp', import.meta.url).href}" alt="Next" class="arrow-right" />
                     </button>
                 </div>
               </div>
 
               <!-- Mobile Download Button -->
               <button type="button" class="mobile-download-btn md:hidden w-full flex items-center justify-center gap-2 py-3.5 mt-3 rounded-2xl font-bold transition" aria-label="Download" title="Download Sertifikat" data-download-btn>
-                <img src="${new URL('../assets/icons/download.png', import.meta.url).href}" alt="Download" class="w-5 h-5 object-contain" />
+                <img src="${new URL('../assets/icons/download.webp', import.meta.url).href}" alt="Download" class="w-5 h-5 object-contain" />
                 <span>Download</span>
               </button>
             </div>

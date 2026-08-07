@@ -1,7 +1,7 @@
-import reloadIcon from '../assets/icons/reload.png';
-import backLoadIcon from '../assets/icons/back_load.png';
-import whiteModeIcon from '../assets/icons/white_mode.png';
-import darkModeIcon from '../assets/icons/dark_mode.png';
+import reloadIcon from '../assets/icons/reload.webp';
+import backLoadIcon from '../assets/icons/back_load.webp';
+import whiteModeIcon from '../assets/icons/white_mode.webp';
+import darkModeIcon from '../assets/icons/dark_mode.webp';
 import burgerLightIcon from '../assets/icons/burger_light.webp';
 import burgerDarkIcon from '../assets/icons/burger_dark.webp';
 

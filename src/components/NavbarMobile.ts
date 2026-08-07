@@ -1,7 +1,7 @@
 const burgerLightIcon = new URL('../assets/icons/burger_light.webp', import.meta.url).href;
 const burgerDarkIcon  = new URL('../assets/icons/burger_dark.webp',  import.meta.url).href;
-const darkModeIcon    = new URL('../assets/icons/dark_mode.png',   import.meta.url).href;
-const whiteModeIcon   = new URL('../assets/icons/white_mode.png',  import.meta.url).href;
+const darkModeIcon    = new URL('../assets/icons/dark_mode.webp',   import.meta.url).href;
+const whiteModeIcon   = new URL('../assets/icons/white_mode.webp',  import.meta.url).href;
 
 export const NavbarMobile = (): string => {
   return `

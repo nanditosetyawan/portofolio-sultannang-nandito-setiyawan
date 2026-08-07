@@ -51,7 +51,7 @@
   flex-direction: column;
   align-items: center;
   /* Shift content up — 3/4 of title height removed */
-  padding: 1.4rem 1.5rem 3rem;
+  padding: 1.4rem 1.5rem 20rem;
   overflow: visible;
 }
 
@@ -530,7 +530,7 @@
   /* ✏️ angka statistik besar */
   --wid-title-size: clamp(2.8rem, 5.5vw, 5rem);
   /* ✏️ judul "What I've done?" */
-  --wid-section-py: 7rem;
+  --wid-section-py: 13rem;
   /* ✏️ padding atas-bawah */
   --wid-cta-radius: 0.55rem;
   /* ✏️ sudut tombol agak kotak tapi tumpul */
@@ -771,7 +771,7 @@
   /* Ukuran angka besar kaku */
   --wpr-num-col-width: clamp(7rem, 10vw, 10rem);
   /* ✏️ Lebar kolom angka (harus cukup untuk "03") — sesuaikan jika ukuran angka diubah */
-  --wpr-num-gap: clamp(2rem, 3.5vw, 4rem);
+  --wpr-num-gap: clamp(3rem, 4.5vw, 5.5rem);
   /* ✏️ Jarak antara kolom angka dan konten kanan */
   --wpr-item-gap: 2.8rem;
   /* Jarak vertikal antar item */
@@ -897,10 +897,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   /* min-height proporsional dengan tinggi angka (line-height 0.85 × font-size) */
   min-height: calc(var(--wpr-num-size) * 0.85);
-  gap: 0;
+  gap: 0.6rem;
   padding-bottom: 0;
 }
 

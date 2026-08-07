@@ -350,12 +350,8 @@ export const About = (): string => `
 
         <!-- Paragraf deskripsi —— ✏️ ganti lorem ipsum ini dengan teks asli kamu -->
         <p class="about-wid-desc">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          I build practical software that solves real problems, with a focus on clean code, solid performance, and a thoughtful user experience. I enjoy turning ideas into well-structured interfaces, keeping the design clear and consistent, and documenting the process properly. As a Software Engineer, Data Analyst, and AI enthusiast, I like exploring new technologies and turning them into real projects that strengthen my portfolio.
+
         </p>
 
         <!-- 3 angka statistik -->

@@ -1611,6 +1611,94 @@ export const initApp = () => {
 
   initReviewInteractivity();
 
+  // ── Contact Form: mailto + webmail fallback ───────────────
+  (() => {
+    const sendBtn   = document.getElementById('contactSendBtn');
+    const nameInput = document.getElementById('contactName')  as HTMLInputElement | null;
+    const emailInput= document.getElementById('contactEmail') as HTMLInputElement | null;
+    const msgInput  = document.getElementById('contactMessage') as HTMLTextAreaElement | null;
+
+    const webmailModal  = document.getElementById('contactWebmailModal');
+    const errorPopup    = document.getElementById('contactErrorPopup');
+    const modalCloseBtn = document.getElementById('contactModalClose');
+    const errorCloseBtn = document.getElementById('contactErrorClose');
+    const errorOkBtn    = document.getElementById('contactErrorOk');
+    const gmailBtn      = document.getElementById('contactOpenGmail');
+    const outlookBtn    = document.getElementById('contactOpenOutlook');
+
+    if (!sendBtn || !nameInput || !emailInput || !msgInput) return;
+
+    const TO_EMAIL = '124240083@student.upnyk.ac.id';
+
+    // Simpan draft global agar bisa diakses webmail buttons
+    let draftSubject = '';
+    let draftBody    = '';
+
+    // ── Util: highlight field merah + shake ────────────────
+    function markFieldError(field: HTMLElement) {
+      field.classList.add('is-error');
+      const handler = () => {
+        field.classList.remove('is-error');
+        field.removeEventListener('input', handler);
+      };
+      field.addEventListener('input', handler, { once: true });
+    }
+
+    // ── Tutup semua modal ─────────────────────────────────
+    function closeWebmailModal() { if (webmailModal) webmailModal.style.display = 'none'; }
+    function closeErrorPopup()   { if (errorPopup)   errorPopup.style.display = 'none'; }
+
+    modalCloseBtn?.addEventListener('click', closeWebmailModal);
+    errorCloseBtn?.addEventListener('click', closeErrorPopup);
+    errorOkBtn?.addEventListener('click', closeErrorPopup);
+    errorPopup?.addEventListener('click',   (e) => { if (e.target === errorPopup)   closeErrorPopup(); });
+
+    // ── Gmail / Outlook buttons ────────────────────────────
+    gmailBtn?.addEventListener('click', () => {
+      window.open(
+        `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(TO_EMAIL)}&su=${encodeURIComponent(draftSubject)}&body=${encodeURIComponent(draftBody)}`,
+        '_blank'
+      );
+    });
+
+    outlookBtn?.addEventListener('click', () => {
+      window.open(
+        `https://outlook.live.com/mail/0/deeplink/compose?to=${encodeURIComponent(TO_EMAIL)}&subject=${encodeURIComponent(draftSubject)}&body=${encodeURIComponent(draftBody)}`,
+        '_blank'
+      );
+    });
+
+    // ── Handle "Send Message" ──────────────────────────────
+    sendBtn.addEventListener('click', () => {
+      const name    = nameInput.value.trim();
+      const email   = emailInput.value.trim();
+      const message = msgInput.value.trim();
+
+      // Validasi semua field wajib
+      let hasError = false;
+      if (!name)    { markFieldError(nameInput);  hasError = true; }
+      if (!email)   { markFieldError(emailInput); hasError = true; }
+      if (!message) { markFieldError(msgInput);   hasError = true; }
+      if (hasError) return;
+
+      // Bangun draft
+      draftSubject = `Message from ${name}`;
+      draftBody    = `${message}\n\n---\nFrom: ${name}\nEmail: ${email}`;
+      const mailtoUrl = `mailto:${TO_EMAIL}?subject=${encodeURIComponent(draftSubject)}&body=${encodeURIComponent(draftBody)}`;
+
+      // Coba mailto
+      window.location.href = mailtoUrl;
+
+      // Kosongkan form setelah kirim
+      nameInput.value    = '';
+      emailInput.value   = '';
+      msgInput.value     = '';
+
+      // Selalu tampilkan pilihan webmail
+      if (webmailModal) webmailModal.style.display = 'flex';
+    });
+  })();
+
   // ── End Projects ─────────────────────────────────────────────────────────
 
   // ── End About ────────────────────────────────────────────────────────────

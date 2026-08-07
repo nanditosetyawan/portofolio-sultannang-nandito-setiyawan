@@ -238,3 +238,150 @@
     padding-right: 2rem;
   }
 }
+
+/* ============================================================
+   MODAL: Webmail Fallback + Error Popup
+   ✏️ Warna pakai variabel website (--bg, --accent, --text, --text2, --border, --surface)
+   ============================================================ */
+
+/* ── Overlay backdrop ─────────────────────────────────── */
+.contact-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(26, 49, 44, 0.35);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: contactModalFadeIn 0.25s ease;
+}
+
+@keyframes contactModalFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal card ──────────────────────────────────────── */
+.contact-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  max-width: 26rem;
+  width: 100%;
+  box-shadow: var(--shadow2);
+  animation: contactModalSlideUp 0.3s ease;
+}
+
+@keyframes contactModalSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Header row ──────────────────────────────────────── */
+.contact-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.contact-modal-title {
+  font-family: 'CabinetGrotesk-Extrabold', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.contact-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text2);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 0.25rem;
+}
+
+.contact-modal-close:hover {
+  color: var(--text);
+}
+
+.contact-modal-desc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text2);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Webmail buttons row ─────────────────────────────── */
+.contact-modal-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.contact-modal-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.contact-modal-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.contact-modal-btn--gmail,
+.contact-modal-btn--outlook {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.contact-modal-btn--gmail:hover,
+.contact-modal-btn--outlook:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ── Single accent button (error popup) ──────────────── */
+.contact-modal-btn--accent {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  flex: unset;
+  width: 100%;
+  justify-content: center;
+}
+
+.contact-modal-btn--accent:hover {
+  opacity: 0.85;
+}
+
+/* ── Field error state (merah + shake) ───────────────── */
+.contact-input.is-error,
+.contact-textarea.is-error {
+  border-color: #e53e3e;
+  animation: contactFieldShake 0.4s ease;
+}
+
+@keyframes contactFieldShake {
+  0%, 100% { transform: translateX(0); }
+  15%      { transform: translateX(-6px); }
+  30%      { transform: translateX(5px); }
+  45%      { transform: translateX(-4px); }
+  60%      { transform: translateX(3px); }
+  75%      { transform: translateX(-2px); }
+}

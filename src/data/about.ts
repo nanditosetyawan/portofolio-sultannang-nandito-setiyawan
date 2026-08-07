@@ -48,18 +48,18 @@ interface WorkingPrinciple {
 export const WORKING_PRINCIPLES: WorkingPrinciple[] = [
   {
     idx: '01',
-    title: 'Rajin dan semangat',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum ipsum dolor sit amet.',
+    title: 'Precision and Quality',
+    desc: 'Every project starts with careful planning and attention to detail. I focus on writing clean, maintainable code while keeping performance, readability, and long-term reliability in mind.',
   },
   {
     idx: '02',
-    title: 'Rajin dan semangat',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum ipsum dolor sit amet.',
+    title: 'Continuous Learning',
+    desc: 'Technology evolves quickly, and so do I. I enjoy exploring new tools, frameworks, and development practices, then applying them through real projects instead of stopping at theory.',
   },
   {
     idx: '03',
-    title: 'Rajin dan semangat',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum ipsum dolor sit amet.',
+    title: 'Purposeful Development',
+    desc: 'Good software should solve real problems. I build applications with usability, performance, and clear documentation as priorities, creating solutions that are practical and easy to maintain.',
   },
 ];
 

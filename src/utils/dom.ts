@@ -1141,6 +1141,53 @@ const onScroll = () => {
     }
   }, { passive: true });
 
+  // ── MOBILE Education scroll transition (01 → 02) ─────────────
+  if (window.matchMedia('(max-width: 767px)').matches) {
+    const eduSection = document.getElementById('aboutEduSection');
+    const eduTrack = document.getElementById('aboutEduTrack');
+    const eduItemsEl = eduTrack?.parentElement;
+    const eduItems = eduTrack ? Array.from(eduTrack.children) as HTMLElement[] : [];
+
+    if (eduSection && eduTrack && eduItems.length >= 2) {
+      let itemH = 0, measured = false;
+
+      const measure = () => {
+        if (measured || !eduItems[0]) return;
+        itemH = eduItems[0].offsetHeight;
+        if (itemH > 0 && eduItemsEl) {
+          eduItemsEl.style.height = `${itemH}px`;
+          eduItems[1].style.opacity = '0';
+          measured = true;
+        }
+      };
+
+      let rafId = 0, inView = false;
+
+      const update = () => {
+        rafId = 0;
+        if (!inView) return;
+        const rect = eduSection.getBoundingClientRect();
+        const scrollable = Math.max(eduSection.offsetHeight - window.innerHeight, 1);
+        const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
+
+        eduTrack.style.transform = `translateY(${-itemH * progress}px)`;
+        eduItems[0].style.opacity = String(Math.max(0, 1 - progress * 1.2));
+        eduItems[1].style.opacity = String(Math.max(0, (progress - 0.3) / 0.4));
+      };
+
+      const onScroll = () => { if (!rafId) rafId = requestAnimationFrame(update); };
+
+      const io = new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        if (inView) { measure(); update(); window.addEventListener('scroll', onScroll, { passive: true }); }
+        else        window.removeEventListener('scroll', onScroll);
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+      io.observe(eduSection);
+
+      window.addEventListener('resize', () => { measured = false; measure(); if (inView) update(); }, { passive: true });
+    }
+  }
+
   // ── Drag behavior for Built On Principles stars ────────────────────────────
   const initDraggable = (elId: string) => {
     const el = document.getElementById(elId);

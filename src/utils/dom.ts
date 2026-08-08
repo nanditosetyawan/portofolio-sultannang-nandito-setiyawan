@@ -658,10 +658,40 @@ const onScroll = () => {
 
     // Initialize carousel state
     let currentIdx = 0;
+    let carouselObserver: IntersectionObserver | null = null;
+    let intervalId: number | undefined;
+
     const showImage = (idx: number) => {
       if (!imgEl) return;
       imgEl.src = images[idx];
       imgEl.style.opacity = '1';
+    };
+
+    // Deferred image load — only load when stage enters viewport
+    const deferShow = () => {
+      if (carouselObserver) {
+        carouselObserver.disconnect();
+      }
+      carouselObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            if (intervalId !== undefined) clearInterval(intervalId);
+            showImage(0);
+            intervalId = window.setInterval(() => {
+              if (!imgEl) return;
+              imgEl.style.opacity = '0';
+              window.setTimeout(() => {
+                currentIdx = (currentIdx + 1) % images.length;
+                showImage(currentIdx);
+              }, 280);
+            }, 5000);
+            carouselObserver?.disconnect();
+            carouselObserver = null;
+          }
+        },
+        { rootMargin: '200px 0px', threshold: 0.01 }
+      );
+      carouselObserver?.observe(stage);
     };
 
     if (images.length > 1 && imgEl) {
@@ -669,35 +699,39 @@ const onScroll = () => {
       prevBtn?.classList.remove('hidden');
       nextBtn?.classList.remove('hidden');
 
-      // Auto slideshow
-      const intervalId = window.setInterval(() => {
-        if (!imgEl) return;
-        imgEl.style.opacity = '0';
-        window.setTimeout(() => {
-          currentIdx = (currentIdx + 1) % images.length;
-          showImage(currentIdx);
-        }, 280);
-      }, 5000);
+      // Defer auto-rotation until stage enters viewport
+      deferShow();
 
       // Navigation button handlers
       prevBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
-        clearInterval(intervalId);
+        if (intervalId !== undefined) clearInterval(intervalId);
         currentIdx = (currentIdx - 1 + images.length) % images.length;
         showImage(currentIdx);
+        deferShow();
       });
       nextBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
-        clearInterval(intervalId);
+        if (intervalId !== undefined) clearInterval(intervalId);
         currentIdx = (currentIdx + 1) % images.length;
         showImage(currentIdx);
+        deferShow();
       });
     } else {
-      // Single image: hide navigation buttons if present
-      prevBtn?.classList.add('hidden');
-      nextBtn?.classList.add('hidden');
-      // Ensure the first (and only) image is displayed
-      showImage(0);
+      // Single image: defer loading until stage enters viewport
+      // (data-lazy-src already handles this; imageManager will load it when visible)
+      // But we still need showImage(0) to set src and opacity
+      // Use a one-time observer to trigger once stage is visible
+      const stageObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            showImage(0);
+            stageObserver.disconnect();
+          }
+        },
+        { rootMargin: '200px 0px', threshold: 0.01 }
+      );
+      stageObserver.observe(stage);
     }
 
     // Preview button popup modal (only for Mobile screen widths)
@@ -832,39 +866,6 @@ const onScroll = () => {
       mobileDownloadBtn.classList.add('downloaded');
     });
   });
-
-  // ── Hero Photo Stack Auto-Rotate ──────────────────────────────────────────
-  const heroStack = document.getElementById('heroPhotoStack');
-  if (heroStack) {
-    const cards = Array.from(heroStack.querySelectorAll<HTMLElement>('[data-stack-card]'));
-    const total = cards.length;
-
-    if (total > 1) {
-      let activeIdx = 0;
-
-      const rotate = () => {
-        // Remove all pos-N classes
-        cards.forEach((card, i) => {
-          card.classList.remove(...Array.from({ length: total }, (_, n) => `pos-${n}`));
-        });
-
-        // Assign new positions in a round-robin shift
-        cards.forEach((card, i) => {
-          const newPos = (i - activeIdx + total) % total;
-          card.classList.add(`pos-${newPos}`);
-        });
-
-        activeIdx = (activeIdx + 1) % total;
-      };
-
-      // Click anywhere on the stack to advance
-      heroStack.addEventListener('click', rotate);
-
-      // Auto-rotate every 3 seconds
-      setInterval(rotate, 3000);
-    }
-  }
-  // ─────────────────────────────────────────────────────────────────────────
 
   // ══════════════════════════════════════════════════════════════════════════
   // ABOUT SECTION — Zigzag parallax + Education sticky dot

@@ -199,6 +199,14 @@
   width: 0;
 }
 
+/* Mobile: badge always visible (lightweight entrance animates opacity, not width) */
+@media (max-width: 767px) {
+  .typing-animation {
+    width: auto;
+    overflow: visible;
+  }
+}
+
 /* Typing only starts once hero loads (class added by JS after loading screen) */
 .typing-animation.typing-active {
   animation: typing-smooth 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -437,16 +445,4 @@
     padding-top: 3.5rem;
     /* lg:pt-14 */
   }
-}
-
-/* ── Photo decorative blob ──────────────────────────────── */
-.hero-photo-blob {
-  position: absolute;
-  inset: -2rem;
-  /* -inset-8 */
-  border-radius: 3rem;
-  /* rounded-[3rem] */
-  background: radial-gradient(circle at 30% 20%, rgba(137, 215, 183, .18), rgba(137, 215, 183, .05) 42%, transparent 72%);
-  filter: blur(64px);
-  /* blur-3xl */
 }

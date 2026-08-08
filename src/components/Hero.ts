@@ -16,16 +16,16 @@ export const Hero = (): string => {
           <div class="hero-left reveal">
             <!-- Unified Badge -->
             <div class="hero-badge-container">
-              <span class="font-cabinet hero-badge-text typing-animation">HI, I'm</span>
+              <span class="font-cabinet hero-badge-text typing-animation" data-hero-anim="badge">HI, I'm</span>
             </div>
-            <h1 class="font-cabinet hero-name hero-title">
+            <h1 class="font-cabinet hero-name hero-title" data-hero-anim="name">
               Nandito <br class="hidden md:block">Setiyawan
             </h1>
-            <p class="hero-desc mobile-delay-reveal">
+            <p class="hero-desc mobile-delay-reveal" data-hero-anim="desc">
               ${profile.description}
             </p>
 
-            <div class="hero-actions mobile-delay-reveal">
+            <div class="hero-actions mobile-delay-reveal" data-hero-anim="actions">
               <a href="${profile.linkedin}" class="btn-primary hero-btn">
                 <span class="material-symbols-outlined text-[20px]">LinkedIn</span>
               </a>
@@ -34,7 +34,7 @@ export const Hero = (): string => {
               </a>
             </div>
 
-            <div class="hero-socials mobile-delay-reveal">
+            <div class="hero-socials mobile-delay-reveal" data-hero-anim="socials">
               <a href="${profile.whatsapp}" class="hero-wa-chip" aria-label="WhatsApp">
                 <img src="${whatsappIcon}" alt="WhatsApp" class="hero-wa-icon">
                 <span class="hero-tooltip" data-tooltip="WhatsApp">WhatsApp</span>
@@ -51,12 +51,6 @@ export const Hero = (): string => {
           </div>
 
           <div class="hero-right reveal">
-            <div class="relative" style="visibility: hidden; pointer-events: none;">
-              <div class="hero-photo-blob"></div>
-              <div class="photo-stack" id="heroPhotoStack">
-                <div class="stack-label">Profile Slideshow</div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

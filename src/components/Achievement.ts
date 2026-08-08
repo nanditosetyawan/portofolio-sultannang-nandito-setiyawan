@@ -63,7 +63,13 @@ export const Achievement = (): string => {
       <article class="accordion elevated achievement-item ${isHidden}" data-accordion>
         <button class="achievement-btn" data-accordion-btn>
           <div class="achievement-logo-wrapper">
-            ${ach.image ? `<img src="${ach.image}" alt="${ach.title} logo" class="achievement-logo-img">` : ''}
+            ${ach.image ? `
+              <img
+                src="${ach.image}"
+                alt="${ach.title} logo"
+                class="achievement-logo-img"
+                data-lazy-src="${ach.image}"
+              >` : ''}
           </div>
           <div class="achievement-meta">
             <div class="achievement-tags">
@@ -88,7 +94,12 @@ export const Achievement = (): string => {
 
               <div class="certificate-preview relative rounded-[1.4rem] overflow-hidden border border-border bg-surface shadow-soft2 min-h-[420px]">
                 <div class="certificate-stage" data-cert-images='${JSON.stringify(ach.certificates)}' data-cert-title="${ach.title}">
-                  <img class="cert-img" src="${ach.certificates[0]}" alt="${ach.title}">
+                  <img
+                  class="cert-img"
+                  src="${ach.certificates[0]}"
+                  alt="${ach.title}"
+                  data-lazy-src="${ach.certificates[0]}"
+                >
                   <button type="button" class="cert-badge" data-preview-btn>${badgeText}</button>
                     <button type="button" class="download-btn hidden md:flex" aria-label="Download" title="Download Sertifikat">
                       <img src="${new URL('../assets/icons/download.webp', import.meta.url).href}" alt="Download" class="download-img" />

@@ -72,76 +72,6 @@
 .floating-burger.show { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
 .floating-burger.left { left: 20px; right: auto; }
 
-/* Photo Stack Animasi */
-.photo-stack {
-    position: relative;
-    width: min(100%, 380px);
-    margin: 0 auto;
-    min-height: 450px;
-    aspect-ratio: 3 / 4;
-    transform: translateX(-20px);
-}
-.stack-card {
-  position: absolute; inset: 0; border-radius: 2.25rem; overflow: hidden; background: rgba(255,253,248,.97);
-  border: 1px solid rgba(232,225,215,.96); box-shadow: 0 20px 56px rgba(26,49,44,.14);
-  transition: transform .95s cubic-bezier(.2,.9,.2,1), opacity .75s ease, z-index .75s ease, filter .75s ease;
-  transform-origin: center center;
-}
-.stack-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.stack-label {
-  position: absolute; top: 16px; left: 16px; z-index: 5; background: rgba(255,255,255,.82);
-  backdrop-filter: blur(12px); border: 1px solid rgba(232,225,215,.95); padding: 8px 12px;
-  border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--text2);
-}
-.stack-card.pos-0 { transform: translate(0, 0) rotate(-3deg) scale(1); z-index: 5; opacity: 1; filter: saturate(1); }
-.stack-card.pos-1 { transform: translate(28px, -18px) rotate(10deg) scale(.965); z-index: 4; opacity: .95; filter: saturate(.99); }
-.stack-card.pos-2 { transform: translate(58px, 30px) rotate(-12deg) scale(.93); z-index: 3; opacity: .88; filter: saturate(.96); }
-.stack-card.pos-3 { transform: translate(10px, 62px) rotate(7deg) scale(.885); z-index: 2; opacity: .78; filter: saturate(.94); }
-.stack-card.pos-4 { transform: translate(94px, 22px) rotate(-16deg) scale(.845); z-index: 1; opacity: .70; filter: saturate(.92); }
-
-@media (max-width: 1023px){
-  .photo-stack { min-height: 440px; aspect-ratio: 3 / 4; margin: 0 auto; }
-  .stack-card.pos-1{ transform: translate(22px, -8px) rotate(5deg) scale(.965); }
-  .stack-card.pos-2{ transform: translate(42px, 18px) rotate(-6deg) scale(.925); }
-  .stack-card.pos-3{ transform: translate(16px, 36px) rotate(4deg) scale(.885); }
-  .stack-card.pos-4{ transform: translate(58px, 26px) rotate(-10deg) scale(.845); }
-}
-@media (max-width: 767px){
-  /* ── Global mobile page margins ── */
-  .stage > div,
-  section > div.mx-auto {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-  }
-
-  /* ── Photo stack: 20% smaller ── */
-  .photo-stack { width: 80%; min-height: 304px; margin: 0 auto; aspect-ratio: 3 / 4; }
-  .stack-card.pos-1{ transform: translate(14px, 8px) rotate(5deg) scale(.972); }
-  .stack-card.pos-2{ transform: translate(27px, 18px) rotate(-6deg) scale(.942); }
-  .stack-card.pos-3{ transform: translate(10px, 32px) rotate(4deg) scale(.91); }
-  .stack-card.pos-4{ transform: translate(37px, 22px) rotate(-10deg) scale(.885); }
-
-  /* ── Cards: smaller padding ── */
-  .elevated,
-  .section-card {
-    padding: 1rem !important;
-  }
-
-  /* ── Accordion / project cards ── */
-  .accordion.elevated {
-    padding: 1.6rem !important;
-    border-radius: 1.25rem !important;
-  }
-  .accordion.elevated button .rounded-\[1\.4rem\] {
-    border-radius: 1rem !important;
-  }
-  /* Slightly smaller certificate preview image on mobile */
-  .certificate-preview {
-    min-height: 300px !important;
-  }
-}
-
-
 /* Loading screen */
 .loading-screen {
   position: fixed;
@@ -570,18 +500,6 @@
 
   /* (mobile nav-shell shrink handled via .mobile-nav-shell.is-scrolled above) */
 
-
-  /* Photo stack adjustment: reduce size by 15%, center it horizontally */
-  .photo-stack {
-    width: 85% !important;
-    min-height: 320px !important;
-    margin: 0 auto !important;
-    transform: translateX(0) !important;
-  }
-  .photo-stack .stack-card.pos-1 { transform: translate(15px, 8px) rotate(5deg) scale(.972); }
-  .photo-stack .stack-card.pos-2 { transform: translate(28px, 18px) rotate(-6deg) scale(.942); }
-  .photo-stack .stack-card.pos-3 { transform: translate(10px, 34px) rotate(4deg) scale(.91); }
-  .photo-stack .stack-card.pos-4 { transform: translate(38px, 24px) rotate(-10deg) scale(.885); }
 
   /* Certificate cards adjustments */
   .certificate-preview {

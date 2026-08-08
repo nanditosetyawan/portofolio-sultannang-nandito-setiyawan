@@ -704,19 +704,6 @@
   border-color: var(--accent);
 }
 
-/* ── PHOTO STACK ───────────────────────────────────────────── */
-.dark .stack-card {
-  background: rgba(21, 28, 24, 0.97);
-  border-color: var(--border);
-  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.40);
-}
-
-.dark .stack-label {
-  background: rgba(21, 28, 24, 0.82);
-  border-color: var(--border);
-  color: var(--text2);
-}
-
 /* ── SECTION CARD / ELEVATED ───────────────────────────────── */
 .dark .section-card,
 .dark .elevated {
@@ -982,10 +969,6 @@
 /* ── GLOBAL / COMPONENTS ────────────────────────────────────── */
 .dark .reveal {
   transition: opacity .8s ease, transform .8s ease, visibility .8s ease;
-}
-
-.dark .stack-card {
-  transition: transform .95s cubic-bezier(.2,.9,.2,1), opacity .75s ease, z-index .75s ease, filter .75s ease;
 }
 
 .dark .loading-screen {

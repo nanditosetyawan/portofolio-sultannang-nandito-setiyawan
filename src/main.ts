@@ -9,6 +9,7 @@ import { Achievement } from './components/Achievement';
 import { Contact } from './components/Contact';
 import { initApp } from './utils/dom';
 import { initAnimations } from './animations';
+import { initImageManager } from './utils/imageManager';
 
 import './styles/dark.css';
 
@@ -45,4 +46,5 @@ app.innerHTML = `
 window.addEventListener('DOMContentLoaded', () => {
   initApp();
   initAnimations();
+  initImageManager();
 });

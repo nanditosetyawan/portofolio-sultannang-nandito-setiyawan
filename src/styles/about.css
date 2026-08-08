@@ -481,31 +481,7 @@
     animation-name: skills-marquee-left;
   }
 
-  /* Gradient edge masks — smooth entry/exit with viewport */
-  .about-skills-section {
-    position: relative;
-  }
 
-  .about-skills-section::before,
-  .about-skills-section::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 80px;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .about-skills-section::before {
-    left: 0;
-    background: linear-gradient(to right, var(--surface2) 15%, transparent);
-  }
-
-  .about-skills-section::after {
-    right: 0;
-    background: linear-gradient(to left, var(--surface2) 15%, transparent);
-  }
 
   @keyframes skills-marquee-right {
     0%   { transform: translateX(0); }

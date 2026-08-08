@@ -1484,6 +1484,7 @@ setTimeout(() => {
 
     // ── Slider Touch / Swipe (mobile only) ──────────────────────────────────────────
     let sliderTouchStartX = 0;
+    let sliderTouchStartTime = 0;
     let sliderDragging = false;
     let sliderStartOffset = 0;
     let sliderScrollRaf: number | null = null;
@@ -1516,6 +1517,7 @@ setTimeout(() => {
       sliderStepMs = 500;
       sliderLastStepAt = 0;
       sliderThumb.style.transition = 'none';
+      sliderTouchStartTime = performance.now();
     });
 
     sliderThumb?.addEventListener('touchmove', (e) => {
@@ -1541,11 +1543,13 @@ setTimeout(() => {
     });
 
     sliderThumb?.addEventListener('touchend', () => {
+      const flickOffset = sliderStartOffset;
+      const flickElapsed = performance.now() - sliderTouchStartTime;
       sliderDragging = false;
       sliderStopScroll();
       const trackWidth = sliderTrack?.offsetWidth ?? 0;
       const maxOffset = trackWidth * 0.4;
-      const dragDistance = Math.abs(sliderStartOffset);
+      const dragDistance = Math.abs(flickOffset);
       const dragRatio = Math.min(1, dragDistance / (maxOffset * 0.5));
       const baseDuration = 500;
       const minDuration = 180;
@@ -1553,6 +1557,14 @@ setTimeout(() => {
       sliderThumb.style.transition = `left ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
       sliderThumb.style.left = '50%';
       sliderStartOffset = 0;
+
+      // ── Cungkil (flick): jari sentuh → geser cepat → lepas → card maju 1 card ──
+      // Responsif: kecepatan minimal ~0.06px/ms ATAU lepas < 400ms dengan jarak >= 8px
+      const velocity = flickElapsed > 0 ? Math.abs(flickOffset) / flickElapsed : 0;
+      const isFlick = velocity > 0.06 || (flickElapsed < 400 && Math.abs(flickOffset) >= 8);
+      if (isFlick && Math.abs(flickOffset) >= 4) {
+        advance(flickOffset < 0 ? -1 : 1);
+      }
     });
 
     // ── SEARCH + FILTER LOGIC ───────────────────────────────────────────────

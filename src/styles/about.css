@@ -465,16 +465,17 @@
 
   /* ── Education: scroll-driven 01 → 02 transition ─────────── */
   .about-edu-section {
-    height: 130vh !important;
+    height: auto !important;
+    overflow: hidden;
   }
 
   .about-edu-sticky {
-    position: sticky !important;
-    top: 0;
+    position: relative !important;
+    top: auto;
     height: auto !important;
     flex-direction: column;
-    align-items: center;
-    padding: 3rem 1.25rem 4rem;
+    align-items: flex-start;
+    padding: 3rem 1.25rem 3.5rem;
     gap: 2.5rem;
   }
 
@@ -491,8 +492,8 @@
   .about-edu-right {
     width: 100%;
     min-height: auto;
-    align-items: center;
-    gap: 1.5rem;
+    align-items: stretch;
+    gap: 0;
     padding-top: 0;
   }
 
@@ -505,11 +506,11 @@
     opacity: 1 !important;
     transform: none !important;
     margin-bottom: 0;
-    text-align: center;
+    text-align: left;
   }
 
   .about-edu-body {
-    text-align: center;
+    text-align: left;
   }
 
   .about-edu-item[data-edu-index="1"] {

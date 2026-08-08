@@ -617,6 +617,18 @@
   border-color: var(--border);
 }
 
+/* Mobile sidebar — dark mode toggle active state */
+.dark #mobileThemeToggle {
+  background: rgb(246, 245, 245);
+  border-color: rgba(92, 200, 161, 0.35);
+}
+
+.dark #mobileThemeToggle #mobileThemeLabel {
+  background: var(--accent);
+  color: #0F1411;
+  box-shadow: 0 4px 14px rgba(92, 200, 161, 0.35);
+}
+
 /* Floating burger */
 .dark .floating-burger {
   background: rgba(15, 20, 17, 0.95);

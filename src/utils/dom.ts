@@ -1182,10 +1182,10 @@ const onScroll = () => {
         const rawP = clamp(-rect.top / scrollable, 0, 1);
 
         // 3-phase windows with a LONG, felt freeze + pronounced swap:
-        // 0.00 - 0.45 : FREEZE — content pinned at center, NOTHING moves
-        // 0.45 - 0.85 : TRANSITION — 01 slides out up, 02 slides in from below
-        // 0.85 - 1.00 : EXIT — normal scroll resumes
-        const tStart = 0.45, tEnd = 0.85;
+        // 0.00 - 0.25 : FREEZE — content pinned at center, NOTHING moves
+        // 0.25 - 0.90 : TRANSITION — 01 slides out up, 02 slides in from below
+        // 0.90 - 1.00 : EXIT — normal scroll resumes
+        const tStart = 0.25, tEnd = 0.90;
         const t = clamp((rawP - tStart) / (tEnd - tStart), 0, 1);
 
         // easeOutQuart: strong acceleration with NO overshoot (safe, no glitch)

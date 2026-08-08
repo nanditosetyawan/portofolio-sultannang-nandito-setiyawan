@@ -501,6 +501,7 @@
 
   .about-edu-items {
     overflow: hidden;
+    margin-top: 0.5rem;
   }
 
   .about-edu-item {
@@ -509,6 +510,7 @@
     transform: none !important;
     margin-bottom: 0;
     text-align: left;
+    align-items: center;
   }
 
   .about-edu-body {

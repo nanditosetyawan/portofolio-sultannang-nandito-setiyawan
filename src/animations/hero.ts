@@ -54,19 +54,42 @@ const initHeroAnimationsMobile = (): void => {
     });
   };
 
-  // Wait for loading screen to finish before initializing entrance animations
-  if (document.getElementById('loadingScreen')) {
+  // Start observer only AFTER the loading screen is fully removed from the DOM,
+  // so entrance animations are never hidden behind it.
+  let started = false;
+  const startWhenReady = () => {
+    if (started) return;
+    started = true;
+    startObserver();
+  };
+
+  const loading = document.getElementById('loadingScreen');
+  if (!loading || !loading.parentNode) {
+    // Already gone — animate immediately
+    startWhenReady();
+  } else {
+    // Watch for the loading screen being removed from the DOM
+    const parent = loading.parentNode;
+    const mo = new MutationObserver(() => {
+      if (!document.getElementById('loadingScreen')) {
+        mo.disconnect();
+        startWhenReady();
+      }
+    });
+    mo.observe(parent, { childList: true });
+
+    // Backup 1: `app:loading-done` fires when the fade-out starts (0.5s).
+    // Wait ~700ms for the fade to complete and element removal to happen.
     window.addEventListener(
       'app:loading-done',
       () => {
-        startObserver();
+        setTimeout(startWhenReady, 700);
       },
       { once: true }
     );
-    // Fallback: start after 2s if loading event never fires
-    setTimeout(startObserver, 2000);
-  } else {
-    startObserver();
+
+    // Backup 2: hard cap in case the event never fires.
+    setTimeout(startWhenReady, 4000);
   }
 };
 

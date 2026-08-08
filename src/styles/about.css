@@ -1129,7 +1129,9 @@
   }
 
   .about-wpr-title {
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    line-height: 1.1;
   }
 
   .about-wpr-item-inner {
@@ -1138,5 +1140,11 @@
 
   .about-wpr-num {
     width: 3.2rem;
+  }
+
+  .about-wpr-bintang-isi,
+  .about-wpr-bintang-kosong,
+  .about-wpr-dragme {
+    display: none;
   }
 }

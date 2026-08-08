@@ -1309,11 +1309,14 @@ const onScroll = () => {
     window.addEventListener('touchend', onTouchEnd);
   };
 
-  // Run draggable initialization
-  setTimeout(() => {
-    initDraggable('bintangIsi');
-    initDraggable('bintangKosong');
-  }, 100);
+  // Run draggable initialization (desktop only — hidden on mobile)
+  const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
+  if (!isMobileViewport) {
+    setTimeout(() => {
+      initDraggable('bintangIsi');
+      initDraggable('bintangKosong');
+    }, 100);
+  }
 
   // ── Stats Counter handled by GSAP (src/animations/about.ts) ─────────────
 

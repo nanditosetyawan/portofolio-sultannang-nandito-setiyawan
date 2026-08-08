@@ -54,10 +54,32 @@ const initHeroAnimationsMobile = (): void => {
     });
   };
 
-  // Start observer IMMEDIATELY — elements are already hidden via gsap.set above.
-  // On mobile, if a loading screen covers the hero, it is removed from DOM
-  // before this runs (loading.ts), so we can safely observe now.
-  startObserver();
+  // Wait for loading animation to finish before starting entrance animations
+  // This uses the same event the loading animation dispatches when done
+  let started = false;
+  const startWhenReady = () => {
+    if (started) return;
+    started = true;
+    startObserver();
+  };
+
+  // If app:loading-done has already fired (no loading screen or already finished),
+  // start animations immediately
+  if ((window as any).__loadingDoneFired) {
+    startWhenReady();
+    return;
+  }
+
+  // Otherwise, wait for the event (with timeout fallback)
+  const handleLoadingDone = () => {
+    window.removeEventListener('app:loading-done', handleLoadingDone);
+    startWhenReady();
+  };
+  
+  window.addEventListener('app:loading-done', handleLoadingDone);
+  
+  // Hard cap: 5s max wait in case event never fires
+  setTimeout(startWhenReady, 5000);
 };
 
 /* ──────────────────────────────────────────────────────────── */

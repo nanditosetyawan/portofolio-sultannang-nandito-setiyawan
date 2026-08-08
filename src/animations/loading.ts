@@ -2,10 +2,17 @@ import { gsap } from 'gsap';
 
 export const initLoadingAnimation = (): void => {
   const loading = document.getElementById('loadingScreen');
-  if (!loading) return;
+  if (!loading) {
+    window.dispatchEvent(new CustomEvent('app:loading-done'));
+    return;
+  }
 
-  // Reduced motion: skip fill-bar animation, dismiss immediately
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // On mobile, always show loading screen briefly (UX necessity)
+  // Only skip if reduced motion AND not mobile
+  const isMobile = window.matchMedia('(max-width: 767px)').matches;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reducedMotion && !isMobile) {
     window.dispatchEvent(new CustomEvent('app:loading-done'));
     loading.style.visibility = 'hidden';
     loading.style.pointerEvents = 'none';
@@ -13,6 +20,7 @@ export const initLoadingAnimation = (): void => {
     return;
   }
 
+  // Mobile or desktop with motion: show loading animation
   const fillBar = loading.querySelector<HTMLElement>('.loading-screen__fill');
   const title = loading.querySelector<HTMLElement>('.loading-screen__title');
 
@@ -30,8 +38,9 @@ export const initLoadingAnimation = (): void => {
   tl.add(
     () => {
       if (fillBar) gsap.set(fillBar, { width: '100%' });
-      // Dispatch event so hero timeline can start
       window.dispatchEvent(new CustomEvent('app:loading-done'));
+      // Set flag so hero animations know event already fired
+      (window as any).__loadingDoneFired = true;
       gsap.to(loading, {
         opacity: 0,
         duration: 0.5,

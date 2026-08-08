@@ -465,7 +465,7 @@
 
   /* ── Education: scroll-driven 01 → 02 transition ─────────── */
   .about-edu-section {
-    height: 150vh !important;
+    height: 130vh !important;
   }
 
   .about-edu-sticky {
@@ -473,7 +473,7 @@
     top: 0;
     height: auto !important;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding: 3rem 1.25rem 4rem;
     gap: 2.5rem;
   }
@@ -481,6 +481,7 @@
   .about-edu-left {
     flex: none;
     width: 100%;
+    text-align: center;
   }
 
   .about-edu-heading {
@@ -490,8 +491,9 @@
   .about-edu-right {
     width: 100%;
     min-height: auto;
-    align-items: stretch;
+    align-items: center;
     gap: 1.5rem;
+    padding-top: 0;
   }
 
   .about-edu-items {
@@ -503,6 +505,11 @@
     opacity: 1 !important;
     transform: none !important;
     margin-bottom: 0;
+    text-align: center;
+  }
+
+  .about-edu-body {
+    text-align: center;
   }
 
   .about-edu-item[data-edu-index="1"] {
@@ -539,6 +546,14 @@
   .about-edu-desc {
     font-size: 0.95rem;
     line-height: 1.6;
+  }
+
+  .about-edu-line {
+    width: 2px;
+    background: var(--accent);
+    margin-top: 0.5rem;
+    min-height: 0;
+    align-self: stretch;
   }
 
   .about-edu-dot {

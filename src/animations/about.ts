@@ -157,12 +157,16 @@ export const initAboutAnimations = (): void => {
   if (widStats) {
     const counters = widStats.querySelectorAll<HTMLElement>('.about-wid-num[data-counter]');
 
-    counters.forEach(counter => {
-      const target = parseInt(counter.getAttribute('data-target') || '0', 10);
-      const suffix = counter.getAttribute('data-suffix') || '';
+    /* Helper: run count-up from 0 → target. Works standalone or gated by
+       ScrollTrigger. Uses a proxy object for GPU-free JS counting. */
+    const buildCounterTween = (
+      counter: HTMLElement,
+      target: number,
+      suffix: string,
+      scrollTrigger?: ScrollTrigger.Vars
+    ): void => {
       const proxy = { val: 0 };
-
-      gsap.to(proxy, {
+      const tweenVars: gsap.TweenVars = {
         val: target,
         duration: 2,
         ease: 'power2.out',
@@ -170,11 +174,50 @@ export const initAboutAnimations = (): void => {
         onUpdate: () => {
           counter.textContent = `${Math.round(proxy.val)}${suffix}`;
         },
-        scrollTrigger: {
-          trigger: '.about-wid-stats',
-          start: 'top 80%',
-          once: true,
-        },
+      };
+      if (scrollTrigger) {
+        tweenVars.scrollTrigger = scrollTrigger;
+      }
+      gsap.to(proxy, tweenVars);
+    };
+
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const widStatsRect = widStats.getBoundingClientRect();
+    const statsInViewAtLoad =
+      widStatsRect.top < window.innerHeight && widStatsRect.bottom > 0;
+
+    counters.forEach(counter => {
+      const target = parseInt(counter.getAttribute('data-target') || '0', 10);
+      const suffix = counter.getAttribute('data-suffix') || '';
+
+      /* ── Mobile: if stats are already on-screen at load (common on mobile),
+             run the count-up immediately. Otherwise fall back to a lightweight
+             IntersectionObserver so it still animates when scrolled into view.
+             Desktop keeps the original ScrollTrigger gate. ── */
+      if (isMobile) {
+        if (statsInViewAtLoad) {
+          buildCounterTween(counter, target, suffix);
+        } else {
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  buildCounterTween(counter, target, suffix);
+                  obs.disconnect();
+                }
+              });
+            },
+            { rootMargin: '0px 0px -15% 0px', threshold: 0.2 }
+          );
+          observer.observe(counter);
+        }
+        return;
+      }
+
+      buildCounterTween(counter, target, suffix, {
+        trigger: '.about-wid-stats',
+        start: 'top 80%',
+        once: true,
       });
     });
 

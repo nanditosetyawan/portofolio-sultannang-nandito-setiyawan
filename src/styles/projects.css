@@ -1234,35 +1234,26 @@ body.modal-open {
   .proj-card.is-right { transform: translate3d(calc(-50% + 250px), -50%, -30px) rotateY(-12deg) scale(0.86); }
   .projects-carousel-wrap { height: 500px; }
 
+  /* Hide edge fade overlays on mobile */
   .proj-fade-left,
-  .proj-fade-right { width: 80px; }
+  .proj-fade-right { display: none !important; }
 
   /* Hide desktop nav arrows on mobile */
   .proj-nav-btn { display: none !important; }
 
-  /* Hide dots pagination on mobile — replaced by slider */
-  .proj-dots { display: none !important; }
-
-  /* Slider wrap — mobile only */
+/* Slider wrap — mobile only, flow below dots */
   .proj-slider-wrap {
     display: flex;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 44px;
-    align-items: center;
-    justify-content: center;
-    z-index: 20;
-    pointer-events: none;
-    padding-top: 0;
+    justify-content: center;  /* center track di layar */
+    margin-top: 2.25rem;
+    margin-bottom: 1.75rem;
   }
 
   .proj-slider-track {
     display: flex;
     position: relative;
     width: 48%;
-    height: 44px;
+    height: 20px;  /* 2. dikurangi */
     align-items: center;
     justify-content: center;
     pointer-events: auto;
@@ -1281,7 +1272,7 @@ body.modal-open {
     border-radius: 1px;
   }
 
-  /* Oval thumb button — tombol lonjong bertekstur */
+  /* Oval thumb button — 3. posisi tidak di tengah layar, ukuran lebih kecil */
   .proj-slider-thumb {
     display: flex;
     position: absolute;
@@ -1289,9 +1280,9 @@ body.modal-open {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 30;
-    width: 56px;
-    height: 44px;
-    border-radius: 22px;
+    width: 40px;  /* 2. dikurangi */
+    height: 20px;  /* 2. dikurangi */
+    border-radius: 10px;
     background: rgba(255, 253, 248, 0.92);
     border: 2px solid rgba(137, 215, 183, 0.5);
     box-shadow: 0 4px 14px rgba(26, 49, 44, 0.18);
@@ -1300,6 +1291,7 @@ body.modal-open {
     cursor: grab;
     flex-shrink: 0;
     touch-action: none;
+    /* center */
   }
   .proj-slider-thumb:active {
     background: rgba(255, 253, 248, 1.0);
@@ -1314,10 +1306,18 @@ body.modal-open {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 24px;
+    width: 16px;  /* 2. dikurangi */
     height: 2px;
     background: linear-gradient(90deg, transparent, rgba(66, 132, 117, 0.35), transparent);
     border-radius: 1px;
+  }
+
+  /* Saat auto-scroll aktif, transisi card lebih cepat agar halus */
+  .proj-cards-track.is-fast .proj-card {
+    transition:
+      transform 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .proj-filter-panel { right: auto; left: 0; }

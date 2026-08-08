@@ -462,6 +462,8 @@ export const About = (): string => `
              draggable="false" />
 
         <!-- Container list prinsip -->
+
+        
         <div class="about-wpr-list">
           ${WORKING_PRINCIPLES.map((p, idx) => `
             <div class="about-wpr-item">
@@ -476,7 +478,9 @@ export const About = (): string => `
               </div>
               <!-- Divider line artistik di bawah item 01 & 02 -->
               ${idx < WORKING_PRINCIPLES.length - 1 ? '<div class="about-wpr-divider"></div>' : ''}
-            </div>
+         </div> 
+       
+
           `).join('')}
         </div>
 

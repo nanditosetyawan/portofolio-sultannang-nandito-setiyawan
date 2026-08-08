@@ -1156,17 +1156,16 @@ const onScroll = () => {
         itemH = eduItems[0].offsetHeight;
         if (itemH > 0 && eduItemsEl) {
           eduItemsEl.style.height = `${itemH}px`;
+          // Also set line height to match item 01 exactly
+          const eduLine = eduSection.querySelector<HTMLElement>('.about-edu-line');
+          if (eduLine) eduLine.style.height = `${itemH}px`;
           eduItems[1].style.opacity = '0';
           measured = true;
         }
       };
 
-      // Easing helpers for pronounced freeze + punchy swap
-      const easeOutBack = (t: number) => {
-        const c1 = 1.70158;
-        const c3 = c1 + 1;
-        return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
-      };
+      // Easing helpers for a strong, felt freeze + smooth clean swap
+      const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
       const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
 
       let rafId = 0, inView = false;
@@ -1182,23 +1181,22 @@ const onScroll = () => {
         // raw progress 0→1 as section scrolls through viewport
         const rawP = clamp(-rect.top / scrollable, 0, 1);
 
-        // 3-phase windows with a pronounced FREEZE + long, visible swap:
-        // 0.00 - 0.40 : FREEZE — content pinned at center, NOTHING moves
-        // 0.40 - 0.80 : TRANSITION — 01 slides out up, 02 slides in from below
-        // 0.80 - 1.00 : EXIT — normal scroll resumes
-        const tStart = 0.40, tEnd = 0.80;
+        // 3-phase windows with a LONG, felt freeze + pronounced swap:
+        // 0.00 - 0.45 : FREEZE — content pinned at center, NOTHING moves
+        // 0.45 - 0.85 : TRANSITION — 01 slides out up, 02 slides in from below
+        // 0.85 - 1.00 : EXIT — normal scroll resumes
+        const tStart = 0.45, tEnd = 0.85;
         const t = clamp((rawP - tStart) / (tEnd - tStart), 0, 1);
 
-        // easeOutBack gives slight overshoot → the swap feels deliberate/punchy
-        const eased = easeOutBack(t);
+        // easeOutQuart: strong acceleration with NO overshoot (safe, no glitch)
+        const eased = clamp(1 - Math.pow(1 - t, 4), 0, 1);
 
         // Track slides up by one item height (full swap)
         eduTrack.style.transform = `translateY(${-itemH * eased}px)`;
 
-        // Item 01 stays solid until halfway, then fades out sharply
-        const op1 = eased < 0.6 ? 1 : clamp(1 - (eased - 0.6) / 0.4, 0, 1);
-        // Item 02 waits, then fades in from below
-        const op2 = eased > 0.4 ? clamp((eased - 0.4) / 0.6, 0, 1) : 0;
+        // Sequential fade — clear "01 out → 02 in" replace action:
+        const op1 = eased < 0.65 ? 1 : clamp((1 - eased) / 0.35, 0, 1);
+        const op2 = eased < 0.35 ? 0 : clamp((eased - 0.35) / 0.65, 0, 1);
         eduItems[0].style.opacity = String(op1);
         eduItems[1].style.opacity = String(op2);
       };
@@ -1337,14 +1335,14 @@ const onScroll = () => {
     window.addEventListener('touchend', onTouchEnd);
   };
 
-  // Run draggable initialization (desktop only — hidden on mobile)
-  const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
-  if (!isMobileViewport) {
-    setTimeout(() => {
-      initDraggable('bintangIsi');
-      initDraggable('bintangKosong');
-    }, 100);
-  }
+// Run draggable initialization (mobile only — desktop handled elsewhere if needed)
+const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
+if (isMobileViewport) {
+  setTimeout(() => {
+    initDraggable('bintangIsi');
+    initDraggable('bintangKosong');
+  }, 100);
+}
 
   // ── Stats Counter handled by GSAP (src/animations/about.ts) ─────────────
 
@@ -1466,11 +1464,35 @@ const onScroll = () => {
     let sliderTouchStartX = 0;
     let sliderDragging = false;
     let sliderStartOffset = 0;
+    let sliderScrollRaf: number | null = null;
+    let sliderLastStepAt = 0;
+    let sliderDirection: 1 | -1 = 1;
+    let sliderStepMs = 500;
+
+    const sliderStopScroll = () => {
+      if (sliderScrollRaf !== null) {
+        cancelAnimationFrame(sliderScrollRaf);
+        sliderScrollRaf = null;
+      }
+      track?.classList.remove('is-fast');
+    };
+
+    const sliderScrollStep = (now: number) => {
+      if (!sliderDragging) { sliderStopScroll(); return; }
+      if (now - sliderLastStepAt >= sliderStepMs) {
+        sliderLastStepAt = now;
+        advance(sliderDirection);
+      }
+      sliderScrollRaf = requestAnimationFrame(sliderScrollStep);
+    };
 
     sliderThumb?.addEventListener('touchstart', (e) => {
       sliderTouchStartX = e.touches[0].clientX;
       sliderDragging = true;
       sliderStartOffset = 0;
+      sliderDirection = 1;
+      sliderStepMs = 500;
+      sliderLastStepAt = 0;
       sliderThumb.style.transition = 'none';
     });
 
@@ -1479,28 +1501,34 @@ const onScroll = () => {
       const touchX = e.touches[0].clientX;
       const deltaX = touchX - sliderTouchStartX;
       const trackWidth = sliderTrack?.offsetWidth ?? 0;
-      const maxOffset = trackWidth / 2;
+      const maxOffset = trackWidth * 0.4;
       sliderStartOffset = Math.max(-maxOffset, Math.min(maxOffset, deltaX));
       sliderThumb.style.left = `calc(50% + ${sliderStartOffset}px)`;
+
+      // Update direction & speed
+      sliderDirection = sliderStartOffset < 0 ? -1 : 1;
+      const dragRatio = Math.min(1, Math.abs(sliderStartOffset) / maxOffset);
+      sliderStepMs = Math.max(120, Math.round(650 - dragRatio * 530));
+
+      // Start auto-scroll loop
+      if (sliderScrollRaf === null && Math.abs(sliderStartOffset) > 0) {
+        sliderLastStepAt = performance.now();
+        track?.classList.add('is-fast');
+        sliderScrollRaf = requestAnimationFrame(sliderScrollStep);
+      }
     });
 
     sliderThumb?.addEventListener('touchend', () => {
       sliderDragging = false;
-      const thumbWidth = sliderThumb?.offsetWidth ?? 52;
+      sliderStopScroll();
       const trackWidth = sliderTrack?.offsetWidth ?? 0;
-      const maxOffset = trackWidth / 2;
+      const maxOffset = trackWidth * 0.4;
       const dragDistance = Math.abs(sliderStartOffset);
       const dragRatio = Math.min(1, dragDistance / (maxOffset * 0.5));
-      const direction = sliderStartOffset < 0 ? -1 : 1;
       const baseDuration = 500;
       const minDuration = 180;
       const duration = Math.round(baseDuration - dragRatio * (baseDuration - minDuration));
-      if (dragDistance > thumbWidth * 0.2) {
-        advance(direction as 1 | -1);
-        sliderThumb.style.transition = `left ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-      } else {
-        sliderThumb.style.transition = `left ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-      }
+      sliderThumb.style.transition = `left ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
       sliderThumb.style.left = '50%';
       sliderStartOffset = 0;
     });
@@ -1646,17 +1674,20 @@ const onScroll = () => {
       if (!overlay) return;
       const win = overlay.querySelector<HTMLElement>('.proj-modal-window');
 
-      if (win && !win.dataset.modalReady) {
-        // Overlay is hidden so use viewport dimensions directly
-        // Default window size matches CSS: width 640, height 580
-        const WIN_W = 640, WIN_H = 580;
-        const ow = window.innerWidth;
-        const oh = window.innerHeight;
-        win.style.left = Math.round((ow - WIN_W) / 2) + 'px';
-        win.style.top  = Math.round((oh - WIN_H) / 2) + 'px';
-        setupModalWindow(overlay, win);
-        win.dataset.modalReady = '1';
-      }
+        if (win && !win.dataset.modalReady) {
+          // Overlay is hidden so use viewport dimensions directly
+          // Default window size matches CSS: width 640, height 580
+          // Respect max-width / max-height constraints from CSS (100vw - 24px, 100vh - 24px)
+          const WIN_W = 640, WIN_H = 580;
+          const ow = window.innerWidth;
+          const oh = window.innerHeight;
+          const actualWinW = Math.min(WIN_W, ow - 24);
+          const actualWinH = Math.min(WIN_H, oh - 24);
+          win.style.left = Math.round((ow - actualWinW) / 2) + 'px';
+          win.style.top  = Math.round((oh - actualWinH) / 2) + 'px';
+          setupModalWindow(overlay, win);
+          win.dataset.modalReady = '1';
+        }
 
        overlay.classList.add('is-open');
       // Reparent to <body>: the modal markup lives inside #projects which has

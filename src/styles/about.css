@@ -465,8 +465,8 @@
 
   /* ── Education: scroll-driven 01 → 02 transition ─────────── */
   .about-edu-section {
-    height: 170vh !important;
-    overflow: hidden;
+    height: 130vh !important;
+    overflow: visible;
   }
 
   .about-edu-sticky {
@@ -505,7 +505,7 @@
 
   .about-edu-item {
     position: relative !important;
-    opacity: 1 !important;
+    /* opacity: 1 !important — REMOVED so JS can control it */
     transform: none !important;
     margin-bottom: 0;
     text-align: left;
@@ -555,9 +555,9 @@
     width: 2px;
     background: var(--accent);
     margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
     min-height: 0;
-    align-self: stretch;
+    align-self: flex-start;
     border-radius: 999px;
     position: relative;
   }
@@ -1137,6 +1137,7 @@
 
   .about-wpr-card {
     padding: 4rem var(--wpr-desktop-mx);
+    overflow: hidden;
   }
 
   .about-wpr-title {
@@ -1166,8 +1167,16 @@
     transform: rotate(-15deg);
   }
 
+  .about-wpr-list {
+    gap: 1.25rem;
+  }
+
   .about-wpr-item-inner {
-    gap: 1.5rem;
+    gap: 1rem;
+  }
+
+  .about-wpr-list br {
+    display: none;
   }
 
   .about-wpr-num {

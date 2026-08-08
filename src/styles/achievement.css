@@ -470,4 +470,12 @@
   .review-marquee-container::after {
     width: 45px; /* Reduced by 25% from 60px */
   }
+
+  /* Mobile: row 1 moves right→left, row 2 moves left→right */
+  .review-marquee-track.to-right {
+    animation: marquee-left 75s linear infinite;
+  }
+  .review-marquee-track.to-left {
+    animation: marquee-right 75s linear infinite;
+  }
 }

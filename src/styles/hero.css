@@ -52,8 +52,8 @@
   padding-left: 1rem;
   /* px-4 */
   padding-right: 1rem;
-  padding-top: 1.25rem;
-  /* pt-5 */
+  padding-top: 3rem;
+  /* pt-12 — extra breathing room below fixed navbar on mobile */
   padding-bottom: 10rem;
   /* pb-28 */
   width: 100%;

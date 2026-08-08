@@ -25,7 +25,7 @@ const initHeroAnimationsMobile = (): void => {
     socials: { from: { opacity: 0, scale: 0.8 }, to: { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(1.5)', force3D: true } },
   };
 
-  // Set initial hidden state (opacity 0)
+  // Set initial hidden state (opacity 0) IMMEDIATELY
   Object.entries(animateConfigs).forEach(([key, cfg]) => {
     const el = elements[key as keyof typeof elements];
     if (el) gsap.set(el, cfg.from);
@@ -45,7 +45,7 @@ const initHeroAnimationsMobile = (): void => {
           }
         });
       },
-      { rootMargin: '50px 0px', threshold: 0.1 }
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
     );
 
     // Observe each hero element
@@ -54,43 +54,10 @@ const initHeroAnimationsMobile = (): void => {
     });
   };
 
-  // Start observer only AFTER the loading screen is fully removed from the DOM,
-  // so entrance animations are never hidden behind it.
-  let started = false;
-  const startWhenReady = () => {
-    if (started) return;
-    started = true;
-    startObserver();
-  };
-
-  const loading = document.getElementById('loadingScreen');
-  if (!loading || !loading.parentNode) {
-    // Already gone — animate immediately
-    startWhenReady();
-  } else {
-    // Watch for the loading screen being removed from the DOM
-    const parent = loading.parentNode;
-    const mo = new MutationObserver(() => {
-      if (!document.getElementById('loadingScreen')) {
-        mo.disconnect();
-        startWhenReady();
-      }
-    });
-    mo.observe(parent, { childList: true });
-
-    // Backup 1: `app:loading-done` fires when the fade-out starts (0.5s).
-    // Wait ~700ms for the fade to complete and element removal to happen.
-    window.addEventListener(
-      'app:loading-done',
-      () => {
-        setTimeout(startWhenReady, 700);
-      },
-      { once: true }
-    );
-
-    // Backup 2: hard cap in case the event never fires.
-    setTimeout(startWhenReady, 4000);
-  }
+  // Start observer IMMEDIATELY — elements are already hidden via gsap.set above.
+  // On mobile, if a loading screen covers the hero, it is removed from DOM
+  // before this runs (loading.ts), so we can safely observe now.
+  startObserver();
 };
 
 /* ──────────────────────────────────────────────────────────── */

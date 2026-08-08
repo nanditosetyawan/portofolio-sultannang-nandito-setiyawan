@@ -68,7 +68,6 @@ export const Achievement = (): string => {
                 src="${ach.image}"
                 alt="${ach.title} logo"
                 class="achievement-logo-img"
-                data-lazy-src="${ach.image}"
               >` : ''}
           </div>
           <div class="achievement-meta">
@@ -98,7 +97,6 @@ export const Achievement = (): string => {
                   class="cert-img"
                   src="${ach.certificates[0]}"
                   alt="${ach.title}"
-                  data-lazy-src="${ach.certificates[0]}"
                 >
                   <button type="button" class="cert-badge" data-preview-btn>${badgeText}</button>
                     <button type="button" class="download-btn hidden md:flex" aria-label="Download" title="Download Sertifikat">

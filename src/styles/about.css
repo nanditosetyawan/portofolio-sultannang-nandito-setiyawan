@@ -465,7 +465,7 @@
 
   /* ── Education: scroll-driven 01 → 02 transition ─────────── */
   .about-edu-section {
-    height: 160vh !important;
+    height: 140vh !important;
     overflow: hidden;
   }
 
@@ -476,8 +476,8 @@
     height: auto !important;
     flex-direction: column;
     align-items: flex-start;
-    padding: 3rem 1.25rem 3.5rem;
-    gap: 2.5rem;
+    padding: 2rem 1.25rem 2.5rem;
+    gap: 1.5rem;
   }
 
   .about-edu-left {
@@ -553,8 +553,8 @@
   .about-edu-line {
     width: 2px;
     background: var(--accent);
-    margin-top: 0.8rem;
-    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
     min-height: 0;
     align-self: stretch;
     border-radius: 999px;

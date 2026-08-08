@@ -123,6 +123,39 @@
 }
 
 
+/* ── MOBILE ONLY: Hero height fix ──────────────────────────
+   Reduce excessive hero height on mobile without touching desktop.
+   Desktop styles above (min-width: 768px) remain untouched.
+   Mobile gets: compact section, less padding, hidden empty grid col,
+   waves pulled closer to content.
+   ─────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .hero-section {
+    min-height: auto;
+  }
+
+  .hero-container {
+    padding-bottom: 3.5rem;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-right {
+    display: none;
+  }
+
+  .hero-wave-top {
+    bottom: 20px;
+    height: 48px;
+  }
+
+  .hero-wave {
+    height: 40px;
+  }
+}
+
 
 /* ── Content grid ───────────────────────────────────────── */
 .hero-grid {

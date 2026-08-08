@@ -489,6 +489,7 @@
 
   .about-edu-heading {
     font-size: clamp(2rem, 9vw, 2.6rem);
+    margin-bottom: 2rem;
   }
 
   .about-edu-right {
@@ -878,8 +879,9 @@
   font-weight: 900;
   text-align: center;
   color: var(--wpr-text-color);
-  margin: 0 0 1.5rem;
+  margin: 0 0 3.5rem;
   letter-spacing: -0.03em;
+  line-height: 1.15;
   transition:
     color var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94),
     text-shadow var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94);

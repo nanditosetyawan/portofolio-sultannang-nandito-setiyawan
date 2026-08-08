@@ -36,7 +36,7 @@
     background: var(--bg); 
     color: var(--text); 
     font-family: "Plus Jakarta Sans", sans-serif; 
-    overflow-x: hidden; 
+    overflow-x: clip;
   }
 }
 
@@ -104,14 +104,5 @@
   }
   body.modal-open {
     overscroll-behavior: none;
-  }
-}
-
-/* ── Mobile: allow position: sticky to work (overflow-x: clip
-   prevents horizontal scroll WITHOUT creating a scroll container
-   that traps sticky — unlike overflow-x: hidden). Mobile only. ── */
-@media (max-width: 767px) {
-  html, body {
-    overflow-x: clip;
   }
 }

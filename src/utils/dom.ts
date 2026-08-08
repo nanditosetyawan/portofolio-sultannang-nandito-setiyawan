@@ -752,7 +752,7 @@ const onScroll = () => {
 
       const closeBtn = document.createElement('button');
       closeBtn.className = 'absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white z-10 transition';
-      closeBtn.innerHTML = '<span class="material-symbols-outlined text-[28px]">close</span>';
+      closeBtn.innerHTML = '<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
       closeBtn.setAttribute('aria-label', 'Close preview');
 
       overlay.appendChild(img);

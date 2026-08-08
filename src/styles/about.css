@@ -465,13 +465,14 @@
 
   /* ── Education: scroll-driven 01 → 02 transition ─────────── */
   .about-edu-section {
-    height: auto !important;
+    height: 160vh !important;
     overflow: hidden;
   }
 
   .about-edu-sticky {
-    position: relative !important;
-    top: auto;
+    position: sticky !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
     height: auto !important;
     flex-direction: column;
     align-items: flex-start;
@@ -482,7 +483,7 @@
   .about-edu-left {
     flex: none;
     width: 100%;
-    text-align: center;
+    text-align: left;
   }
 
   .about-edu-heading {
@@ -552,9 +553,12 @@
   .about-edu-line {
     width: 2px;
     background: var(--accent);
-    margin-top: 0.5rem;
+    margin-top: 0.8rem;
+    margin-bottom: 2rem;
     min-height: 0;
     align-self: stretch;
+    border-radius: 999px;
+    position: relative;
   }
 
   .about-edu-dot {
@@ -877,6 +881,12 @@
     color var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94),
     text-shadow var(--wpr-transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: default;
+  position: relative;
+}
+
+/* Mobile decorative star behind title — hidden on desktop */
+.about-wpr-title-star {
+  display: none;
 }
 
 .about-wpr-title:hover {
@@ -1131,7 +1141,28 @@
   .about-wpr-title {
     margin-bottom: 1.5rem;
     font-size: clamp(2.5rem, 8vw, 3.5rem);
-    line-height: 1.1;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .about-wpr-title br {
+    display: block;
+    content: "";
+    margin-bottom: 0.15em;
+  }
+
+  .about-wpr-title-star {
+    display: block;
+    position: absolute;
+    top: -1.5rem;
+    right: -1rem;
+    width: clamp(80px, 20vw, 120px);
+    height: auto;
+    opacity: 0.12;
+    z-index: -1;
+    pointer-events: none;
+    user-select: none;
+    transform: rotate(-15deg);
   }
 
   .about-wpr-item-inner {

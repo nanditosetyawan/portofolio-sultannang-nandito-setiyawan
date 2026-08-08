@@ -430,11 +430,18 @@ export const About = (): string => `
          Ubah isi data di src/data/about.ts pada array WORKING_PRINCIPLES.
          Ini akan me-render nomor, judul, dan deskripsi secara dinamis.
     -->
-    <div class="about-wpr-section" id="aboutWorkingPrinciples">
+<div class="about-wpr-section" id="aboutWorkingPrinciples">
       <div class="about-wpr-card">
-        
+         
         <!-- Judul section -->
-        <h2 class="about-wpr-title font-cabinet">Built On Principles</h2>
+        <h2 class="about-wpr-title font-cabinet">Built On<br>Principles</h2>
+
+        <!-- Mobile decorative star behind title -->
+        <img src="${new URL('../assets/icons/bintang_isi_hitam.webp', import.meta.url).href}" 
+             class="about-wpr-title-star" 
+             alt="" 
+             aria-hidden="true" 
+             draggable="false" />
 
         <!-- Decorative Background Elements (Draggable & Static) -->
         <img src="${new URL('../assets/icons/bintang_isi_hitam.webp', import.meta.url).href}" 

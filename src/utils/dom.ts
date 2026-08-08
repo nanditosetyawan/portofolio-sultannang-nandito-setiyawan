@@ -1161,18 +1161,30 @@ const onScroll = () => {
         }
       };
 
+      // Easing: smooth ease-out for natural deceleration
+      const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
       let rafId = 0, inView = false;
 
       const update = () => {
         rafId = 0;
         if (!inView) return;
         const rect = eduSection.getBoundingClientRect();
-        const scrollable = Math.max(eduSection.offsetHeight - window.innerHeight, 1);
-        const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
+        const sectionH = eduSection.offsetHeight;
+        const viewH = window.innerHeight;
+
+        // Progress 0→1 as section scrolls through viewport.
+        // sticky keeps the content centered; scroll drives the transition.
+        const scrolled = -rect.top;
+        const scrollable = Math.max(sectionH - viewH, 1);
+        const rawProgress = Math.max(0, Math.min(1, scrolled / scrollable));
+
+        // Apply easing for a smooth, natural 01→02 swap
+        const progress = easeOutCubic(rawProgress);
 
         eduTrack.style.transform = `translateY(${-itemH * progress}px)`;
-        eduItems[0].style.opacity = String(Math.max(0, 1 - progress * 1.2));
-        eduItems[1].style.opacity = String(Math.max(0, (progress - 0.3) / 0.4));
+        eduItems[0].style.opacity = String(Math.max(0, 1 - progress * 1.3));
+        eduItems[1].style.opacity = String(Math.max(0, (progress - 0.2) / 0.5));
       };
 
       const onScroll = () => { if (!rafId) rafId = requestAnimationFrame(update); };

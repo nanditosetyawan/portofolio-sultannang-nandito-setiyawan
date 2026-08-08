@@ -1024,6 +1024,7 @@
    No new image files needed. */
 .dark .about-wpr-bintang-isi { filter: invert(1); }
 .dark .about-wpr-bintang-kosong { filter: invert(1); }
+.dark .about-wpr-title-star { filter: invert(1); }
 .dark .achievement-chev { filter: invert(1); }
 .dark .arrow-left, .dark .arrow-right { filter: invert(1); }
 .dark .download-img { filter: invert(1); }

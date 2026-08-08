@@ -1,0 +1,22 @@
+{
+  "name": "Nandito Setiyawan - Web Developer Portfolio",
+  "short_name": "Nandito",
+  "description": "Portfolio of Nandito Setiyawan, an Information Systems student building clean, modern digital experiences through web development, design thinking, and project-based learning.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay"],
+  "background_color": "#ffffff",
+  "theme_color": "#863bff",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "categories": ["portfolio", "developer", "education"],
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

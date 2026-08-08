@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap reference
+Sitemap: https://nanditosetyawan.github.io/portofolio-sultannang-nandito-setiyawan/sitemap.xml

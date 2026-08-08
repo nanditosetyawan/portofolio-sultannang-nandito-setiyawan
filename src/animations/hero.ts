@@ -31,6 +31,20 @@ const initHeroAnimationsMobile = (): void => {
     if (el) gsap.set(el, cfg.from);
   });
 
+  const animateVisibleElements = () => {
+    Object.entries(elements).forEach(([key, el]) => {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+      if (isInViewport) {
+        const cfg = animateConfigs[key];
+        if (cfg) {
+          gsap.fromTo(el, cfg.from, cfg.to);
+        }
+      }
+    });
+  };
+
   const startObserver = () => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -51,6 +65,12 @@ const initHeroAnimationsMobile = (): void => {
     // Observe each hero element
     Object.values(elements).forEach((el) => {
       if (el) observer.observe(el);
+    });
+
+    // Also animate immediately any elements already in viewport
+    // (handles case where hero is at top and loading screen just disappeared)
+    requestAnimationFrame(() => {
+      animateVisibleElements();
     });
   };
 
@@ -176,9 +196,17 @@ const initHeroAnimationsDesktop = (): void => {
 
   // Play timeline when loading screen finishes
   const playTimeline = () => {
-    badgeText?.classList.add('typing-active');
+    // Ensure hero elements become visible even if CSS typing animation
+    // doesn't trigger (force width expansion for badge text)
+    if (badgeText) {
+      badgeText.classList.add('typing-active');
+      // Force-trigger the typing animation by reflowing after class add
+      void badgeText.offsetWidth;
+    }
     tl.play();
   };
+
+  // Register listener immediately (hero anim inits before loading anim)
   if (document.getElementById('loadingScreen')) {
     window.addEventListener('app:loading-done', playTimeline, { once: true });
     // Safety fallback: if event never fires, play after 3s
@@ -186,6 +214,7 @@ const initHeroAnimationsDesktop = (): void => {
       if (tl.progress() === 0) tl.play();
     }, 3000);
   } else {
+    // No loading screen — play immediately
     playTimeline();
   }
 };
@@ -218,4 +247,4 @@ export const refreshHeroAnimationMode = (): void => {
       initHeroAnimationsMobile();
     }
   }
-};
+}

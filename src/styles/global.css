@@ -36,9 +36,6 @@
     background: var(--bg); 
     color: var(--text); 
     font-family: "Plus Jakarta Sans", sans-serif; 
-  }
-
-  body { 
     overflow-x: hidden; 
   }
 }

@@ -1161,8 +1161,12 @@ const onScroll = () => {
         }
       };
 
-      // Easing for smooth 01→02
-      const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+      // Easing helpers for pronounced freeze + punchy swap
+      const easeOutBack = (t: number) => {
+        const c1 = 1.70158;
+        const c3 = c1 + 1;
+        return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+      };
       const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
 
       let rafId = 0, inView = false;
@@ -1175,20 +1179,28 @@ const onScroll = () => {
         const viewH = window.innerHeight;
         const scrollable = Math.max(sectionH - viewH, 1);
 
-        // Progress 0→1 as section scrolls through viewport
+        // raw progress 0→1 as section scrolls through viewport
         const rawP = clamp(-rect.top / scrollable, 0, 1);
 
-        // 3-phase windows:
-        // 0.00 - 0.35 : section enters, centers → freezes (no transition)
-        // 0.35 - 0.75 : frozen → 01→02 transition
-        // 0.75 - 1.00 : transition done, normal scroll resumes
-        const tStart = 0.35, tEnd = 0.75;
+        // 3-phase windows with a pronounced FREEZE + long, visible swap:
+        // 0.00 - 0.40 : FREEZE — content pinned at center, NOTHING moves
+        // 0.40 - 0.80 : TRANSITION — 01 slides out up, 02 slides in from below
+        // 0.80 - 1.00 : EXIT — normal scroll resumes
+        const tStart = 0.40, tEnd = 0.80;
         const t = clamp((rawP - tStart) / (tEnd - tStart), 0, 1);
-        const eased = easeOutCubic(t);
 
+        // easeOutBack gives slight overshoot → the swap feels deliberate/punchy
+        const eased = easeOutBack(t);
+
+        // Track slides up by one item height (full swap)
         eduTrack.style.transform = `translateY(${-itemH * eased}px)`;
-        eduItems[0].style.opacity = String(clamp(1 - eased, 0, 1));
-        eduItems[1].style.opacity = String(eased);
+
+        // Item 01 stays solid until halfway, then fades out sharply
+        const op1 = eased < 0.6 ? 1 : clamp(1 - (eased - 0.6) / 0.4, 0, 1);
+        // Item 02 waits, then fades in from below
+        const op2 = eased > 0.4 ? clamp((eased - 0.4) / 0.6, 0, 1) : 0;
+        eduItems[0].style.opacity = String(op1);
+        eduItems[1].style.opacity = String(op2);
       };
 
       const onScroll = () => { if (!rafId) rafId = requestAnimationFrame(update); };
@@ -1339,17 +1351,19 @@ const onScroll = () => {
   // ══════════════════════════════════════════════════════════════════════════
   // PROJECTS CAROUSEL — Coverflow navigation, search, filter, modals
   // ══════════════════════════════════════════════════════════════════════════
-  const initProjectsCarousel = () => {
-    const track = document.getElementById('projCardsTrack');
-    const prevBtn = document.getElementById('projNavPrev');
-    const nextBtn = document.getElementById('projNavNext');
-    const dotsContainer = document.getElementById('projDots');
-    const searchInput = document.getElementById('projSearch') as HTMLInputElement | null;
-    const noResults = document.getElementById('projNoResults');
-    const filterBtn = document.getElementById('projFilterBtn');
-    const filterPanel = document.getElementById('projFilterPanel');
-    const filterBadge = document.getElementById('projFilterBadge');
-    const filterResetBtn = document.getElementById('projFilterReset');
+   const initProjectsCarousel = () => {
+     const track = document.getElementById('projCardsTrack');
+     const prevBtn = document.getElementById('projNavPrev');
+     const nextBtn = document.getElementById('projNavNext');
+     const dotsContainer = document.getElementById('projDots');
+     const sliderThumb = document.getElementById('projSliderThumb');
+     const sliderTrack = document.getElementById('projSliderTrack');
+     const searchInput = document.getElementById('projSearch') as HTMLInputElement | null;
+     const noResults = document.getElementById('projNoResults');
+     const filterBtn = document.getElementById('projFilterBtn');
+     const filterPanel = document.getElementById('projFilterPanel');
+     const filterBadge = document.getElementById('projFilterBadge');
+     const filterResetBtn = document.getElementById('projFilterReset');
 
     if (!track) return;
 
@@ -1440,12 +1454,55 @@ const onScroll = () => {
       if (e.key === 'ArrowRight') advance(1);
     });
 
-    // Touch / swipe on carousel
+    // Touch / swipe on carousel — fallback
     let touchStartX = 0;
     track.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
     track.addEventListener('touchend', (e) => {
       const dx = e.changedTouches[0].clientX - touchStartX;
       if (Math.abs(dx) > 40) advance(dx < 0 ? 1 : -1);
+    });
+
+    // ── Slider Touch / Swipe (mobile only) ──────────────────────────────────────────
+    let sliderTouchStartX = 0;
+    let sliderDragging = false;
+    let sliderStartOffset = 0;
+
+    sliderThumb?.addEventListener('touchstart', (e) => {
+      sliderTouchStartX = e.touches[0].clientX;
+      sliderDragging = true;
+      sliderStartOffset = 0;
+      sliderThumb.style.transition = 'none';
+    });
+
+    sliderThumb?.addEventListener('touchmove', (e) => {
+      if (!sliderDragging) return;
+      const touchX = e.touches[0].clientX;
+      const deltaX = touchX - sliderTouchStartX;
+      const trackWidth = sliderTrack?.offsetWidth ?? 0;
+      const maxOffset = trackWidth / 2;
+      sliderStartOffset = Math.max(-maxOffset, Math.min(maxOffset, deltaX));
+      sliderThumb.style.left = `calc(50% + ${sliderStartOffset}px)`;
+    });
+
+    sliderThumb?.addEventListener('touchend', () => {
+      sliderDragging = false;
+      const thumbWidth = sliderThumb?.offsetWidth ?? 52;
+      const trackWidth = sliderTrack?.offsetWidth ?? 0;
+      const maxOffset = trackWidth / 2;
+      const dragDistance = Math.abs(sliderStartOffset);
+      const dragRatio = Math.min(1, dragDistance / (maxOffset * 0.5));
+      const direction = sliderStartOffset < 0 ? -1 : 1;
+      const baseDuration = 500;
+      const minDuration = 180;
+      const duration = Math.round(baseDuration - dragRatio * (baseDuration - minDuration));
+      if (dragDistance > thumbWidth * 0.2) {
+        advance(direction as 1 | -1);
+        sliderThumb.style.transition = `left ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+      } else {
+        sliderThumb.style.transition = `left ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+      }
+      sliderThumb.style.left = '50%';
+      sliderStartOffset = 0;
     });
 
     // ── SEARCH + FILTER LOGIC ───────────────────────────────────────────────

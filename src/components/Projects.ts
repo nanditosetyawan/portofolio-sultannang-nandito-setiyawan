@@ -348,31 +348,39 @@ export const Projects = (): string => `
       </div>
 
       <!-- Carousel -->
-      <div class="projects-carousel-wrap">
-        <!-- Edge fades -->
-        <div class="proj-fade-left"  aria-hidden="true"></div>
-        <div class="proj-fade-right" aria-hidden="true"></div>
+       <div class="projects-carousel-wrap">
+         <!-- Edge fades -->
+         <div class="proj-fade-left"  aria-hidden="true"></div>
+         <div class="proj-fade-right" aria-hidden="true"></div>
 
-        <!-- Prev / Next -->
-        <button class="proj-nav-btn proj-nav-prev" id="projNavPrev" type="button" aria-label="Previous project">
-          ${chevLeftSVG}
-        </button>
-        <button class="proj-nav-btn proj-nav-next" id="projNavNext" type="button" aria-label="Next project">
-          ${chevRightSVG}
-        </button>
+         <!-- Prev / Next (desktop) -->
+         <button class="proj-nav-btn proj-nav-prev" id="projNavPrev" type="button" aria-label="Previous project">
+           ${chevLeftSVG}
+         </button>
+         <button class="proj-nav-btn proj-nav-next" id="projNavNext" type="button" aria-label="Next project">
+           ${chevRightSVG}
+         </button>
 
-        <!-- Cards track: perspective enables 3D rotateY on side cards -->
-        <div class="proj-cards-track" id="projCardsTrack" style="perspective: 1400px; perspective-origin: center center;">
-          ${projects.map((p, i) => renderCard(p, i)).join('')}
+          <!-- Cards track: perspective enables 3D rotateY on side cards -->
+          <div class="proj-cards-track" id="projCardsTrack" style="perspective: 1400px; perspective-origin: center center;">
+            ${projects.map((p, i) => renderCard(p, i)).join('')}
+          </div>
+
+          <!-- Slider Navigation (mobile only) -->
+          <div class="proj-slider-wrap" id="projSliderWrap">
+            <div class="proj-slider-track" id="projSliderTrack">
+              <div class="proj-slider-line"></div>
+              <button class="proj-slider-thumb" id="projSliderThumb">
+                <span class="proj-slider-thumb-texture"></span>
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- Dots -->
-      <div class="proj-dots" id="projDots" role="tablist" aria-label="Projects carousel">
-        ${renderDots()}
-      </div>
-
-      <!-- Bottom bar: Search + Filter -->
+        <!-- Dots (desktop) -->
+        <div class="proj-dots" id="projDots" role="tablist" aria-label="Projects carousel">
+          ${renderDots()}
+        </div>
       <div class="projects-bottom-bar">
 
         <!-- Search -->

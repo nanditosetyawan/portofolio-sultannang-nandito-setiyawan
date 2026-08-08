@@ -1214,6 +1214,14 @@ body.modal-open {
 .proj-modal-info-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.3rem; }
 
 /* ── Responsive ─────────────────────────────────────────────── */
+
+/* Slider Navigation — hidden by default (desktop) */
+.proj-slider-wrap { display: none; }
+.proj-slider-track { display: none; }
+.proj-slider-line { display: none; }
+.proj-slider-thumb { display: none; }
+.proj-slider-thumb-texture { display: none; }
+
 @media (max-width: 767px) {
   .projects-inner { padding: 4.5rem 0 4rem; }
   .projects-title { font-size: 2.4rem; }
@@ -1229,8 +1237,88 @@ body.modal-open {
   .proj-fade-left,
   .proj-fade-right { width: 80px; }
 
-  .proj-nav-prev { left: 6px; }
-  .proj-nav-next { right: 6px; }
+  /* Hide desktop nav arrows on mobile */
+  .proj-nav-btn { display: none !important; }
+
+  /* Hide dots pagination on mobile — replaced by slider */
+  .proj-dots { display: none !important; }
+
+  /* Slider wrap — mobile only */
+  .proj-slider-wrap {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    pointer-events: none;
+    padding-top: 0;
+  }
+
+  .proj-slider-track {
+    display: flex;
+    position: relative;
+    width: 48%;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+  }
+
+  /* Thin track line — wujud tipis */
+  .proj-slider-line {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,253,248,0.3) 10%, rgba(255,253,248,0.6) 50%, rgba(255,253,248,0.3) 90%, transparent 100%);
+    border-radius: 1px;
+  }
+
+  /* Oval thumb button — tombol lonjong bertekstur */
+  .proj-slider-thumb {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 30;
+    width: 56px;
+    height: 44px;
+    border-radius: 22px;
+    background: rgba(255, 253, 248, 0.92);
+    border: 2px solid rgba(137, 215, 183, 0.5);
+    box-shadow: 0 4px 14px rgba(26, 49, 44, 0.18);
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    flex-shrink: 0;
+    touch-action: none;
+  }
+  .proj-slider-thumb:active {
+    background: rgba(255, 253, 248, 1.0);
+    box-shadow: 0 6px 22px rgba(26, 49, 44, 0.28);
+    cursor: grabbing;
+  }
+
+  /* Texture line inside the thumb — garis lintasan tipis di tengah tombol */
+  .proj-slider-thumb-texture {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(66, 132, 117, 0.35), transparent);
+    border-radius: 1px;
+  }
 
   .proj-filter-panel { right: auto; left: 0; }
 }

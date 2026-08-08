@@ -463,6 +463,60 @@
     --skills-row-gap: 14px;
   }
 
+  /* ── Mobile Skill Circles Auto-Scroll ───────────────────────── */
+  /* Row 1: kanan → kiri, Row 2: kiri → kanan */
+  .about-skills-row.skills-marquee-right,
+  .about-skills-row.skills-marquee-left {
+    animation-duration: 60s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+
+  .about-skills-row.skills-marquee-right {
+    animation-name: skills-marquee-right;
+  }
+
+  .about-skills-row.skills-marquee-left {
+    animation-name: skills-marquee-left;
+  }
+
+  /* Gradient edge masks — smooth entry/exit with viewport */
+  .about-skills-section {
+    position: relative;
+  }
+
+  .about-skills-section::before,
+  .about-skills-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .about-skills-section::before {
+    left: 0;
+    background: linear-gradient(to right, var(--surface2) 15%, transparent);
+  }
+
+  .about-skills-section::after {
+    right: 0;
+    background: linear-gradient(to left, var(--surface2) 15%, transparent);
+  }
+
+  @keyframes skills-marquee-right {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes skills-marquee-left {
+    0%   { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
   /* ── Education: scroll-driven 01 → 02 transition ─────────── */
   .about-edu-section {
     height: 130vh !important;

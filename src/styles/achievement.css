@@ -478,4 +478,13 @@
   .review-marquee-track.to-left {
     animation: marquee-right 75s linear infinite;
   }
+
+  /* Force marquee to animate even when reduced-motion is active
+     (overrides the global 0.01ms override). Uses !important
+     to beat the global reduced-motion rule. Lightweight, gentle speed. */
+  .review-marquee-track {
+    animation-duration: 30s !important;
+    animation-iteration-count: infinite !important;
+    animation-play-state: running !important;
+  }
 }

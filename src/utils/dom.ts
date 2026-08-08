@@ -991,6 +991,31 @@ const onScroll = () => {
     requestAnimationFrame(animateSkills);
   }
 
+  /* ── Mobile Skill Auto-Scroll (lightweight, no RAF loop) ─── */
+  if (!isDesktop) {
+    const row1CycleWidth = duplicateCircles(aboutRow1, skillCirclesRow1);
+    const row2CycleWidth = duplicateCircles(aboutRow2, skillCirclesRow2);
+
+    /* Hanya aktif saat skills section terlihat di viewport */
+    let mobileObs: IntersectionObserver | null = null;
+
+    if (aboutSkillsWrap) {
+      mobileObs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            aboutRow1?.classList.add('skills-marquee-right');
+            aboutRow2?.classList.add('skills-marquee-left');
+          } else {
+            aboutRow1?.classList.remove('skills-marquee-right');
+            aboutRow2?.classList.remove('skills-marquee-left');
+          }
+        },
+        { threshold: 0.1 }
+      );
+      mobileObs.observe(aboutSkillsWrap);
+    }
+  }
+
   const aboutEduLine = aboutEduSection?.querySelector('.about-edu-line') as HTMLElement | null;
 
   /* ── Education scroll-driven animation ──────────────────────────────────

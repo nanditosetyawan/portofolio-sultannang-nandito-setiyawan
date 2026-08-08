@@ -1335,14 +1335,11 @@ const onScroll = () => {
     window.addEventListener('touchend', onTouchEnd);
   };
 
-// Run draggable initialization (mobile only — desktop handled elsewhere if needed)
-const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
-if (isMobileViewport) {
-  setTimeout(() => {
-    initDraggable('bintangIsi');
-    initDraggable('bintangKosong');
-  }, 100);
-}
+// Run draggable initialization — both mobile (touch) and desktop (mouse)
+setTimeout(() => {
+  initDraggable('bintangIsi');
+  initDraggable('bintangKosong');
+}, 100);
 
   // ── Stats Counter handled by GSAP (src/animations/about.ts) ─────────────
 

@@ -256,6 +256,7 @@
 /* ✏️ Lebar kolom kiri: ubah flex-basis di bawah (default 38%) */
 .about-edu-left {
   flex: 0 0 38%;
+  margin-top: 5rem;
 }
 
 /* ✏️ Ukuran heading: ubah clamp(min, preferred, max) */

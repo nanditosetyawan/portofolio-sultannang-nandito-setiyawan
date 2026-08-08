@@ -1677,8 +1677,10 @@ if (isMobileViewport) {
         if (win && !win.dataset.modalReady) {
           // Overlay is hidden so use viewport dimensions directly
           // Default window size matches CSS: width 640, height 580
-          // Respect max-width / max-height constraints from CSS (100vw - 24px, 100vh - 24px)
-          const WIN_W = 640, WIN_H = 580;
+          // On mobile (<768px) CSS shrinks it to 88vw x 500px
+          const isMobile = window.innerWidth < 768;
+          const WIN_W = isMobile ? Math.round(window.innerWidth * 0.88) : 640;
+          const WIN_H = isMobile ? 500 : 580;
           const ow = window.innerWidth;
           const oh = window.innerHeight;
           const actualWinW = Math.min(WIN_W, ow - 24);

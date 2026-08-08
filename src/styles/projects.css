@@ -1323,6 +1323,15 @@ body.modal-open {
   .proj-filter-panel { right: auto; left: 0; }
 }
 
+@media (max-width: 767px) {
+  .proj-modal-window {
+    width: 88vw;
+    height: 500px;
+    min-width: 280px;
+    max-width: 88vw;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 1199px) {
   .proj-card { width: 340px; height: 500px; margin-top: -250px; margin-left: -170px; }
   .proj-card.is-left  { transform: translate3d(calc(-50% - 300px), -50%, -35px) rotateY(13deg) scale(0.88); }
